@@ -40,6 +40,26 @@ Jacobiatorのdivergence消滅・gradient horizontality・Euler恒等式を示し
 幾何学的分解J=FT+E∧B₂があれば全多項式Jacobiを結論する。
 分解の存在そのものは仮定として明示し、G1全体の完成とはしない。
 
+## 幾何学的接続の実装済み補助結果
+
+G0–G2の完成状態は未完了のまま、次を実際の定義に対して追加した。
+
+- `PolynomialRepresentation`・`RepresentationLinearEquiv`：水平な二次双ベクトルと定数trivectorの
+  勾配縮約による線形同値。高次Koszul完全性と次数射影により存在・一意性を証明した。
+- `TangentRepresentative`・`RepresentativeUniqueness`：接性の係数式からEuler補正を行い、
+  代表の独立性を証明。既約性を使わず、多項式環で非零積を消去する。
+- `GradedKoszul`・`ExteriorKoszul`：実際のgradientについて全正次数のKoszulホモロジー消滅と
+  必要なgraded strandの一意な定数preimage。配列・外積・元のPの係数も符号込みで比較した。
+- `ChartCoordinates`・`ChartNormalization`・`ChartPresentation`・`JacobianIdeal`：
+  pivotの並べ替え、比座標、実際の一式presentationとJacobian、商環の全素点での偏微分被覆。
+- `ConeBracket`・`LocalChartHamiltonian`：実際の商環S/(F)と局所化環の演算、
+  比座標Hamiltonianと実際の次数0射影チャート環の括弧係数の一致、次数0環全体の保存。
+- `AffineSmoothness`：実際の滑らかなscheme射から、アフィン開集合の切断環の滑らかさを比較。
+- `LocalizedBracket`：実際の多項式局所化上の全要素についての括弧、Leibniz・Jacobi・自然性。
+
+実際の射影切断からの係数代表の取得、scheme smoothnessとの比較、接束外積の切断の
+貼り合わせは、これらの多項式補題で置き換えたとはしない。未完了の比較は次節以下に明示する。
+
 ## 依存と検証
 
 Lean 4.35.0、mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679、
@@ -51,7 +71,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。46モジュールをビルドし、517宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。66モジュールをビルドし、743宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。
@@ -61,7 +81,7 @@ HTML生成先は `blueprint/verso/_out/site/html-multi/index.html`。
 作業環境では `source scripts/env.sh` と `export XDG_CACHE_HOME=/workspace/.cache` を使う。
 procfs互換処理は現在は不要。原論文はpaper/source.jsonのSHA256で照合する。
 
-## 深刻な未解決点：元の射影幾何への接続
+## 実装中の課題：元の射影幾何への接続
 
 アフィン分類の完成だけでは、任意の幾何学的Poisson切断に適用できない。
 G0–G2には次の実際のscheme/sheaf構成が残っている。

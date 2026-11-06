@@ -356,13 +356,18 @@
         "P2",
         "P0"
       ],
-      "status": "open",
+      "status": "in_progress",
       "required": true,
-      "acceptance": "Euler列・twistのコホモロジー・高次Koszul完全性から任意のπ_Xに一意なPを対応。smoothnessからgradient条件・既約性を補助補題として証明し、代表独立性と非零性を比較する。",
+      "acceptance": "Euler列・twistのコホモロジー・高次Koszul完全性から任意の幾何学的π_Xに一意なPを対応。smoothnessからgradient条件を比較し、代表独立性・非零性を証明する。Euler wedgeの消去で既約性を不要にする経路を許す。",
       "declarations": [],
       "priority": 16,
       "source": "補題2.2、命題2.3",
-      "planned_module": "NcCubic/Geometry/Representation.lean"
+      "planned_module": "NcCubic/Geometry/Representation.lean",
+      "verified_components": [
+        "高次graded Koszul完全性と定数preimageの一意性",
+        "水平二次代表と定数trivectorの実際の縮約による線形同値",
+        "Euler補正と代表独立性（scheme切断との比較は未完了）"
+      ]
     },
     {
       "id": "G1",
@@ -371,13 +376,17 @@
         "G0",
         "P2"
       ],
-      "status": "open",
+      "status": "in_progress",
       "required": true,
       "acceptance": "twistした三重接束の制限列からJ=FT+E∧B₂を得て、divergenceとEuler場の恒等式、(1−3/N)F i_dF T=0、定数syzygy消滅からJ=0を証明。全多項式Jacobiと比較する。",
       "declarations": [],
       "priority": 17,
       "source": "命題2.4",
-      "planned_module": "NcCubic/Geometry/JacobiLift.lean"
+      "planned_module": "NcCubic/Geometry/JacobiLift.lean",
+      "verified_components": [
+        "divergence・Euler計算とJacobiatorの水平性",
+        "J=FT+E∧B₂からのJacobi持上げ（幾何学的分解の存在は未完了）"
+      ]
     },
     {
       "id": "G2",
@@ -387,13 +396,18 @@
         "P0",
         "P6b"
       ],
-      "status": "open",
+      "status": "in_progress",
       "required": true,
       "acceptance": "smoothnessとgradient、斉次bivectorと射影切断、イデアル(F)への降下、座標変換を比較。代数的/正則切断の比較の範囲とSchouten括弧との適合を明記して証明する。",
       "declarations": [],
       "priority": 18,
       "source": "§1.1、§2、定理1.1(3)逆構成",
-      "planned_module": "NcCubic/Geometry/Comparison.lean"
+      "planned_module": "NcCubic/Geometry/Comparison.lean",
+      "verified_components": [
+        "実際のアフィン商環と一式presentation・Jacobian",
+        "全素点の偏微分被覆・scheme Smoothからアフィン切断環のSmooth",
+        "実際の局所化括弧と比座標・次数0環（scheme切断への貼り合わせは未完了）"
+      ]
     },
     {
       "id": "T",

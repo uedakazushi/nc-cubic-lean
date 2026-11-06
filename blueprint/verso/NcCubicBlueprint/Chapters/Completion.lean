@@ -58,6 +58,8 @@ $$`\Lambda^3V\xrightarrow{\sim}H^0(X,\Lambda^2T_X),\qquad P\longmapsto(\iota_{dF
 
 を構成する。右辺への写像は斉次二次 bivector の射影化である。
 任意の切断がこの形で表されることと、$`P` の一意性の両方を示す。
+係数段階の高次Koszul表示・Euler補正・代表独立性・縮約による線形同値は
+`PolynomialRepresentation.lean` と関連モジュールで検証済み。実際の射影切断との比較は未完了。
 :::
 
 証明設計は原論文の補題2.2・命題2.3（印刷 pp.4–5）に沿う。
@@ -87,6 +89,8 @@ G0 の証明には、G2 にまとめる最終比較に先立って、smoothness 
 :::lemma_ "G1" (uses := "G0, P2")
 標準代表 $`q=\iota_{dF}P` の $`X` 上の射影化が Poisson ならば、
 アフィン錐上でも $`[q,q]=0`。従って A の全多項式 Jacobi 仮定を満たす。
+`NcCubic.contraction_jacobi_of_geometric_lift` の代数計算は検証済みであり、
+射影的に消えるJacobiatorから分解の存在を導く部分が残る。
 :::
 
 証明設計：原論文の命題2.4。標準体積形式による divergence $`\delta` を定義し、
@@ -111,7 +115,9 @@ Schouten 括弧の座標式と A の Jacobiator の関係（係数2を含む）�
 :::lemma_ "G2" (uses := "G0, P0, P6b")
 射影的 smoothness と斉次三次式の gradient 条件、幾何学的 Poisson 切断と
 座標環上の括弧を比較し、標準代表の射影降下・$`X` への制限・座標変換を接続する。
-原論文の切断を正則な切断として扱う場合は、代数的切断との比較も必要である。
+原論文の切断を解析的な正則切断として扱う場合は、代数的切断との比較も必要である。
+実際の一式presentation、Jacobianの素点被覆、schemeの滑らかさからアフィン切断環への比較、
+商環・局所化環・次数0チャート環の括弧は検証済み。実際の双ベクトル切断への貼り合わせは未完了。
 :::
 
 証明設計：smoothness と「gradient の零点は原点のみ」の比較は Euler 等式と

@@ -83,7 +83,7 @@ Jacobianブロックの逆構成はsmoothnessを必要としない。
   idealにはそのまま適用できない。`Koszul.Regular` → `Koszul.Relations` が適切な入口。
 - `StacksFrontier` のLean証明と、元のStacksの文章との型の一致は別に確認する。
 - gradient idealを含む素イデアルでの局所正則性と、大域H₁消滅・低次数syzygy消滅は
-  `GradientRegularity.lean` で検証済み。大域正則列そのものと全高次Koszul消滅は別課題。
+  `GradientRegularity.lean` で検証済み。全正次数Koszul消滅は `Geometry/GradedKoszul.lean` で追加証明済み。大域正則列そのものの別証明とは区別する。
 - 複素対称双線形形式とHermitian内積を区別する。
 - 係数モデルの分類、外積の分類、幾何学的sectionの分類を比較定理なしに同一視しない。
 - 数値実験やCASによる確認はLean証明ではない。必要なら証明書を生成して検証する。
@@ -103,7 +103,7 @@ mathlibの型へ合わせる依存関係をさらに詰める。URL等は `refer
 **元のscheme上のPoisson切断の表示G0、scheme smoothnessとの比較G2は未完了。**
 座標条件を新たにsmoothnessの定義として置き、元の定理を置き換えることはしない。
 
-実装済みの入口は次の二つである。
+初期の座標的な入口は次の二つであり、さらに下記の実装を追加した。
 
 - `Geometry/JacobianCondition.lean`：非零同次座標xでF(x)=0ならgradientの一成分が
   非零という条件と、`HasIsolatedGradientZero F` の同値。Eulerの係数3を割る箇所はℂ上。
@@ -138,7 +138,10 @@ chartの被覆・貼り合わせを接続する。これらの接続は未証明
 原論文補題2.2に必要な双対Euler列、接束の外積・twistと短完全列の具体的な射、
 H⁰(Λ³T(-3))≃Λ³Vの同型を構成して、既存の線束計算を適用する必要がある。
 超曲面への制限列、接性から厳密な縮約等式への修正、標準代表の一意性も未実装。
-P2で得た大域H₁消滅だけでは、G0が使う高次のgraded Koszul完全性は供給されない。
+G0が使う高次のgraded Koszul完全性は、今回 `Geometry/GradedKoszul.lean` と
+`ExteriorKoszul.lean` で証明した。配列から定数Pへの一意な表示は
+`PolynomialRepresentation.lean`、勾配縮約そのものによる線形同値は
+`RepresentationLinearEquiv.lean` にある。実際の切断から配列を取得する段階は未完了。
 
 ### P2の数学的な型の確認
 
@@ -149,3 +152,28 @@ idealを含む場合だけ局所正則列を使う。gradient ideal全体を単�
 次数比較は全次数≤1の非斉次係数も扱い、Jacobiatorの一次斉次係数を特に含む。
 結論を仮定するtypeclassや未知の正則性を引数に持たず、ℂ上の元のアフィン仮定へ適用できる。
 これは元の射影smoothnessとの比較を証明したことにはならない。
+
+### 接性・一意性の現在の実装経路
+
+`TangentRepresentative.lean` は、実際の二次skew配列Bと接性の係数式
+ΣᵢBⁱʲFᵢ=FAʲ+hXʲから、q=B−(1/3)E∧Aを構成し、厳密なgradient水平性と二次斉次性を得る。
+この係数式自体をschemeの接性から得る比較は別途必要である。
+`RepresentativeUniqueness.lean` では3FZ=Z(F)Eの成分を交差乗算し、非零3Fを消去してE∧Z=0を得る。
+したがって原論文の代表独立性に使われたFの既約性は、この証明経路では不要である。
+
+`ChartPresentation.lean` は一式の実際のAlgebra.Presentationと1×1 Jacobianを構成した。
+`JacobianIdeal.lean` はdehomogenized equationと偏微分の単位イデアル生成、商環の全素点での
+偏微分被覆を証明した。これらを実際のAlgebra.IsSmoothAtへ接続し、その後Scheme.Smoothと比較する。
+
+`ConeBracket.lean` は実際のS/(F)に括弧とJacobiを降下する。
+`LocalChartHamiltonian.lean` は局所化環の比座標の導分と次数0射影チャート環の括弧係数を構成し、
+両者の値が一致することを証明した。全次数0環の安定性は `ProjectiveBracketDescent.lean` で追加証明した。
+`LocalizedBracket.lean` は局所化環の全要素での実際の括弧とJacobiを構成する。
+異なるpivot間の貼り合わせと実際のΛ²T切断との同定は引き続き必要である。
+
+### この準備環境での依存生成物の共有
+
+rootとVersoのmathlib/Stacksのgitコミット一致を確認し、無視対象の.lake/package checkoutを
+同一固定版のcheckoutへsymlinkして生成物を共有した。manifestや証明kernelの設定は変更しない。
+元のVerso cacheは無視対象work/cache-backupに退避しており、これは環境内の再生成可能なcache処理である。
+新規cloneでは通常通り固定manifestから取得する。
