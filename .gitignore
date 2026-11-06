@@ -2,6 +2,7 @@
 .tools/
 .cache/
 __pycache__/
+work/
 *.pyc
 build/
 *.aux

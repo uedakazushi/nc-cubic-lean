@@ -16,14 +16,18 @@ Lean 4.35.0を使う独立したLake packageであり、本文の数式、依存
 | [Completion.lean](NcCubicBlueprint/Chapters/Completion.lean) | A・G0–G2・T：アフィン分類、表示・持上げ・降下、幾何学的完成 |
 
 全19課題について、主張・仮定・証明設計・実装先候補を記述する。
-証明設計の本文は未形式化の論証である。Leanで検証済みの課題は次の二つだけである。
+未完了課題の証明設計は未形式化の論証である。Leanで検証済みの課題はP0–P5・P6a・P6b・L0–L5・Aの15課題である。
+
+- P1 → `NcCubic.CubicDifferential.hessian_gradient`：微分の次数・Euler・Hessian恒等式と線形性。
+- L0 → `NcCubic.NondegenerateForm.exists_nondegenerate`：無限体上の基点自由な対称形式族に非退化元が存在する。
+- P4 → `NcCubic.CubicDifferential.hessian_basepoint_free`：孤立gradient条件からの基点自由性。
 
 - P6a → `NcCubic.Jacobian.jacobi`：一ブロックのJacobian括弧。関連する9定理を検証済み。
 - L2 → `NcCubic.LieObstruction.no_highest_root_witness`：明示された証拠からの矛盾。
   根基型・最高根型・交差括弧に関する計5定理を検証済み。証拠の存在は含めない。
 
 代表宣言との関連付けだけで課題全体を完了とはしない。
-AとTは未証明であり、`AffineClassificationStatement` は命題の定義である。
+Aは `NcCubic.theorem113_affine` で証明済み。Tは未証明である。
 `GeometricClassificationStatement` は今後導入する最終型の予定名である。
 
 ## 生成と検査
@@ -46,7 +50,7 @@ bash scripts/build_blueprint.sh
 生成前にこのHTMLディレクトリを置換し、改名前の章を残さない。
 全体ビルド・公理監査を含めて検証するときはルートで `lake build`。
 元の分類定理の完成判定は `bash scripts/check.sh --complete` で別に行う。
-現在は17課題が未完了であり、最終ゲートは失敗するのが正しい。
+現在は4課題が未完了であり、最終ゲートは失敗するのが正しい。
 
 2026-11-07、準備済みクラウド環境で全体ビルドとHTML生成を検証した。
 初回はVersoBlueprint・Versoと補助依存の取得にネットワーク接続が必要。

@@ -17,14 +17,14 @@ htmlSplit := .never
 分類する対象は $`X=V(F)\subset\mathbf P(V)` 上の全 Poisson 双ベクトル切断である。
 アフィン錐上にあらかじめ与えた $`q=\iota_{dF}P` の分類だけでは元の定理にならない。
 原論文 §2 の表示・Jacobi の持上げと、幾何学的な定義の比較をこの章で接続する。
-以下の A・G0–G2・T は全て未証明である。
+アフィン分類Aは証明済み。G0–G2・Tは未証明である。
 
 # アフィン核心の正確な完成条件
 %%%
 tag := "affine-classification"
 %%%
 
-:::theorem "A" (uses := "P3, P4, L5, P5, P6b")
+:::theorem "A" (uses := "P3, P4, L5, P5, P6b") (lean := "NcCubic.theorem113_affine")
 $`N\ge5`、$`0\ne F\in\mathbf C[z_1,\ldots,z_N]_3`、
 `HasIsolatedGradientZero F`、$`0\ne P\in\Lambda^3\mathbf C^N` の下で、
 $`\iota_{dF}P` が全多項式上で Jacobi を満たすことと、
@@ -33,12 +33,18 @@ $`\iota_{dF}P` が全多項式上で Jacobi を満たすことと、
 `NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement`。
 :::
 
-証明設計：順方向では P3・P4 から $`K(P)` の基点自由性を得て L5 を適用し、P5 で
+:::proof "A"
+`NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement` を検証済み。
+既存の目標命題の型を変更せず、全仮定・量化・正規形・逆方向を満たす。
+この結果だけでは元の幾何学的定理Tは完成しない。
+:::
+
+順方向では P3・P4 から $`K(P)` の基点自由性を得て L5 を適用し、P5 で
 $`F` を分解する。逆方向は P6b と可逆な座標変換を使う。
 基底を伴う存在量化、$`N=3k+m`、全 $`f_s` の三次斉次性、
 任意の共変ベクトルに対する $`P` の等式まで `HasBlockNormalForm` に詰める。
-`AffineClassificationStatement` は現在は命題の定義であり、これを引数に取る wrapper は
-この目標の証明とはしない。ファイル候補は `NcCubic/AffineClassification.lean`。
+`AffineClassificationStatement` は命題の定義であり、その証明を
+`theorem113_affine` が与える。ファイル候補は `NcCubic/AffineClassification.lean`。
 
 # 任意の射影双ベクトルを取り込む
 %%%

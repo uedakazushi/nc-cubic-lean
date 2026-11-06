@@ -12,8 +12,8 @@ public import Mathlib.LinearAlgebra.BilinearForm.Basic
 
 This file proves the substitutions in equation (3.2) used in Steps 2 and 3
 of Lemma 3.2 of `cubic_poisson_paper_20261104.pdf`, printed pages 6–7.
-The existence of the radical or highest-root witnesses is a separate,
-currently open obligation in the classification proof.
+Witness existence is established separately in RadicalElimination,
+RootCombinatorics, RootWitness, and SimpleFactorDimension.
 
 Symmetry of the bilinear form is unnecessary for these two calculations.
 The proofs therefore apply to any bilinear form satisfying (3.2).

@@ -56,11 +56,11 @@ P=\sum_{s=1}^k\partial_{x_{s1}}\wedge\partial_{x_{s2}}\wedge\partial_{x_{s3}},
 | 可逆な座標変換 | `Module.Basis (BlockIndex k m) ℂ (CoordinateSpace N)` |
 | \(F\) の座標変換 | `polynomialInBasis F b` |
 | 正規形の存在 | `HasBlockNormalForm F P` |
-| 未証明の分類命題 | `AffineClassificationStatement` |
+| アフィン分類の契約 | `AffineClassificationStatement` |
 
 最後の命題は \(N\ge5\)、\(F\ne0\)、三次斉次性、gradient条件、\(P\ne0\) の下で
 Jacobiと正規形を同値とする。**`def ... : Prop` を定義したことは証明ではない。**
-証明時の宣言名を `NcCubic.theorem113_affine` と予約する。
+この命題は `NcCubic.theorem113_affine` で証明済みである。
 
 trivectorの正規形は、任意の3つの共変ベクトル \(\alpha_i\) に対して
 \[
@@ -73,7 +73,7 @@ P(\alpha_0,\alpha_1,\alpha_2)
 施してはいけない。
 
 `HasIsolatedGradientZero` と幾何学的smoothnessの同値も未証明の橋渡しである。
-また全多項式Jacobiと座標生成元でのJacobiの同値をP3で証明する。
+全多項式Jacobiと座標生成元でのJacobiの同値はP3で証明済みである。
 
 ## 3. 証明の中心
 
@@ -140,8 +140,8 @@ Lie括弧を経由する場合は、可換で完全な因子の証拠を保持�
 3. **アフィン分類**：P5とP6bを接続してAを証明する。
 4. **元の幾何学的分類**：G0・G1・G2を接続し、最終型をレビューしてTを証明する。
 
-現在の着手順は `python3 scripts/next_task.py` で取得する。P1、L0、P0が準備済みである。
-主要な未解決点はP2の大域正則性、L3・L4の存在定理、G0–G2の射影幾何の基盤。
+現在の着手順は `python3 scripts/next_task.py` で取得する。アフィン分類まで完了し、現在の独立な着手点はG0の幾何学的表示である。
+主要な未解決点はG0–G2の射影幾何の基盤。P2は大域Koszul H₁消滅の経路で解決済み。
 予定モジュール名と原典の位置はtasks.jsonの `planned_module`・`source` に記録する。
 
 ## 6. 作業単位と終了条件
@@ -154,3 +154,10 @@ Lie括弧を経由する場合は、可換で完全な因子の証拠を保持�
 中心結果を仮定したtypeclassで緑のビルドを作ることを禁止する。
 最終型の意味が元の定理と一致することは別途レビューし、その後だけ
 `geometric_statement_review` を `passed` に変更する。
+
+## 現在の到達点
+
+`NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement` を証明済み。
+P0–P5・P6a・P6b・L0–L5・Aの15課題が完了した。G0・G1・G2・Tは未完了で、
+任意の幾何学的Poisson切断を取り込む表示・持上げ・比較の基盤が残る。
+実際の型と検証状況は [STATUS](../docs/STATUS.md) を参照する。

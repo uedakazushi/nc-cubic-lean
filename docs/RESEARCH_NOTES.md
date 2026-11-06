@@ -82,7 +82,8 @@ Jacobianブロックの逆構成はsmoothnessを必要としない。
 - Stacksの `Koszul.Syzygies` の一部は単位イデアルを仮定する。原点で消えるgradient
   idealにはそのまま適用できない。`Koszul.Regular` → `Koszul.Relations` が適切な入口。
 - `StacksFrontier` のLean証明と、元のStacksの文章との型の一致は別に確認する。
-- Cohen–Macaulay局所環の次元条件から大域斉次gradientの正則性への接続は未完了。
+- gradient idealを含む素イデアルでの局所正則性と、大域H₁消滅・低次数syzygy消滅は
+  `GradientRegularity.lean` で検証済み。大域正則列そのものと全高次Koszul消滅は別課題。
 - 複素対称双線形形式とHermitian内積を区別する。
 - 係数モデルの分類、外積の分類、幾何学的sectionの分類を比較定理なしに同一視しない。
 - 数値実験やCASによる確認はLean証明ではない。必要なら証明書を生成して検証する。
@@ -96,3 +97,55 @@ EtingofのMIT講義ノートで、Proposition 16.9（根基のスカラー作用
 §19.4（root decomposition）、Theorem 25.17（最高ウェイト）、§32.2（最高根）の
 参照位置を確認した。具体的なroot bracket非零性と階数1の三次元性については、
 mathlibの型へ合わせる依存関係をさらに詰める。URL等は `references.bib` に記載する。
+
+## 6. 幾何学的な橋渡しの現在の契約と次の実験
+
+**元のscheme上のPoisson切断の表示G0、scheme smoothnessとの比較G2は未完了。**
+座標条件を新たにsmoothnessの定義として置き、元の定理を置き換えることはしない。
+
+実装済みの入口は次の二つである。
+
+- `Geometry/JacobianCondition.lean`：非零同次座標xでF(x)=0ならgradientの一成分が
+  非零という条件と、`HasIsolatedGradientZero F` の同値。Eulerの係数3を割る箇所はℂ上。
+  pivot座標x_i≠0のchartでは、非pivot偏微分だけの非零性と同値である。
+- `Geometry/AffineChart.lean`：変数を `σ ⊕ Unit` とし、右側の一変数を1にする
+  `dehomogenize`、正規化された `lift`、その多項式商環 `CoordinateRing` と点評価写像。
+  評価・非pivot偏微分がこの代入と交換することを証明した。
+  斉次式の零点ではEuler等式によりpivot偏微分も回復し、両方のJacobian条件が一致する。
+
+### G2でまだ必要な実際のschemeとの比較
+
+固定版Stacksの `ProjectiveChart.HypersurfaceChart.chartQuotientEquiv` は、実際の閉埋込み
+`i : Z ⟶ Proj ...` と `Proj.idealOfClosedSubscheme ... i = Ideal.span {F}` から、
+chartの切断環と `R[Y]/(dehomCoeff R j F)` の環同型を供給する。
+そのため幾何学的データはscheme Z・閉埋込みi・その斉次イデアルの等式で持てる。
+任意のsectionがtrivectorで表せるという結論を、このデータの仮定に含めない。
+
+次の具体的な実験は、まず `Fin (n+1)` のpivotを除いた座標を `Fin n ⊕ Unit` に
+並べ替え、`AffineChart.dehomogenize` と `Stacks.ProjectiveChart.dehomCoeff` の等式を
+多項式生成元の像で証明すること。その後、一式関係の `Algebra.Presentation` を構成する。
+`Algebra.Presentation.isSmoothAt_iff_exists_jacobian_notMem` の適用には、全素イデアルpで
+非零fibreの次元が「変数数−関係数」であることが必要である。これはsmoothnessを
+仮定として得るのではなく、実際の一式商環について証明する。
+さらにschemeのsmooth morphismとこの局所環上の `Algebra.IsSmoothAt`、
+chartの被覆・貼り合わせを接続する。これらの接続は未証明である。
+
+### G0でまだ必要な切断と接束の構成
+
+`SerreComputation.serreTwistCohomology`（01XU）は線束O(d)の各次数のコホモロジーを
+計算し、`ProjectiveSpaceHodgeCohomology`（0FUK）は余接外積Ω^pのHodgeコホモロジーを
+計算する。後者の正twist消滅はq>0の結論であり、H⁰(Λ²T(-3))=0を直接与えない。
+原論文補題2.2に必要な双対Euler列、接束の外積・twistと短完全列の具体的な射、
+H⁰(Λ³T(-3))≃Λ³Vの同型を構成して、既存の線束計算を適用する必要がある。
+超曲面への制限列、接性から厳密な縮約等式への修正、標準代表の一意性も未実装。
+P2で得た大域H₁消滅だけでは、G0が使う高次のgraded Koszul完全性は供給されない。
+
+### P2の数学的な型の確認
+
+`cubic_linear_syzygy_zero` は代数閉体K、N個の変数、N個のgradient成分についての定理。
+CM切断判定に渡す商次元は0、列の長さと多項式環の次元はいずれもNなので、必要な
+次元等式は実際の型から成立する。idealを含まない素イデアルでは単元生成元を使い、
+idealを含む場合だけ局所正則列を使う。gradient ideal全体を単位イデアルとは仮定しない。
+次数比較は全次数≤1の非斉次係数も扱い、Jacobiatorの一次斉次係数を特に含む。
+結論を仮定するtypeclassや未知の正則性を引数に持たず、ℂ上の元のアフィン仮定へ適用できる。
+これは元の射影smoothnessとの比較を証明したことにはならない。

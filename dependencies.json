@@ -20,6 +20,6 @@
     "url": "https://github.com/AxiomMath/Stacks.git",
     "rev": "5ed82d14634e8d9576bb844c7bd4e3da66d450e7",
     "license": "Apache-2.0",
-    "role": "optional integration; mathematical adapters remain to be proved"
+    "role": "production dependency for focused Cohen–Macaulay and Koszul localization proofs of low-degree gradient syzygy vanishing; independent integration smoke tests retained"
   }
 }

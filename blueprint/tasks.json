@@ -8,10 +8,34 @@
       "id": "P0",
       "title": "座標・trivector・正規形の定義と変換則",
       "depends_on": [],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "外積Λ³Vとの同型、縮約の符号、反対称性・Leibniz・Casimir性、可逆な基底代入と括弧の変換則を証明。定義のコンパイルのみでは完了にしない。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.bracket_add_right",
+        "NcCubic.bracket_leibniz_right",
+        "NcCubic.bracket_constant_right",
+        "NcCubic.trivectorCoefficient_swap_first",
+        "NcCubic.contraction_skew",
+        "NcCubic.bracket_skew",
+        "NcCubic.trivectorCoefficient_swap_last",
+        "NcCubic.contraction_gradient_zero",
+        "NcCubic.contraction_potential_casimir",
+        "NcCubic.covector_eq_sum",
+        "NcCubic.exteriorTrivectorEquiv_volume",
+        "NcCubic.hasBlockTrivector_iff_exterior",
+        "NcCubic.exteriorTrivectorEquiv_natural",
+        "NcCubic.dualBasis_standard_eq_coordinate",
+        "NcCubic.trivectorCoefficient_ext",
+        "NcCubic.pderiv_aeval",
+        "NcCubic.pderiv_polynomialInBasis",
+        "NcCubic.basis_matrix_inverse_left",
+        "NcCubic.basis_matrix_inverse_right",
+        "NcCubic.polynomialFromBasis_basis_X",
+        "NcCubic.polynomialInBasis_inverse_X",
+        "NcCubic.polynomialBasisEquiv_apply",
+        "NcCubic.basisContractionBracket_covariance"
+      ],
       "priority": 3,
       "source": "§1.1、式(1.1)(1.2)、§2.1",
       "planned_module": "NcCubic/Coordinates.lean"
@@ -20,10 +44,27 @@
       "id": "P1",
       "title": "斉次三次式の微分とHessian対称性",
       "depends_on": [],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "Euler等式、偏微分の斉次次数、Hessianの対称性とpへの線形性、Hess_F(p)(w,w)=2 dF_w(p)を証明する。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.CubicDifferential.derivative_homogeneous",
+        "NcCubic.CubicDifferential.second_derivative_homogeneous",
+        "NcCubic.CubicDifferential.euler",
+        "NcCubic.CubicDifferential.eval_constant",
+        "NcCubic.CubicDifferential.eval_linear",
+        "NcCubic.CubicDifferential.hessian_gradient",
+        "NcCubic.CubicDifferential.hessian_symm",
+        "NcCubic.CubicDifferential.hessian_add_left",
+        "NcCubic.CubicDifferential.hessian_smul_left",
+        "NcCubic.CubicDifferential.hessian_add_right",
+        "NcCubic.CubicDifferential.hessian_smul_right",
+        "NcCubic.CubicDifferential.hessianForm_symm",
+        "NcCubic.CubicDifferential.eval_linear_add",
+        "NcCubic.CubicDifferential.eval_linear_smul",
+        "NcCubic.CubicDifferential.hessian_add_point",
+        "NcCubic.CubicDifferential.hessian_smul_point"
+      ],
       "priority": 1,
       "source": "補題3.1、補題2.1",
       "planned_module": "NcCubic/CubicDifferential.lean"
@@ -34,10 +75,14 @@
       "depends_on": [
         "P1"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
-      "acceptance": "gradientの孤立零点仮定から正則列とKoszul完全性を証明し、斉次成分により係数次数0/1のsyzygyを消去。局所から大域への比較を省略せず、正則列を追加仮定として残さない。",
-      "declarations": [],
+      "acceptance": "孤立gradient零点から商環の次元0を証明し、局所Cohen–Macaulay正則性とKoszulの局所化貼り合わせにより大域H₁完全性を得て、係数次数0/1のsyzygyを消去する。大域正則列そのものはこの経路では主張しない。",
+      "declarations": [
+        "NcCubic.GradientRegularity.cubic_linear_syzygy_zero",
+        "NcCubic.GradientRegularity.polynomial_h1Regular_of_dimension_zero",
+        "NcCubic.GradientSyzygy.quotient_dimension_zero"
+      ],
       "priority": 5,
       "source": "補題2.1",
       "planned_module": "NcCubic/GradientSyzygy.lean"
@@ -50,10 +95,13 @@
         "P1",
         "P2"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "座標Jacobiと全多項式Jacobiの同値、J^{ijk}=ΣF_a L_a^{ijk}とL_a=-K_H(i,j,k,a)の符号込み展開、Hessian条件との同値を証明する。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.CubicJacobi.jacobi_iff_hessians_compatible",
+        "NcCubic.CubicJacobi.compatibleForms_basepoint_free_of_jacobi"
+      ],
       "priority": 9,
       "source": "補題3.1、式(3.1)",
       "planned_module": "NcCubic/HessianCompatibility.lean"
@@ -64,10 +112,13 @@
       "depends_on": [
         "P1"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "非零wに対してHess_F(p)(w,w)≠0となるpの存在をgradientの孤立零点条件とP1から証明する。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.CubicDifferential.hessian_basepoint_free",
+        "NcCubic.CubicDifferential.hessian_range_basepoint_free"
+      ],
       "priority": 4,
       "source": "補題3.1後半",
       "planned_module": "NcCubic/CubicDifferential.lean"
@@ -76,10 +127,19 @@
       "id": "L0",
       "title": "基点自由な対称形式の系に非退化元がある",
       "depends_on": [],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "無限体・有限次元の下で、最大階数形式のradical補空間と行列式の一次係数を用いて、基点自由な対称形式の線形系に非退化元があることを証明する。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.NondegenerateForm.coeff_one_det_pencil_of_row_zero",
+        "NcCubic.NondegenerateForm.coeff_one_bordered_pencil",
+        "NcCubic.NondegenerateForm.exists_det_bordered_pencil_ne_zero",
+        "NcCubic.NondegenerateForm.diagonal_eq_zero_of_all_bordered_pencils_singular",
+        "NcCubic.NondegenerateForm.exists_form_nondegenerate_on_border",
+        "NcCubic.NondegenerateForm.nondegenerate_restrict_span_of_det_ne_zero",
+        "NcCubic.NondegenerateForm.exists_maximal_nondegenerate_restriction",
+        "NcCubic.NondegenerateForm.exists_nondegenerate"
+      ],
       "priority": 2,
       "source": "補題3.2、Step 1の代替証明は研究ノート§1",
       "planned_module": "NcCubic/NondegenerateForm.lean"
@@ -91,10 +151,15 @@
         "P0",
         "L0"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
-      "acceptance": "support上のtrivectorと双対制限を比較し、非退化な複素双線形形式からJacobi・不変性・[W,W]=W・Z(W)=0を証明。制限形式の族全体の基点自由性と式(3.2)を保持する。",
-      "declarations": [],
+      "acceptance": "基点自由なK(P)から全空間とsupport上で同時非退化なBを構成し、supportのLieRing/LieAlgebra、Jacobi、不変性、完全性、中心零、全制限形式族の互換性・基点自由性を証明。Pの復元はambient Cartan pairingとannihilator比較で行う。",
+      "declarations": [
+        "NcCubic.SupportConstruction.exists_support_lie_data",
+        "NcCubic.SupportConstruction.trivector_zero_of_annihilates_support",
+        "NcCubic.SupportConstruction.contraction_eq_of_agree_on_support",
+        "NcCubic.SupportConstruction.support_ne_bot"
+      ],
       "priority": 10,
       "source": "補題3.2、Step 1、式(3.2)",
       "planned_module": "NcCubic/SupportLie.lean"
@@ -124,10 +189,13 @@
         "L1",
         "L2"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
-      "acceptance": "極小可換イデアル、根基のスカラー作用とtrace、半単純商の非自明既約加群の最高ウェイトから非零の根基型証拠を構成。商の持上げは根基の作用零を介して扱いL2で矛盾させる。",
-      "declarations": [],
+      "acceptance": "非零可換極小イデアルと既約作用、忠実半単純像、非零primitive weightを構成し、元のLie代数へ証拠を持ち上げて基点自由性と矛盾させる。",
+      "declarations": [
+        "NcCubic.LieObstruction.radical_eq_bot_of_compatible_basepointFree",
+        "NcCubic.LieObstruction.radical_witness_of_abelian_atom"
+      ],
       "priority": 11,
       "source": "補題3.2、Step 2",
       "planned_module": "NcCubic/RadicalWitness.lean"
@@ -139,10 +207,16 @@
         "L3",
         "L2"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "半単純Lie代数を単純因子へ分解し、最高根の分解と根空間括弧の非零性から高階数の証拠を構成して除外。階数1の因子の三次元性を証明する。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.SimpleFactorDimension.finrank_eq_three",
+        "NcCubic.SimpleFactorDimension.simple_ideal_finrank_eq_three",
+        "NcCubic.RootWitness.no_high_rank_simple_compatible",
+        "NcCubic.SemisimpleFactors.subspaces_isInternal",
+        "NcCubic.SemisimpleFactors.simple_ideals_dim_three"
+      ],
       "priority": 12,
       "source": "補題3.2、Step 3",
       "planned_module": "NcCubic/SimpleFactors.lean"
@@ -153,10 +227,12 @@
       "depends_on": [
         "L4"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "因子の直交性と制限形式の非退化性から元のPを復元し、三次元直和と非零volume係数を構成。基底一つのスカラー倍で係数1に正規化する。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.TrivectorBlocks.has_block_trivector_of_basepoint_free"
+      ],
       "priority": 13,
       "source": "補題3.2、Step 4、§3.3冒頭",
       "planned_module": "NcCubic/TrivectorBlocks.lean"
@@ -165,14 +241,29 @@
       "id": "P5",
       "title": "混合偏微分消滅から多項式のブロック分解",
       "depends_on": [
+        "P0",
+        "P1",
         "P3",
-        "L5",
         "L2"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "ブロックtrivectorとK(P)の式から混合Hessianの消滅を導き、係数比較で混合単項式を除外。中心のみの項をblock 0に配分して斉次fsを構成する。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.PolynomialBlocks.coeff_zero_of_mixed_derivative_zero",
+        "NcCubic.PolynomialBlocks.blockVariable_injective",
+        "NcCubic.PolynomialBlocks.monomial_support_in_block",
+        "NcCubic.PolynomialBlocks.local_monomial",
+        "NcCubic.PolynomialBlocks.decomposition_of_mixed_derivatives",
+        "NcCubic.BlockHessian.contraction_dual_cyclic",
+        "NcCubic.BlockHessian.contraction_dual_cross",
+        "NcCubic.BlockHessian.compatible_cross_zero",
+        "NcCubic.BlockHessian.eval_directional_second",
+        "NcCubic.BlockHessian.mixed_derivative_in_basis",
+        "NcCubic.BlockHessian.homogeneous_in_basis",
+        "NcCubic.BlockHessian.polynomial_decomposition_in_basis",
+        "NcCubic.BlockHessian.hasBlockNormalForm_of_compatible"
+      ],
       "priority": 14,
       "source": "§3.3、式(1.1)",
       "planned_module": "NcCubic/PolynomialBlocks.lean"
@@ -206,10 +297,34 @@
         "P6a",
         "P0"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "中心変数を共有する任意個の独立activeブロックの交差Jacobiatorを消去し、括弧の和がPoissonで基底変換に適合することを証明。縮約係数との一致も示す。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.JacobianBlocks.compatible",
+        "NcCubic.JacobianBlocks.bracket_sum_right",
+        "NcCubic.JacobianBlocks.sum_pairwise_zero",
+        "NcCubic.JacobianBlocks.sum_jacobi",
+        "NcCubic.JacobianBlocks.pderiv_rename_of_not_range",
+        "NcCubic.JacobianBlocks.block_independent",
+        "NcCubic.JacobianBlocks.block_jacobi",
+        "NcCubic.JacobianBlocks.sum_skew",
+        "NcCubic.JacobianBlocks.sum_add_right",
+        "NcCubic.JacobianBlocks.sum_leibniz_right",
+        "NcCubic.JacobianBlocks.sum_other_variable_central",
+        "NcCubic.JacobianBlocks.bracket_sum_left",
+        "NcCubic.JacobianBlocks.sum_potential_casimir",
+        "NcCubic.JacobianBlocks.block_center_central",
+        "NcCubic.JacobianBlocks.block_potential_casimir",
+        "NcCubic.JacobianBlocks.block_coordinate01",
+        "NcCubic.determinant_contraction",
+        "NcCubic.contraction_eq_directionalBlocks",
+        "NcCubic.polynomialInBasis_directionalDerivative",
+        "NcCubic.polynomialInBasis_directionalJacobian",
+        "NcCubic.pderiv_block_sum",
+        "NcCubic.normalForm_bracket_covariance",
+        "NcCubic.normalForm_satisfiesJacobi"
+      ],
       "priority": 8,
       "source": "§3.3、逆構成",
       "planned_module": "NcCubic/JacobianBlocks.lean"
@@ -224,10 +339,12 @@
         "P5",
         "P6b"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement を証明し公理監査。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.theorem113_affine"
+      ],
       "priority": 15,
       "source": "定理1.1(3)のアフィン核心、§3.3",
       "planned_module": "NcCubic/AffineClassification.lean"

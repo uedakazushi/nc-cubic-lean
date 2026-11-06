@@ -25,7 +25,7 @@ $`F\in S_3` は斉次三次式、$`P\in\Lambda^3V` は定数の交代テンソ�
 tag := "coordinates"
 %%%
 
-:::definition "P0"
+:::definition "P0" (lean := "NcCubic.basisContractionBracket_covariance")
 有限次元双対を通じた同型
 $`\Lambda^3V\simeq\operatorname{Alt}^3(V^*,\mathbf C)` を作り、
 `NcCubic.Trivector` と外積の対応を証明する。$`P^{ija}=P(dz_i,dz_j,dz_a)` と置き、
@@ -42,6 +42,10 @@ $$`q^{ij}=\sum_aP^{ija}F_a,\qquad \{f,g\}=\sum_{i,j}q^{ij}(\partial_i f)(\partia
 volume trivector の和と同値でなければならない。
 :::
 
+:::proof "P0"
+外積と交代写像の同型、行列式の契約、可逆な基底代入、偏微分の連鎖律、任意Pの括弧の共変性を検証済み。
+:::
+
 証明設計：標準基底と双対基底による交代多重線形写像の外延性から始める。
 三変数で $`P=e_1\wedge e_2\wedge e_3` のとき
 $`\{z_1,z_2\}=F_3`、$`\{z_2,z_3\}=F_1`、$`\{z_3,z_1\}=F_2`
@@ -56,7 +60,7 @@ $`\{z_1,z_2\}=F_3`、$`\{z_2,z_3\}=F_1`、$`\{z_3,z_1\}=F_2`
 tag := "cubic-differential"
 %%%
 
-:::lemma_ "P1"
+:::lemma_ "P1" (lean := "NcCubic.CubicDifferential.hessian_gradient")
 $`F\in S_3` に対して $`F_i\in S_2`、$`F_{ij}\in S_1`、
 $`F_{ij}=F_{ji}`、$`\sum_i z_iF_i=3F` が成り立つ。
 対称双線形形式
@@ -70,23 +74,36 @@ $$`H_p(w,w)=2\,dF_w(p)`
 が任意の $`p,w\in V` について成り立つ。
 :::
 
-証明設計：偏微分の交換と斉次次数の公式を使い、最後の恒等式は次数3の単項式に帰着する。
+:::proof "P1"
+`NcCubic/CubicDifferential.lean` で検証済み。二階偏微分が一次式であることを使い、
+一次式の評価と二次偏微分へのEuler等式からHessian恒等式を導く。
+双線形形式と点に関する線形写像も構成した。
+:::
+
+偏微分の交換と斉次次数の公式を使う。
 係数2・3は標数0により可逆である。既存 API の入口は
 `MvPolynomial.pderiv_comm`、`coeff_pderiv`、
 `MvPolynomial.IsHomogeneous.sum_X_mul_pderiv`。
 零多項式も斉次式であることを許し、偏微分が非零であるとは仮定しない。
 ファイル候補は `NcCubic/CubicDifferential.lean`。
 
-:::lemma_ "P2" (uses := "P1")
+:::lemma_ "P2" (uses := "P1") (lean := "NcCubic.GradientRegularity.cubic_linear_syzygy_zero")
 $`F` が `HasIsolatedGradientZero` を満たすならば、
-$`F_1,\ldots,F_N` は $`S` の正則列である。特に
+gradient列のKoszul複体は大域的に第1ホモロジーが消え、特に
 
 $$`\sum_i a_iF_i=0,\qquad \deg a_i\leq1\quad\Longrightarrow\quad a_i=0\ (\forall i)`
 
-が成り立つ。定数係数の場合も含める。正則列であることを追加仮定として残さない。
+が成り立つ。定数係数の場合も含め、未証明の正則性を追加仮定として残さない。
 :::
 
-証明設計：gradient ideal $`I=(F_1,\ldots,F_N)` の零点集合が原点だけなので、
+:::proof "P2"
+`NcCubic.GradientRegularity.cubic_linear_syzygy_zero` で検証済み。
+零点条件から商環のKrull次元0を得て、局所Cohen–Macaulay正則性を適用し、
+KoszulのH₁完全性を局所化から大域へ貼り合わせる。次数比較で結論する。
+この証明経路は大域正則列そのものを別途証明する必要がなく、分類目標を弱めない。
+:::
+
+原論文の経路：gradient ideal $`I=(F_1,\ldots,F_N)` の零点集合が原点だけなので、
 Nullstellensatz から $`\sqrt I=(z_1,\ldots,z_N)`、従って高さ $`N` を得る。
 多項式環の Cohen–Macaulay 性と次元を使って正則性を導く。
 局所環の定理を使う場合は、局所化から大域の斉次列へ戻す比較も証明する。
@@ -95,7 +112,7 @@ Koszul の第1関係は $`F_je_i-F_ie_j` で生成され、その成分は次数
 生成関係の次数だけを述べて、大域的な関係の生成や斉次成分への射影を省略しない。
 
 `integrations/stacks` の検証済みアダプターは「正則列なら Koszul 関係で生成される」
-という条件付きの一般結果である。gradient の正則性と次数比較はこの課題に残る。
+という条件付きの一般結果である。今回の本体実装はその先の局所CM判定・H₁の貼り合わせ・次数比較まで検証した。
 単位イデアルを仮定する定理は $`I` に適用できない。
 ファイル候補は `NcCubic/GradientSyzygy.lean`。
 
@@ -104,7 +121,7 @@ Koszul の第1関係は $`F_je_i-F_ie_j` で生成され、その成分は次数
 tag := "jacobi-hessian"
 %%%
 
-:::lemma_ "P3" (uses := "P0, P1, P2")
+:::lemma_ "P3" (uses := "P0, P1, P2") (lean := "NcCubic.CubicJacobi.jacobi_iff_hessians_compatible")
 $`\gamma(P(\alpha,\beta))=P(\alpha,\beta,\gamma)` で $`P(\alpha,\beta)\in V` を定め、
 $`K(P)\subset\operatorname{Sym}^2 V^*` を次の等式で定義する：
 
@@ -115,7 +132,13 @@ $$`H(P(\alpha,\beta),P(\gamma,\eta))+H(P(\beta,\gamma),P(\alpha,\eta))+H(P(\gamm
 Jacobi 恒等式は、$`H_p\in K(P)` が全 $`p\in V` で成り立つことと同値である。
 :::
 
-証明設計：まず反対称な二重導分の Jacobiator が各引数で導分になることを示す。
+:::proof "P3"
+`NcCubic.CubicJacobi.jacobi_iff_hessians_compatible` で検証済み。
+全多項式Jacobi、符号付きの座標展開、全共変ベクトルの互換性を、
+証明済みP2を使って接続した。追加のsyzygy仮定は残さない。
+:::
+
+まず反対称な二重導分の Jacobiator が各引数で導分になることを示す。
 従って座標生成元での Jacobi と全多項式上の Jacobi が同値になる。
 規約を $`J^{ijk}=\{z_i,\{z_j,z_k\}\}+\mathrm{cyc}` とすると、正確な展開は
 
@@ -128,13 +151,18 @@ Hessian の対称性と $`P` の交代性によって $`-L_a^{ijk}(p)` に等し
 多項式の恒等的消滅と全点での消滅の比較には、複素数体が無限体であることを使う。
 ファイル候補は `NcCubic/HessianCompatibility.lean`。
 
-:::lemma_ "P4" (uses := "P1")
+:::lemma_ "P4" (uses := "P1") (lean := "NcCubic.CubicDifferential.hessian_basepoint_free")
 $`F` が `HasIsolatedGradientZero` を満たすならば、Hessian の線形系は基点自由である：
 
 $$`w\ne0\quad\Longrightarrow\quad\exists p\in V,\ H_p(w,w)\ne0.`
 :::
 
-証明設計：全ての $`p` で値が0なら P1 により $`dF_w=0` であり、gradient 条件から
+:::proof "P4"
+`NcCubic.CubicDifferential.hessian_basepoint_free` と
+`hessian_range_basepoint_free` で検証済み。追加の正則列仮定はない。
+:::
+
+全ての $`p` で値が0なら P1 により $`dF_w=0` であり、gradient 条件から
 $`w=0`。構成的には非零な偏微分 $`F_i(w)` を一つ選び $`p=e_i` とすればよい。
 この課題は P2・Jacobi・Lie 理論を待たずに実装できる。
 
@@ -143,12 +171,16 @@ $`w=0`。構成的には非零な偏微分 $`F_i(w)` を一つ選び $`p=e_i` �
 tag := "polynomial-blocks"
 %%%
 
-:::lemma_ "P5" (uses := "P3, L5, L2")
+:::lemma_ "P5" (uses := "P0, P1, P3, L2") (lean := "NcCubic.BlockHessian.hasBlockNormalForm_of_compatible")
 $`P` の三次元直和分解に適合する座標を取り、$`k\ge1` とする。
 全 Hessian が $`K(P)` に属せば、異なる active ブロック $`s\ne t` に対して
 $`\partial_{x_{si}}\partial_{x_{tj}}F=0` となる。従って
 
 $$`F=\sum_{s=1}^k f_s(x_s,u),\qquad f_s\in\mathbf C[x_{s1},x_{s2},x_{s3},u_1,\ldots,u_m]_3.`
+:::
+
+:::proof "P5"
+`PolynomialBlocks.lean` と `BlockHessian.lean` で検証済み。ブロックtrivectorの等式を明示的な入力とし、その存在はL5をAで適用して得る。従ってこの一般補題自体の証明依存からL5を外した。
 :::
 
 証明設計：正規化された各三次元 volume の双対基底から二つずつ共変ベクトルを取り、
@@ -179,10 +211,14 @@ $$`\{g,h\}_f=f_{x_1}(g_{x_2}h_{x_3}-g_{x_3}h_{x_2})+f_{x_2}(g_{x_3}h_{x_1}-g_{x_
 関連する9定理の一覧と検証状態は task register および `docs/STATUS.md` を参照する。
 :::
 
-:::lemma_ "P6b" (uses := "P6a, P0")
+:::lemma_ "P6b" (uses := "P6a, P0") (lean := "NcCubic.normalForm_satisfiesJacobi")
 互いに素な active 三変数組と共通の中心変数 $`u` に対し、
 $`f_s\in\mathbf C[x_s,u]` の Jacobian 括弧の和は Poisson 括弧である。
 P0 の線形座標変換により移した括弧も Jacobi を満たす。
+:::
+
+:::proof "P6b"
+`JacobianBlocks.lean` と `BlockContraction.lean` で共有中心を許す全多項式Jacobi、縮約係数との一致、可逆な座標変換、正規形からの逆構成を検証済み。
 :::
 
 証明設計：各括弧は別ブロックの potential の active 偏微分を0にする。

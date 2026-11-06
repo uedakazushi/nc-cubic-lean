@@ -22,7 +22,7 @@
 
 ## 2. 基本方針
 
-初期の必須依存は上記 mathlib とする。係数による Poisson/Jacobi の定義、偏微分、Euler 等式、ブロック型の十分性はそれだけで着手できる。Stacks の固定版を追加できる独立した検証用 package / import target を設け、個々の必要モジュールを導入する。
+証明本体は上記mathlibと固定版Stacksに依存する。StacksはP2の低次数gradient syzygy消滅を実証明するため、必要なCM・Koszulモジュールだけを導入した。独立したAPI検証用package `integrations/stacks` も保持し、同一pinを使う。Versoは引き続き独立した文書packageである。
 
 `import Stacks` または `import StacksFrontier` を基礎ファイルに置かない。公式 README は約 63,000 モジュールの全ビルドに大きな時間・メモリが必要と記し、コンパイル済み Stacks のキャッシュは計画段階としている。`lake exe cache get` で取得するのは Mathlib のキャッシュである。少数のモジュールでも推移的依存は大きくなりうるため、実際の時間・メモリを測ってから通常の検証経路に入れる。
 
@@ -39,7 +39,7 @@
 | Euler 等式 | `Mathlib.RingTheory.MvPolynomial.EulerIdentity`; `MvPolynomial.IsHomogeneous.sum_X_mul_pderiv` | `3F = Σ zᵢFᵢ`、アフィン gradient の唯一の零点 |
 | 外積 | `Mathlib.LinearAlgebra.ExteriorPower.Basic`, `.Basis`; `exteriorPower.ιMulti`, `exteriorPower.map` | P、基底変換、直和の各三次元 volume |
 | 縮約 | `Mathlib.LinearAlgebra.CliffordAlgebra.Contraction`; `CliffordAlgebra.contractLeft`, `contractLeft_contractLeft`, `contractLeft_comm` | 二次形式 Q=0 で ExteriorAlgebra の縮約として使う。固定次数へ制限する橋渡しは要作成 |
-| 正則列 | `Mathlib.RingTheory.Regular.RegularSequence`; `RingTheory.Sequence.IsRegular` と `IsWeaklyRegular` | gradient の正則性の受け口。Cohen–Macaulay/Koszul の適切な結論への接続は Stacks 候補 |
+| 正則列 | `Mathlib.RingTheory.Regular.RegularSequence`; `RingTheory.Sequence.IsRegular` と `IsWeaklyRegular` | 局所gradient正則列の受け口。StacksのCM判定・Koszul局所大域接続に実際に適用済み |
 | 零点とイデアル | `Mathlib.RingTheory.Nullstellensatz` | smoothness の座標条件から gradient ideal の情報へ |
 | Lie 基礎 | `Mathlib.Algebra.Lie.Semisimple.Basic`; `LieAlgebra.hasTrivialRadical_iff_no_abelian_ideals` | 補題3.2の根基排除 |
 | 不変双線形形式 | `Mathlib.Algebra.Lie.InvariantForm`; `LieAlgebra.InvariantForm.isSemisimple_of_nondegenerate` | 非退化不変形式と非零可換イデアルの排除から半単純性 |
@@ -51,48 +51,75 @@
 
 固定ソース URL の形は `https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/` に上記モジュール名の `.` を `/` にしたパスと `.lean` を付ける。
 
-## 4. Stacks の具体的な利用候補
+## 4. Stacks の利用先
 
-### 4.1 gradient の正則列と Koszul 関係
+### 4.1 実装済み：低次数gradient syzygyの消滅
 
-これは本プロジェクトで最も直接的な Stacks の利用先である。
+`NcCubic/GradientRegularity.lean` は次の固定版モジュールを直接importする。
 
-1. `StacksFrontier.RingTheory.CohenMacaulay.MvPolynomial`
-   - `Module.IsCohenMacaulay.mvPolynomial_of_isBaseChange`
-   - `Module.IsMaximalCohenMacaulay.of_isLocalization_atPrime_mvPolynomial`
-   - 原典の Stacks tags: `0AAI`, `00ND`。
-   - 多項式環とその局所化の Cohen–Macaulay 性。体から出発する特殊化が必要。
+| モジュール | 適用した主なAPIと役割 |
+|---|---|
+| `CohenMacaulay.MvPolynomial` | `Module.IsMaximalCohenMacaulay.of_isLocalization_atPrime_mvPolynomial`：多項式環の各局所化のCM性（tags 0AAI・00ND） |
+| `CohenMacaulay.Equidimensional` | `Module.IsMaximalCohenMacaulay.ringKrullDim_quotient_add_length_eq_and_isRegular`：正しい余次元で切る列の局所正則性（tag 00R9。内部で02JNを使用） |
+| `Koszul.Regular` | `Koszul.isKoszulRegularOn_and_isKoszulRegular_of_regular`：局所正則列からKoszul消滅 |
+| `Koszul.Localization` | `Koszul.isH1Regular_of_forall_localization_prime`：局所のH₁消滅を大域へ接続 |
+| `Koszul.Relations` | `Koszul.isH1Regular_iff_forall`：syzygyがKoszul関係のspanに入ること |
 
-2. `StacksFrontier.RingTheory.CohenMacaulay.RegularSequence.DimensionCriterion`
-   - `Module.IsMaximalCohenMacaulay.isRegular_iff_ringKrullDim_add_length_eq_ringKrullDim`
-   - 原典 tag `02JN`。
-   - Noetherian local CM ring で、極大イデアル内の列が長さだけ次元を下げることと正則性を結ぶ。
-   - 論文の大域多項式環へそのまま使えるわけではない。局所化と斉次性のアダプターを証明する。
+パスの接頭辞はいずれも `StacksFrontier.RingTheory.`。
+実装した論証は次の通りである。
 
-3. `StacksFrontier.RingTheory.Koszul.Regular`
-   - `Koszul.isKoszulRegularOn_and_isKoszulRegular_of_regular`
-   - mathlib の正則列から Koszul complex の正次数 exactness へ進める。
+1. `GradientRadical.lean`：孤立gradient零点とNullstellensatzから、gradient idealのradicalが原点の極大イデアルであることを示す。
+2. `GradientDimension.lean`：上にある素イデアルがその極大イデアルだけであることから、商のKrull次元0を得る。
+3. 多項式環のCM性と00R9を使い、gradient idealを含む各素イデアルで局所正則列を得る。
+4. idealを含まない素イデアルでは、生成元の一つが局所化で単元となる。明示的な逆元によるKoszul関係の式でH₁消滅を示す。
+5. 局所大域接続で大域H₁消滅を得る。`GradientSyzygy.lean` の次数比較により、次数2の生成元に対する係数全次数≤1のsyzygyは0になる。
 
-4. `StacksFrontier.RingTheory.Koszul.Relations`
-   - `Koszul.isH1Regular_iff_forall`, `Koszul.isH1Regular_iff_ker_le_relSpan`
-   - first syzygy が Koszul relations の span に入ることを得る。
-   - 次に `Fᵢ` の次数2と、係数の次数0/1から消滅を結論する部分を自作する。
+結果は `NcCubic.GradientRegularity.cubic_linear_syzygy_zero`。
+仮定は三次斉次性と孤立gradient零点であり、gradientの正則性を追加仮定に残さない。
+大域正則列そのものや全高次Koszulホモロジーの消滅を別途証明したとは扱わない。
+後者を必要とする射影表示G0には追加の議論が残る。
+`lake build NcCubic.GradientRegularity` を実行し、主要定理の公理依存が標準3公理のみであることを確認した。
 
-`Koszul.Syzygies` という名前だけで選ばない。同ファイルの主要定理は生成元が単位イデアルを生成するという仮定を持ち、本件の原点を零点に持つ gradient ideal にそのまま当てはまらない。
+`Koszul.Syzygies` の単位イデアル仮定を、原点を共通零点に持つgradient ideal全体へ誤用しない。
+単元の議論は零点集合の外側の局所化でのみ使っている。
 
-### 4.2 射影的な表示と延長
+### 4.2 射影的な表示・smoothness比較：正確な受け口と未接続部分
 
-次の個別ソースを確認した。
+以下は固定版ソースの型を確認した段階であり、本プロジェクトへのimport・適用を
+検証済みとする一覧ではない。実装済みの座標比較は `NcCubic/Geometry/` に分けている。
 
-- `StacksFrontier.AlgebraicGeometry.ProjEulerSequence.Exactness`
-  - 名前空間 `Stacks.AlgebraicGeometry.ProjEulerSequence`
-  - `shortExact_eulerSequence`, `exists_shortExact_eulerSequence` がある。
-  - 定数係数環上の射影空間の相対余接 Euler 列。双対化、外積、twist、H⁰ 計算への接続は別途必要。
-- `StacksFrontier.AlgebraicGeometry.ProjectiveCohomology.Basic`
-  - `Stacks.ProjectiveCohomology.isIso_cechCohomologyToCohomology_chart`
-  - `isZero_Hgroup_of_lt` は射影空間の次元より上の消滅。
-  - 論文補題2.2に必要な特定 twist の全コホモロジー消滅とは異なる。
-- 同ディレクトリに `CechVanishing`, `TwistSections`, `TwistWeights` があることは確認したが、必要な Bott 型計算が完備しているかまでは未確認。
+- `AlgebraicGeometry.ProjectiveSpace.Cohomology.SerreComputation`
+  - `Stacks.ProjectiveSpace.Cohomology.serreTwistCohomology R m d` は
+    `SerreTwistCohomology R m d` を構成する（tag 01XU）。
+  - 射影次元は `m+1`。`degreeZero`、`degreeTop` はそれぞれH⁰・最高次の線形同型。
+    `vanishing q` は `q+1 ≠ m+1` のときのH^(q+1)消滅である。
+- `AlgebraicGeometry.DeRham.ProjectiveSpaceHodgeCohomology`
+  - `Stacks.AlgebraicGeometry.ProjectiveSpaceHodge.isZero_twistedHodgeCohomology`
+    は `k>0`、`q>0` のときのH^q(Ω^p(k))消滅（tag 0FUK）。
+  - `isZero_cohomologySheaf_twistingSheaf` は `-n≤d<0` の線束の全次数消滅を供給する。
+  - H⁰(Λ²T(-3))=0とH⁰(Λ³T(-3))≃Λ³Vを、そのまま与える型ではない。
+    余接Euler列の双対、外積、twist、必要な射の同定と短完全列の接続が残る。
+- `AlgebraicGeometry.ProjectiveChart.HypersurfaceChart`
+  - `Stacks.ProjectiveChart.chartQuotientEquiv` の入力は実際の閉埋込み
+    `i : Z ⟶ Proj (MvPolynomial.homogeneousSubmodule (Fin (n+1)) R)`、
+    斉次式 `F`、および `Proj.idealOfClosedSubscheme ... i = Ideal.span {F}`。
+  - 結果は `R[Y₁,…,Yₙ]/(dehomCoeff R j F) ≃+* Γ(Z, subschemeChart i j)`。
+    `chartPresentation_C` が係数Rとの適合を別に示す。
+- `RingTheory.Smooth.JacobianCriterion`
+  - `Algebra.Presentation.isSmoothAt_iff_exists_jacobian_notMem`（tag 00TE）の入力は
+    実際の `P : Algebra.Presentation R S ι σ` と、全素イデアルpに対する
+    `Nontrivial (p.Fiber S) → ringKrullDim (p.Fiber S) + Nat.card σ = Nat.card ι`。
+  - 結果は素イデアルqでの `Algebra.IsSmoothAt R q` と、relations→variablesの埋込みで
+    選ぶJacobian minorがqに入らないことの同値。
+    射影三次式のsmoothnessとgradient零点条件を直接同一視できるAPIではない。
+
+現在の `Geometry/JacobianCondition.lean` は、三次式の同次座標Jacobian条件と
+`HasIsolatedGradientZero` の同値を証明する。これはscheme smoothnessの定義ではない。
+`Geometry/AffineChart.lean` は、変数を `σ ⊕ Unit` とした実際のdehomogenization、
+評価・偏微分の比較、対応する多項式商環と点評価を構成する。
+次はこのdehomogenizationを `dehomCoeff` と比較し、一式関係の具体的presentationと
+上の全fibre次元条件を供給する。その後にschemeのsmoothnessと貼り合わせる。
+詳しい現在の契約と次の実験は `RESEARCH_NOTES.md` §6 に記載する。
 
 ### 4.3 Bertini
 

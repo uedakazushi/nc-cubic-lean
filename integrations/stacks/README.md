@@ -3,8 +3,10 @@
 版: 0.1.0 / 2026-11-07 JST
 
 このディレクトリは独立した Lake package である。原論文の補題2.1へ向けて、
-正則列から Koszul 関係の生成性へ進む接続を用意する。基礎プロジェクトは
-mathlib だけで作業でき、この package は必要に応じて取得・検証する。
+正則列からKoszul関係の生成性へ進む独立したAPI検証先を保持する。
+証明本体も同じ固定版Stacksに依存し、`NcCubic/GradientRegularity.lean` で
+CM・Koszul局所大域接続を用いて低次数gradient syzygy消滅を証明する。
+この独立packageからrootへの依存はなく、循環依存は導入しない。
 
 ## 固定する依存
 
@@ -98,19 +100,23 @@ CM target には `#print axioms` がある。成功時の出力を確認し、�
 `propext`、`Classical.choice`、`Quot.sound` 以外への依存があれば原因を調査する。
 宣言の型が原典と目的に合うことの確認は、kernel による証明検査とは別に行う。
 
-## 原論文へ接続するために残っていること
+## 証明本体への接続
 
-1. 三次斉次式の射影的滑らかさから、偏微分の共通零点が原点だけであることを
-   Euler 等式を使って示す。
-2. この零点条件から gradient ideal の高さ・局所商の次元を求める。
-3. 多項式環の Cohen–Macaulay 性と正則列判定を適用し、局所化の議論を含めて
-   gradient が正則列であることを得る。
-4. ここで用意した `syzygy_mem_relSpan_of_regular` と各偏微分の次数2を使い、
-   係数次数0または1の syzygy が零であることを証明する。
-5. 基礎プロジェクトの cubic・gradient・Jacobi の定義とこの API を接続する。
+rootの `NcCubic/GradientRegularity.lean` が次を証明している。
 
-`Koszul.Syzygies` にある「生成元が単位イデアルを生成する」ことを仮定した定理は、
-原点を共通零点に持つ gradient ideal には直接適用できない。
+1. `GradientRadical.lean` と `GradientDimension.lean` により、孤立gradient零点からgradient idealのradicalと商の次元0を得る。
+2. idealを含む各素イデアルで、CM環の正しい余次元による切断判定（00R9）から局所正則列を得る。
+3. idealを含まない素イデアルでは単元生成元を使い、全素イデアルでH₁消滅を示す。
+4. `Koszul.Localization` の局所大域接続と `Koszul.Relations` を使い、syzygyの生成性を得る。
+5. `GradientSyzygy.lean` の次数比較から、係数全次数≤1のsyzygyを消去する。
+
+最終結果 `NcCubic.GradientRegularity.cubic_linear_syzygy_zero` は、gradientの正則性を仮定に残さない。
+この経路では、大域正則列そのものと全高次Koszul消滅は別証明していない。
+射影smoothnessとの幾何学的比較、G0に必要な高次の完全性は引き続き別課題である。
+rootの `lake build NcCubic.GradientRegularity` と主要定理の公理監査に成功した。
+
+`Koszul.Syzygies` の単位イデアル仮定を持つ定理は、gradient ideal全体には適用しない。
+本体の単元による計算は、零点集合の外側で局所化した場合に使う。
 
 ## 現在の検証状態
 
@@ -122,7 +128,7 @@ CM target には `#print axioms` がある。成功時の出力を確認し、�
 | `lake build NcCubicStacks` | 成功。2つのアダプターを kernel が検査した |
 | `lake build NcCubicStacksAudit` | 成功。2宣言の推移的公理依存を許可リストと照合した |
 | `lake build NcCubicStacksCM` | 成功。3つの CM 公開 API を読み込み、型と公理出力を確認した |
-| 基礎プロジェクトとの共有依存の比較 | mathlib を含む9依存の URL とコミットが一致した |
+| 基礎プロジェクトとの共有依存の比較 | Stacks・mathlibを含む10依存のURLとコミットが一致した |
 
 2つのアダプターと3つの CM 公開 API の公理依存は、すべて
 `[propext, Classical.choice, Quot.sound]` だった。

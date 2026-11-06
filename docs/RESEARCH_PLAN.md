@@ -9,7 +9,7 @@
 独立な三変数Jacobianブロックの和へ変換し、逆の構成も証明する。
 量子化、退化スキーム、moduli、定理第4項の一般階数は第一の完成条件に含めない。
 
-まず `NcCubic.AffineClassificationStatement` の証明を完成させる。
+`NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement` は証明済み。
 続いて、任意の幾何学的Poisson双ベクトルから \(P,q=\iota_{dF}P\) を得る原論文§2を
 接続する。**アフィン版だけの完成を元の定理の完成としない。**
 代数的なPoisson sectionと原論文の正則なsectionの比較が必要な場合には、その範囲も
@@ -36,18 +36,18 @@
 
 ## 優先する次の作業
 
-1. `P1/P4`：三次式のHessian対称性と基点自由性。mathlibのEuler等式と
-   `pderiv_comm` を使い、単項式に帰着する。
-2. `L0`：基点自由な対称双線形形式の線形系に非退化元があること。
-   まずブロック行列の行列式の一次係数を補題にする。
-3. `P2`：Stacksの正則列→Koszul関係の検証先に、gradient idealの正則性と次数の
-   議論を接続する。単位イデアルの仮定を持つ別定理を誤用しない。
-4. `P6b`：中心変数を共有する複数ブロックの互換性と、線形座標変換の適合性。
-5. `L1/L3/L4`：support上のLie代数、可解根基と高階数因子を排除する証拠の存在。
+P0–P5・P6a・P6b・L0–L5・Aは実装済み。課題の現在状態はSTATUSとtasks.jsonを正本とする。
 
-正確な依存関係と受入条件は [tasks.json](../blueprint/tasks.json) を参照する。
-準備できた独立の課題は並列に進める。大きな一般理論の完成を待つ必要のない証拠補題、
-係数計算、比較写像から着手する。
+1. G0/G2：実際の射影超曲面のschemeとチャートpresentationを結ぶ。
+   座標Jacobian条件は検証済みだが、scheme smoothnessとの比較は未完了。
+   余接Euler列の双対・外積・twistと接束の制限列も具体的な写像として構成する。
+2. G1：射影的に消えるJacobiatorからJ=FT+E∧B₂を得る。
+   この分解から全多項式Jacobiへ進むdivergence/Eulerの代数部分は実装済み。
+3. T：全幾何学的切断と正則/代数的カテゴリーの比較を終えて最終型をレビューする。
+
+正確な依存関係・受入条件は [tasks.json](../blueprint/tasks.json)。
+P2は局所正則列→大域Koszul H₁消滅の経路を採用し、大域正則列そのものは主張しない。
+L1はambientとsupportで同時非退化な形式を行列式pencilで選び、annihilator比較でPを保持する。
 
 ## 一般原則（個別計画とは別に常に適用）
 

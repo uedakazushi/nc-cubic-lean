@@ -42,13 +42,22 @@ bash scripts/check.sh --complete
 |---|---|
 | Lean | `leanprover/lean4:v4.35.0` |
 | mathlib | `56a005855ea17e0b0958f73ec801ae140b0a1679` |
-| AxiomMath/Stacks（独立した検証用package） | `5ed82d14634e8d9576bb844c7bd4e3da66d450e7` |
+| AxiomMath/Stacks（本体のCM/Koszul証明と独立検証） | `5ed82d14634e8d9576bb844c7bd4e3da66d450e7` |
 
-通常のターゲットはmathlibに依存します。Stacksの必要部分は
-[integrations/stacks](integrations/stacks/README.md) で個別に検証・導入します。
+通常の証明ライブラリはmathlibと固定版Stacksの必要モジュールに依存します。
+`NcCubic/GradientRegularity.lean` がCohen–Macaulay性・局所正則列・Koszulの局所大域接続を
+使い、gradientの低次数syzygy消滅を証明します。大域正則列そのものを別証明したとは扱いません。
+[integrations/stacks](integrations/stacks/README.md) の独立したAPI検証先も保持します。
 全Stacksを一括importする構成ではありません。
 
-## コードと未証明の目標
+## コードと証明状態
+
+**アフィン分類は証明済みです。**
+[`NcCubic/AffineClassification.lean`](NcCubic/AffineClassification.lean) の
+`theorem113_affine : AffineClassificationStatement` が、既存の目標型を変更せずに
+正規形の必要十分性を証明します。19課題中15課題が完了しました。
+元の幾何学的定理には、任意の射影Poisson切断との表示・持上げ・比較
+（G0・G1・G2）が必要で、最終目標Tは未証明です。
 
 - `NcCubic/Statement.lean`：仮定・座標変換・ブロック正規形と、アフィン分類の
   **目標命題の定義**。この定義自体は分類定理の証明ではありません。
