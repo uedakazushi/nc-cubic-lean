@@ -19,7 +19,7 @@ supplied manuscript dated 2026-11-04. It describes the normal form of
 Poisson structures on smooth complex projective cubic hypersurfaces
 of dimension at least three.
 
-**The classification theorem is not yet formalized.** A Lean-compilable
+*The classification theorem is not yet formalized.* A Lean-compilable
 definition of the affine target is not a proof of that target. The project
 also requires a separate geometric bridge from Poisson bivector sections
 on the projective hypersurface to the polynomial model.

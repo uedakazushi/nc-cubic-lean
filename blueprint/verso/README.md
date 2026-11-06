@@ -31,19 +31,15 @@ dependency graph, and progress summary. Open the generated `index.html`
 locally, or serve the directory with a simple local HTTP server. Nothing
 is uploaded to GitHub Pages.
 
-This build requires network access for the initial VersoBlueprint,
-Verso and auxiliary dependency checkout and cache/artifacts. The first
-successful `lake update` generates a `lake-manifest.json` for this
-subproject. **That lockfile is not committed in this initialization
-because this environment could not perform the dependency fetch**.
-After a successful build, commit its lockfile and check compatibility
-with the root mathlib revision. Until then, reproducible *complete*
-dependency closure is not independently verified.
+初回はVersoBlueprint・Versoと補助依存の取得にネットワーク接続が必要です。
+`lake-manifest.json` は実際に解決した依存を固定します。ルートと共有する
+9依存のURL・コミットは一致しています。
 
-The Verso package and all source modules were selected using upstream
-v4.35.0 template paths. No actual site generation has been run during
-this initialization, so any import/API error must be corrected through
-a real Lean build; do not report an HTML site as built yet.
+2026-11-07、公開済みクラウド環境でルートの `lake build` とHTML生成が成功しました。
+`lake exe vbp check` はエラー0件で、19課題のラベル・グラフ・進捗表・リンクの
+生成データを確認しました。クリーンな新規cloneでの全依存再取得は未検証です。
+補題には固定版APIの `:::lemma_` を使います。本文に記すLean名はバッククォートで
+囲み、`_` をVersoの強調記法として解釈させないようにします。
 
 ## What is linked to Lean?
 
@@ -99,6 +95,5 @@ The repository root has a custom default Lake target. Once Lean 4.35.0
 is installed, run `lake build` **at the root** to build the main proof
 library, audit it, build/audit the selected Stacks adapters, and render this
 Verso site. Use `lake build NcCubic` to build only the proof library.
-The new root custom target and Verso dependency closure have not yet passed
-an end-to-end build in a fresh clone. Treat any first-run failure as a
-required repair task, not as a successful verification.
+The full root build passed in the prepared cloud environment on 2026-11-07.
+A fresh-clone dependency download has not been independently tested.

@@ -8,7 +8,7 @@ root = Path(__file__).resolve().parents[1]
 tasks = {t["id"]: t for t in json.loads((root / "blueprint/tasks.json").read_text())["tasks"]}
 chapterdir = root / "blueprint/verso/NcCubicBlueprint/Chapters"
 nodes = {}
-pattern = re.compile(r'^:::(?:definition|lemma|proposition|theorem)\s+"([^"]+)"([^\n]*)', re.M)
+pattern = re.compile(r'^:::(?:definition|lemma_|proposition|theorem)\s+"([^"]+)"([^\n]*)', re.M)
 for chapter in sorted(chapterdir.glob("*.lean")):
     content = chapter.read_text()
     for label, opts in pattern.findall(content):

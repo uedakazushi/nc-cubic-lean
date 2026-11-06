@@ -76,7 +76,8 @@ The interactive mathematical Blueprint now lives in
 chapters, dependency graph, progress summary, and links to proved Lean
 declarations. Build locally with `bash scripts/build_blueprint.sh`.
 The Blueprint package is separate from the proof library and has no
-GitHub Actions deployment. Its first live build remains to be verified.
+GitHub Actions deployment. The full root build and HTML generation were verified
+on 2026-11-07; see [STATUS](docs/STATUS.md).
 
 ### 単一コマンドのデフォルトビルド（v0.3.0）
 
@@ -97,6 +98,7 @@ Lean 4.35.0 と Lake が利用できる場合、clone したリポジトリの
 完全な数学的最終判定には従来通り `bash scripts/check.sh --complete`。
 最初の `lake build` はVersoの追加依存をネットワークから取得する必要があり、
 依存の競合・環境制限で失敗する可能性があります。失敗は無視しません。
-**新しいデフォルトターゲットの実ビルドは未実施です。**
+**2026-11-07、公開済みクラウド環境で全体ビルドとHTML生成が成功しました。**
+クリーンな新規cloneでの全依存再取得は未検証です。
 
 リポジトリ名は `uedakazushi/nc-cubic-lean` です。Lean の `NcCubic` 名前空間と Lake の `nc_cubic` package 名は意図的にそのまま保持します。旧リポジトリ名の GitHub URL はリダイレクトされますが、Codex の環境・Git remote には新URLを使用してください。

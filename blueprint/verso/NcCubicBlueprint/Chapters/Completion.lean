@@ -17,25 +17,25 @@ extension statements in Section 2 must be formalized too.
 :::theorem "A" (uses := "P3, P4, L5, P5, P6b")
 Prove the full affine polynomial classification, represented by
 NcCubic.AffineClassificationStatement. The goal is a genuine
-Lean theorem named NcCubic.theorem113_affine. The current declaration
+Lean theorem named `NcCubic.theorem113_affine`. The current declaration
 AffineClassificationStatement is a definition of a proposition, not
 the proof.
 :::
 
-:::lemma "G0" (uses := "P2, P0")
+:::lemma_ "G0" (uses := "P2, P0")
 Prove the representation and uniqueness of projective bivector
 fields on a smooth cubic in terms of constant trivectors.
 This requires the Euler sequence, cohomological vanishings,
 and the graded Koszul calculation from the source Section 2.
 :::
 
-:::lemma "G1" (uses := "G0, P2")
+:::lemma_ "G1" (uses := "G0, P2")
 Show that a Poisson bivector on the cubic lifts to a
 Poisson structure on the affine cone, not merely a tangent
 bivector, by the divergence and Euler-field argument.
 :::
 
-:::lemma "G2" (uses := "G0, P0, P6b")
+:::lemma_ "G2" (uses := "G0, P0, P6b")
 Connect projective smoothness and the geometric Poisson
 section to the polynomial Lean model, and prove the
 descent and inverse construction in the correct categories.

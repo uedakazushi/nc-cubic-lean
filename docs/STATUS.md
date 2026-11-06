@@ -58,34 +58,26 @@ P0（外積・座標変換との比較）を準備済み課題として返す。
 研究方針・Blueprint・現在のtask graphは、過去の会話を取得せずに作業を再開できる。
 最終目標のTとアフィン分類Aは未完了のままである。
 
-## Verso Blueprint integration (2026-11-07 / v0.2.0)
+## Verso Blueprint と全体ビルド
 
-A separate `blueprint/verso` Lake workspace now contains a VersoBlueprint
-v4.35.0 generator, three mathematical chapters, and 19 task labels with
-explicit dependency edges. Existing proved representatives are linked to
-`NcCubic.Jacobian.jacobi` and
-`NcCubic.LieObstruction.no_highest_root_witness`.
-The repository also contains `scripts/check_blueprint.py` for deterministic
-label/edge checks and `scripts/build_blueprint.sh` for local rendering.
-**Verso has not yet been fetched or built in an actual Lean environment.**
-Consequently no generated HTML and no resolved subworkspace lockfile are
-claimed. The root mathlib and Stacks pins remain unchanged; Codex must perform
-the initial dependency resolution, build, and visual check and then commit the
-subworkspace manifest. The original theorem remains open.
+2026-11-07、公開済みクラウド環境でルートの `lake build` が成功した。
+Lean 4.35.0、mathlib・Stacksの既存pinは変更していない。
 
-## Single-command root build (2026-11-07 / v0.3.0)
+- `NcCubic` のビルド、38宣言の公理監査、14件のtheorem宣言確認に成功。
+- Blueprintの19課題のラベルと依存関係の照合に成功。
+- StacksのKoszulアダプター2宣言のビルド・公理監査に成功。
+- VersoBlueprint生成ツールと3章のビルド、HTML生成に成功。
+- `lake exe vbp check` は `ok: true`、エラー0件。生成ラベルを課題一覧と照合した。
 
-The root Lake configuration has been changed from TOML to a Lean-format
-`lakefile.lean` with a default `fullProject` target. It builds `NcCubic`,
-then runs `scripts/full_build.sh` to audit project declarations, verify
-Blueprint label/dependency consistency, build and audit the selected Stacks
-adapters, and render the Verso HTML site. Subprocesses use explicit targets
-or a distinct subworkspace to avoid recursive default builds.
+文書の補題ディレクティブを固定版APIの `:::lemma_` に合わせ、
+整合性検査のパーサーも対応させた。本文の宣言名の `_` はコード表記で保護し、
+Versoの強調表記も修正した。数学的な定義・証明・課題状態は変更していない。
+Verso用 `lake-manifest.json` を取得済み依存から保存し、ルートと共有する9依存の
+URL・コミットの一致を確認した。
 
-**This change is saved as configuration, not yet proven working**:
-the current execution environment has no Lean/Lake binary and no accessible
-Verso dependency closure, so the full fresh-clone `lake build` was not run.
-The possible first-run obstacles are downloading and resolving the Verso
-subworkspace dependencies, version collisions, and compiling its API. Never
-report the single-command build as successful until a real run completes.
-The underlying classification theorem remains open.
+HTMLは `blueprint/verso/_out/site/html-multi/index.html` に生成される。
+グラフ・進捗表・ローカルリンクの生成データを確認した。
+上流依存にlinter warningは残る。クリーンな新規cloneでの全依存再取得は未検証。
+今回の環境では `source scripts/env.sh` と
+`export XDG_CACHE_HOME=/workspace/.cache` を使い、procfs互換処理は不要だった。
+全体ビルド成功は元の定理1.1(3)やアフィン分類の完成を意味しない。

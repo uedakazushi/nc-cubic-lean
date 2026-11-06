@@ -101,8 +101,8 @@ After changing a task or proof, run `python3 scripts/check_blueprint.py`
 and update the corresponding labeled Verso statement. When dependencies are
 available, run `bash scripts/build_blueprint.sh` and check the HTML graph,
 summary, and links. No GitHub Actions or GitHub Pages setup is authorized.
-The first actual Verso build and lockfile are pending. Do not report them
-as complete until successfully executed and inspected.
+The Verso build, generated HTML/data checks, and resolved lockfile were verified
+in the prepared cloud environment on 2026-11-07. Preserve the pinned lockfile.
 
 ## Default build entry point (v0.3.0)
 
@@ -112,6 +112,6 @@ rendering through a default Lake custom target and `scripts/full_build.sh`.
 Do not remove these checks to mask a dependency or build failure.
 For fast proof iterations, `lake build NcCubic` remains available; use
 `lake build` before reporting a verified, complete project checkpoint.
-The custom target and Verso's dependency closure have NOT YET passed a
-fresh real Lake build. Your first task is to run and fix the actual build
-on Lean 4.35.0, and record all newly verified facts.
+The full custom target passed on Lean 4.35.0 in the prepared cloud environment
+on 2026-11-07. Continue to run it for complete checkpoints; a fresh-clone
+dependency download has not been independently tested.
