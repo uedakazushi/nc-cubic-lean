@@ -56,6 +56,22 @@ G0–G2の完成状態は未完了のまま、次を実際の定義に対して�
   比座標Hamiltonianと実際の次数0射影チャート環の括弧係数の一致、次数0環全体の保存。
 - `AffineSmoothness`：実際の滑らかなscheme射から、アフィン開集合の切断環の滑らかさを比較。
 - `LocalizedBracket`：実際の多項式局所化上の全要素についての括弧、Leibniz・Jacobi・自然性。
+- `ProjectivePoisson`・`ProjectiveHypersurfacePoisson`・`ProjectiveOverlap`：
+  実際の次数0環と超曲面商環の全要素に対するPoisson括弧、斉次局所化の重なりでの一致。
+- `PoissonSheaf`・`PoissonGluing`：実際の構造層上の括弧とHamiltonian導分、
+  被覆上の整合する局所Poisson演算の一意な貼り合わせ。
+- `KahlerBracket`：双導分から実際の余接外積の双対への標準写像。
+  余接加群が有限自由なら実際の接加群外積へ移し、微分の外積上の評価を比較。
+- `ChartSmoothness`・`HypersurfacePresentation`・`AffineSmoothnessCover`：
+  実際の一式超曲面のfibre次元と全素点でのJacobian判定、孤立gradient条件と
+  各チャート代数のSmoothの同値、実際のアフィン開被覆からのscheme Smoothの復元。
+- `TangentSheaf`・`ProjectiveBivector`・`TangentNaturality`：実際の相対余接層の双対、
+  接層外積の大域切断、開集合上の導分作用と全制限写像との適合性。
+- `PolynomialTangent`：係数配列を実際の多項式接加群外積に移し、
+  微分の外積上の評価が元の括弧と一致することと配列の一意性を証明。
+
+`SheafKahler`は各開集合の切断環のKähler微分上の形式を構成する。
+任意の開集合で微分層の切断と切断環の微分を同一視したとは主張しない。
 
 実際の射影切断からの係数代表の取得、scheme smoothnessとの比較、接束外積の切断の
 貼り合わせは、これらの多項式補題で置き換えたとはしない。未完了の比較は次節以下に明示する。
@@ -71,7 +87,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。66モジュールをビルドし、743宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。89モジュールをビルドし、1072宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。

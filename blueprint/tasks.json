@@ -385,7 +385,8 @@
       "planned_module": "NcCubic/Geometry/JacobiLift.lean",
       "verified_components": [
         "divergence・Euler計算とJacobiatorの水平性",
-        "J=FT+E∧B₂からのJacobi持上げ（幾何学的分解の存在は未完了）"
+        "J=FT+E∧B₂からのJacobi持上げ（幾何学的分解の存在は未完了）",
+        "実際の座標Jacobiatorの交代性と三次斉次性"
       ]
     },
     {
@@ -406,7 +407,10 @@
       "verified_components": [
         "実際のアフィン商環と一式presentation・Jacobian",
         "全素点の偏微分被覆・scheme Smoothからアフィン切断環のSmooth",
-        "実際の局所化括弧と比座標・次数0環（scheme切断への貼り合わせは未完了）"
+        "実際の局所化括弧と比座標・次数0環（scheme切断への貼り合わせは未完了）",
+        "実際の超曲面商環のJacobi・斉次局所化の重なりでの括弧適合性",
+        "実際の構造層の局所Poisson演算の一意な貼り合わせ",
+        "双導分と実際のKähler外積・有限自由接加群外積の比較"
       ]
     },
     {

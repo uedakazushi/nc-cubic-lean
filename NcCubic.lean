@@ -66,3 +66,32 @@ public import NcCubic.Geometry.RepresentationLinearEquiv
 public import NcCubic.Geometry.AffineSmoothness
 public import NcCubic.Geometry.ProjectiveBracketDescent
 public import NcCubic.Geometry.LocalizedBracket
+public import NcCubic.Geometry.ModulesBridge
+
+public import NcCubic.Geometry.LocalizedHamiltonianComparison
+public import NcCubic.Geometry.ProjectiveEquation
+public import NcCubic.Geometry.ProjectivePoisson
+public import NcCubic.Geometry.ProjectiveHypersurfacePoisson
+
+public import NcCubic.Geometry.ProjectiveOverlap
+public import NcCubic.Geometry.PoissonSheaf
+public import NcCubic.Geometry.PoissonGluing
+public import NcCubic.Geometry.KahlerBracket
+public import NcCubic.Geometry.JacobiHomogeneity
+public import NcCubic.Geometry.PolynomialTangent
+public import NcCubic.Geometry.HypersurfacePresentation
+public import NcCubic.Geometry.ChartSmoothness
+public import NcCubic.Geometry.SheafKahler
+
+public import NcCubic.Geometry.TangentSheaf
+public import NcCubic.Geometry.ProjectiveBivector
+
+public import NcCubic.Geometry.ImmersionCotangent
+public import NcCubic.Geometry.AffineSmoothnessCover
+
+public import NcCubic.Geometry.ProjectiveSectionBracket
+public import NcCubic.Geometry.ImmersionExterior
+
+public import NcCubic.Geometry.ProjectiveSectionOverlap
+public import NcCubic.Geometry.TangentNaturality
+public import NcCubic.Geometry.LocalSectionHom

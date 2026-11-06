@@ -7,14 +7,14 @@ namespace NcCubic.Geometry
 open MvPolynomial
 attribute [local instance] MvPolynomial.gradedAlgebra
 variable {n : ℕ}
-private theorem chartEquiv_X_val (i : Fin (n+1)) (a : Fin n) :
+theorem projectiveChartEquiv_X_val (i : Fin (n+1)) (a : Fin n) :
     (Stacks.ProjectiveChart.chartRingEquiv ℂ i (X a)).val =
       chartCoordinate i (i.succAbove a) := by
   simp [Stacks.ProjectiveChart.chartRingEquiv, Stacks.ProjectiveChart.chartRingEquivDeg0,
     Stacks.ProjectiveChart.chartHom, Stacks.ProjectiveChart.ratio,
     HomogeneousLocalization.Away.isLocalizationElem, HomogeneousLocalization.Away.val_mk,
     Localization.mk_eq_mk', chartCoordinate, chartDenominator]
-private theorem chartEquiv_C_val (i : Fin (n+1)) (c : ℂ) :
+theorem projectiveChartEquiv_C_val (i : Fin (n+1)) (c : ℂ) :
     (Stacks.ProjectiveChart.chartRingEquiv ℂ i (C c)).val =
       algebraMap ℂ (ChartLocalization i) c := by
   simp [Stacks.ProjectiveChart.chartRingEquiv, Stacks.ProjectiveChart.chartRingEquivDeg0,
@@ -32,7 +32,7 @@ theorem chartCoordinateHamiltonian_preserves_degreeZero
   induction p using MvPolynomial.induction_on with
   | C c =>
     refine ⟨0, ?_⟩
-    rw [HomogeneousLocalization.val_zero, chartEquiv_C_val]
+    rw [HomogeneousLocalization.val_zero, projectiveChartEquiv_C_val]
     simp
   | add p q hp hq =>
     obtain ⟨a, ha⟩ := hp
@@ -45,7 +45,7 @@ theorem chartCoordinateHamiltonian_preserves_degreeZero
     refine ⟨e p * projectiveBracketCoefficient F P hF i j (i.succAbove k) + e (X k) * a, ?_⟩
     simp only [HomogeneousLocalization.val_add, HomogeneousLocalization.val_mul,
       map_mul, Derivation.leibniz, smul_eq_mul]
-    rw [ha, projectiveBracketCoefficient_matches_hamiltonian, chartEquiv_X_val]
+    rw [ha, projectiveBracketCoefficient_matches_hamiltonian, projectiveChartEquiv_X_val]
 
 
 end NcCubic.Geometry
