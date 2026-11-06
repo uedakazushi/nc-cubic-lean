@@ -91,3 +91,15 @@ source paper, blueprint, bibliography, and reproduction commands self-contained.
 Preserve valid valuable mathematics; remove histories, duplicate files, old ZIPs,
 and build artifacts. The general research principles in `docs/RESEARCH_PLAN.md`
 apply throughout. Git-backed project files are persisted in this repository.
+
+## Verso mathematical Blueprint
+
+The authored Verso chapters are in `blueprint/verso/NcCubicBlueprint/Chapters/`.
+This is a separate Lake package that uses VersoBlueprint v4.35.0; do not add
+Verso to the main mathlib-only root package just for documentation.
+After changing a task or proof, run `python3 scripts/check_blueprint.py`
+and update the corresponding labeled Verso statement. When dependencies are
+available, run `bash scripts/build_blueprint.sh` and check the HTML graph,
+summary, and links. No GitHub Actions or GitHub Pages setup is authorized.
+The first actual Verso build and lockfile are pending. Do not report them
+as complete until successfully executed and inspected.

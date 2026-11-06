@@ -68,3 +68,13 @@ GitHub Actions、PR、外部サービスへの通知は必須ではありませ�
 Codexは `AGENTS.md` に従い、小さい証明単位で検証・保存し、次の課題へ進みます。
 原論文は変更せず、SHA256を `paper/source.json` に記録しています。
 既存論文の内容、今回確認した数学、Leanで検証した命題は区別します。
+
+## Verso Blueprint
+
+The interactive mathematical Blueprint now lives in
+[`blueprint/verso`](blueprint/verso/README.md). It uses the upstream
+`leanprover/verso-blueprint` package for Lean 4.35.0 with mathematical
+chapters, dependency graph, progress summary, and links to proved Lean
+declarations. Build locally with `bash scripts/build_blueprint.sh`.
+The Blueprint package is separate from the proof library and has no
+GitHub Actions deployment. Its first live build remains to be verified.

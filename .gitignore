@@ -10,3 +10,5 @@ build/
 *.toc
 *.fls
 *.fdb_latexmk
+blueprint/verso/_out/
+blueprint/verso/.lake/

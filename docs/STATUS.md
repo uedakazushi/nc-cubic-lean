@@ -57,3 +57,18 @@ Stacks側では `lake build NcCubicStacks NcCubicStacksAudit NcCubicStacksCM` �
 P0（外積・座標変換との比較）を準備済み課題として返す。
 研究方針・Blueprint・現在のtask graphは、過去の会話を取得せずに作業を再開できる。
 最終目標のTとアフィン分類Aは未完了のままである。
+
+## Verso Blueprint integration (2026-11-07 / v0.2.0)
+
+A separate `blueprint/verso` Lake workspace now contains a VersoBlueprint
+v4.35.0 generator, three mathematical chapters, and 19 task labels with
+explicit dependency edges. Existing proved representatives are linked to
+`NcCubic.Jacobian.jacobi` and
+`NcCubic.LieObstruction.no_highest_root_witness`.
+The repository also contains `scripts/check_blueprint.py` for deterministic
+label/edge checks and `scripts/build_blueprint.sh` for local rendering.
+**Verso has not yet been fetched or built in an actual Lean environment.**
+Consequently no generated HTML and no resolved subworkspace lockfile are
+claimed. The root mathlib and Stacks pins remain unchanged; Codex must perform
+the initial dependency resolution, build, and visual check and then commit the
+subworkspace manifest. The original theorem remains open.
