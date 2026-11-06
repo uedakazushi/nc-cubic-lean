@@ -10,9 +10,11 @@
       "depends_on": [],
       "status": "open",
       "required": true,
-      "acceptance": "Statement.lean の型を元の定理と照合し、Λ³V・縮約・基底変換との比較定理を証明する。定義のコンパイルのみでは完了にしない。",
+      "acceptance": "外積Λ³Vとの同型、縮約の符号、反対称性・Leibniz・Casimir性、可逆な基底代入と括弧の変換則を証明。定義のコンパイルのみでは完了にしない。",
       "declarations": [],
-      "priority": 3
+      "priority": 3,
+      "source": "§1.1、式(1.1)(1.2)、§2.1",
+      "planned_module": "NcCubic/Coordinates.lean"
     },
     {
       "id": "P1",
@@ -20,9 +22,11 @@
       "depends_on": [],
       "status": "open",
       "required": true,
-      "acceptance": "Euler等式、偏微分の次数、Hess_F(p)(w,w)=2 dF_w(p) を証明する。",
+      "acceptance": "Euler等式、偏微分の斉次次数、Hessianの対称性とpへの線形性、Hess_F(p)(w,w)=2 dF_w(p)を証明する。",
       "declarations": [],
-      "priority": 1
+      "priority": 1,
+      "source": "補題3.1、補題2.1",
+      "planned_module": "NcCubic/CubicDifferential.lean"
     },
     {
       "id": "P2",
@@ -32,9 +36,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "実際の滑らかさ仮定から正則列・Koszul exactnessを経て次数0/1のsyzygyを消去する。正則列を追加仮定として残さない。",
+      "acceptance": "gradientの孤立零点仮定から正則列とKoszul完全性を証明し、斉次成分により係数次数0/1のsyzygyを消去。局所から大域への比較を省略せず、正則列を追加仮定として残さない。",
       "declarations": [],
-      "priority": 5
+      "priority": 5,
+      "source": "補題2.1",
+      "planned_module": "NcCubic/GradientSyzygy.lean"
     },
     {
       "id": "P3",
@@ -46,9 +52,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "全多項式Jacobiと座標係数Jacobiの同値、および補題3.1の符号込み展開を証明する。",
+      "acceptance": "座標Jacobiと全多項式Jacobiの同値、J^{ijk}=ΣF_a L_a^{ijk}とL_a=-K_H(i,j,k,a)の符号込み展開、Hessian条件との同値を証明する。",
       "declarations": [],
-      "priority": 9
+      "priority": 9,
+      "source": "補題3.1、式(3.1)",
+      "planned_module": "NcCubic/HessianCompatibility.lean"
     },
     {
       "id": "P4",
@@ -58,9 +66,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "非零wに対してHess_F(p)(w,w)≠0となるpが存在することを実際のgradient仮定から証明する。",
+      "acceptance": "非零wに対してHess_F(p)(w,w)≠0となるpの存在をgradientの孤立零点条件とP1から証明する。",
       "declarations": [],
-      "priority": 4
+      "priority": 4,
+      "source": "補題3.1後半",
+      "planned_module": "NcCubic/CubicDifferential.lean"
     },
     {
       "id": "L0",
@@ -68,9 +78,11 @@
       "depends_on": [],
       "status": "open",
       "required": true,
-      "acceptance": "研究ノートの最大階数・行列式一次係数の証明をLean化。有限次元・無限体の仮定を明示。",
+      "acceptance": "無限体・有限次元の下で、最大階数形式のradical補空間と行列式の一次係数を用いて、基点自由な対称形式の線形系に非退化元があることを証明する。",
       "declarations": [],
-      "priority": 2
+      "priority": 2,
+      "source": "補題3.2、Step 1の代替証明は研究ノート§1",
+      "planned_module": "NcCubic/NondegenerateForm.lean"
     },
     {
       "id": "L1",
@@ -81,9 +93,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "Jacobi、不変性、[W,W]=W、Z(W)=0を証明する。複素双線形形式を使う。",
+      "acceptance": "support上のtrivectorと双対制限を比較し、非退化な複素双線形形式からJacobi・不変性・[W,W]=W・Z(W)=0を証明。制限形式の族全体の基点自由性と式(3.2)を保持する。",
       "declarations": [],
-      "priority": 10
+      "priority": 10,
+      "source": "補題3.2、Step 1、式(3.2)",
+      "planned_module": "NcCubic/SupportLie.lean"
     },
     {
       "id": "L2",
@@ -99,7 +113,9 @@
         "NcCubic.LieObstruction.no_radical_witness",
         "NcCubic.LieObstruction.no_highest_root_witness"
       ],
-      "priority": 7
+      "priority": 7,
+      "source": "補題3.2、Steps 2–3、§3.3",
+      "planned_module": "NcCubic/LieObstruction.lean"
     },
     {
       "id": "L3",
@@ -110,9 +126,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "非零根基からL2の非零証拠を構成し、基点自由性と矛盾させる。",
+      "acceptance": "極小可換イデアル、根基のスカラー作用とtrace、半単純商の非自明既約加群の最高ウェイトから非零の根基型証拠を構成。商の持上げは根基の作用零を介して扱いL2で矛盾させる。",
       "declarations": [],
-      "priority": 11
+      "priority": 11,
+      "source": "補題3.2、Step 2",
+      "planned_module": "NcCubic/RadicalWitness.lean"
     },
     {
       "id": "L4",
@@ -123,9 +141,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "階数≥2の単純因子の最高根証拠を構成し除外。階数1の三次元性を証明する。",
+      "acceptance": "半単純Lie代数を単純因子へ分解し、最高根の分解と根空間括弧の非零性から高階数の証拠を構成して除外。階数1の因子の三次元性を証明する。",
       "declarations": [],
-      "priority": 12
+      "priority": 12,
+      "source": "補題3.2、Step 3",
+      "planned_module": "NcCubic/SimpleFactors.lean"
     },
     {
       "id": "L5",
@@ -135,9 +155,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "直和の基底を構成しvolume係数を正規化、元のPへの等式を証明する。",
+      "acceptance": "因子の直交性と制限形式の非退化性から元のPを復元し、三次元直和と非零volume係数を構成。基底一つのスカラー倍で係数1に正規化する。",
       "declarations": [],
-      "priority": 13
+      "priority": 13,
+      "source": "補題3.2、Step 4、§3.3冒頭",
+      "planned_module": "NcCubic/TrivectorBlocks.lean"
     },
     {
       "id": "P5",
@@ -149,9 +171,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "混合単項式がないことを係数で証明し、中心のみの項をblock 0に配分して斉次fsを構成。",
+      "acceptance": "ブロックtrivectorとK(P)の式から混合Hessianの消滅を導き、係数比較で混合単項式を除外。中心のみの項をblock 0に配分して斉次fsを構成する。",
       "declarations": [],
-      "priority": 14
+      "priority": 14,
+      "source": "§3.3、式(1.1)",
+      "planned_module": "NcCubic/PolynomialBlocks.lean"
     },
     {
       "id": "P6a",
@@ -171,7 +195,9 @@
         "NcCubic.Jacobian.coordinate_bracket",
         "NcCubic.Jacobian.jacobi"
       ],
-      "priority": 6
+      "priority": 6,
+      "source": "§3.3、式(1.2)",
+      "planned_module": "NcCubic/Jacobian.lean"
     },
     {
       "id": "P6b",
@@ -182,9 +208,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "中心変数を共有する任意個の独立activeブロックの和がPoissonで、座標変換に適合することを証明。",
+      "acceptance": "中心変数を共有する任意個の独立activeブロックの交差Jacobiatorを消去し、括弧の和がPoissonで基底変換に適合することを証明。縮約係数との一致も示す。",
       "declarations": [],
-      "priority": 8
+      "priority": 8,
+      "source": "§3.3、逆構成",
+      "planned_module": "NcCubic/JacobianBlocks.lean"
     },
     {
       "id": "A",
@@ -200,7 +228,9 @@
       "required": true,
       "acceptance": "NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement を証明し公理監査。",
       "declarations": [],
-      "priority": 15
+      "priority": 15,
+      "source": "定理1.1(3)のアフィン核心、§3.3",
+      "planned_module": "NcCubic/AffineClassification.lean"
     },
     {
       "id": "G0",
@@ -211,9 +241,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "Euler列・コホモロジー・Koszulから命題2.3を証明。任意のπ_Xから一意なPを得る。",
+      "acceptance": "Euler列・twistのコホモロジー・高次Koszul完全性から任意のπ_Xに一意なPを対応。smoothnessからgradient条件・既約性を補助補題として証明し、代表独立性と非零性を比較する。",
       "declarations": [],
-      "priority": 16
+      "priority": 16,
+      "source": "補題2.2、命題2.3",
+      "planned_module": "NcCubic/Geometry/Representation.lean"
     },
     {
       "id": "G1",
@@ -224,9 +256,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "divergence・Euler場の恒等式を証明し命題2.4を示す。",
+      "acceptance": "twistした三重接束の制限列からJ=FT+E∧B₂を得て、divergenceとEuler場の恒等式、(1−3/N)F i_dF T=0、定数syzygy消滅からJ=0を証明。全多項式Jacobiと比較する。",
       "declarations": [],
-      "priority": 17
+      "priority": 17,
+      "source": "命題2.4",
+      "planned_module": "NcCubic/Geometry/JacobiLift.lean"
     },
     {
       "id": "G2",
@@ -238,9 +272,11 @@
       ],
       "status": "open",
       "required": true,
-      "acceptance": "smoothness、Poisson section、座標括弧を本来の幾何と接続。代数的/正則の比較の範囲を明記。",
+      "acceptance": "smoothnessとgradient、斉次bivectorと射影切断、イデアル(F)への降下、座標変換を比較。代数的/正則切断の比較の範囲とSchouten括弧との適合を明記して証明する。",
       "declarations": [],
-      "priority": 18
+      "priority": 18,
+      "source": "§1.1、§2、定理1.1(3)逆構成",
+      "planned_module": "NcCubic/Geometry/Comparison.lean"
     },
     {
       "id": "T",
@@ -255,7 +291,10 @@
       "required": true,
       "acceptance": "幾何学的な最終型の独立レビューとNcCubic.theorem113の証明。scripts/check.sh --completeが成功。",
       "declarations": [],
-      "priority": 19
+      "priority": 19,
+      "source": "定理1.1(3)、印刷pp.2–3",
+      "planned_module": "NcCubic/Completion.lean"
     }
-  ]
+  ],
+  "blueprint_version": "0.4.0"
 }

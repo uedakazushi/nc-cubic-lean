@@ -12,6 +12,9 @@ if [[ ! -f lake-manifest.json ]]; then
 else
   lake resolve-deps
 fi
+# The renderer does not remove obsolete chapter paths after a title/file change.
+# Clear only generated HTML so old chapters cannot remain in the current site.
+rm -rf -- "$PWD/_out/site/html-multi"
 lake exe vbp build
 site="$PWD/_out/site/html-multi/index.html"
 if [[ ! -s "$site" ]]; then

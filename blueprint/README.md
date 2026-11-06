@@ -1,7 +1,22 @@
 # 定理1.1(3)のBlueprint
 
-2026-11-07 / v0.1.0。原典は `paper/source.json` に固定する。
+2026-11-07 / Blueprint v0.4.0。原典は `paper/source.json` に固定する。
 これは依存関係と証明設計であり、未形式化の結果を証明済みとする文書ではない。
+
+数学的な本文は [Verso Blueprint](verso/README.md) の3章に置く。全19課題について、
+主張・仮定・証明の分割・原典との対応・実装先候補を記述する。
+このREADMEは目標と契約の入口、[tasks.json](tasks.json) は依存関係・受入条件・
+状態の正本である。実装先候補は未作成ファイルを含む配置案で、証明済み宣言ではない。
+
+| 本文 | 内容 |
+|---|---|
+| [多項式・Hessian・Jacobi](verso/NcCubicBlueprint/Chapters/Foundations.lean) | P0–P6b。座標変換、gradient syzygy、符号込みJacobi展開、多項式の分解と逆構成 |
+| [対称形式とLie理論](verso/NcCubicBlueprint/Chapters/LieTheory.lean) | L0–L5。最大階数による非退化形式、support、根基・最高根の証拠、三次元分解 |
+| [幾何学的な完成](verso/NcCubicBlueprint/Chapters/Completion.lean) | A・G0–G2・T。任意の射影切断の表示、Jacobi持上げ、降下と最終型 |
+
+HTMLはルートで `bash scripts/build_blueprint.sh` を実行し、
+`blueprint/verso/_out/site/html-multi/index.html` を開く。
+式のある本文、依存グラフ、進捗表、検証済みLean宣言へのリンクを生成する。
 
 ## 1. 元の定理と二段階の目標
 
@@ -113,7 +128,23 @@ flowchart TD
 証拠を与えれば \(H(v,v)=0\) と示すL2と、その証拠が実際に存在するL3/L4を混同しない。
 同様に正則列からsyzygyを記述するStacks側の補題と、gradientが正則列であるP2は別である。
 
-## 5. 作業単位と終了条件
+Lie理論の課題は任意の基点自由なcompatible形式族を仮定する一般補題として作る。
+そのためL1へP3・P4の依存辺を加えず、AでHessianの族に適用する。
+P5では、ブロックtrivectorの等式と双対基底から混合Hessianの消滅を直接得られる。
+Lie括弧を経由する場合は、可換で完全な因子の証拠を保持する必要がある。
+
+## 5. 実装の区切り
+
+1. **多項式基盤**：P0・P1からP4・P2・P3へ。P1の後のP4は短い独立課題となる。
+2. **線形代数とLie理論**：L0・L1からL3・L4・L5へ。L2は条件付き計算として検証済み。
+3. **アフィン分類**：P5とP6bを接続してAを証明する。
+4. **元の幾何学的分類**：G0・G1・G2を接続し、最終型をレビューしてTを証明する。
+
+現在の着手順は `python3 scripts/next_task.py` で取得する。P1、L0、P0が準備済みである。
+主要な未解決点はP2の大域正則性、L3・L4の存在定理、G0–G2の射影幾何の基盤。
+予定モジュール名と原典の位置はtasks.jsonの `planned_module`・`source` に記録する。
+
+## 6. 作業単位と終了条件
 
 一つの作業で一つの明確な数学的補題を追加し、その型・証明・公理依存を確認する。
 原論文の主張の弱化、係数体や次元の変更、genericへの限定は無断で行わない。

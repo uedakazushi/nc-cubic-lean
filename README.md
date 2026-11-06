@@ -70,14 +70,14 @@ Codexは `AGENTS.md` に従い、小さい証明単位で検証・保存し、�
 
 ## Verso Blueprint
 
-The interactive mathematical Blueprint now lives in
-[`blueprint/verso`](blueprint/verso/README.md). It uses the upstream
-`leanprover/verso-blueprint` package for Lean 4.35.0 with mathematical
-chapters, dependency graph, progress summary, and links to proved Lean
-declarations. Build locally with `bash scripts/build_blueprint.sh`.
-The Blueprint package is separate from the proof library and has no
-GitHub Actions deployment. The full root build and HTML generation were verified
-on 2026-11-07; see [STATUS](docs/STATUS.md).
+日本語の数学的本文を [`blueprint/verso`](blueprint/verso/README.md) に置く。
+Blueprint v0.4.0では、全19課題の正確な主張・仮定・証明設計・原典の位置・
+実装先候補を整理した。アフィン分類と元の幾何学的定理の完成条件を分け、
+条件付きの障害計算と証拠の存在定理も区別する。
+`leanprover/verso-blueprint` の固定版で、数式・依存グラフ・進捗表・
+証明済みLean宣言へのリンクを生成する。ルートで `bash scripts/build_blueprint.sh` を実行する。
+証明ライブラリとは独立したpackageで、GitHub Actionsによる公開は設定していない。
+全体ビルド・HTML生成の検証は [STATUS](docs/STATUS.md) を参照する。
 
 ### 単一コマンドのデフォルトビルド（v0.3.0）
 
