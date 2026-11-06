@@ -20,9 +20,8 @@
 Linux/macOS で Bash、Python 3.11以降、Git、curl、tar、zstd を用意します。
 
 ```bash
-bash scripts/bootstrap.sh
-source scripts/env.sh
-bash scripts/check.sh
+bash scripts/bootstrap.sh  # 必要な場合のみ初回環境準備
+lake build
 ```
 
 `bootstrap.sh` は固定版のLeanを取得・検証し、固定した依存関係を解決し、
@@ -35,7 +34,7 @@ bash scripts/check.sh --complete
 ```
 
 未解決の課題が残る初期版では、この最終ゲートは意図的に失敗します。
-`lake build` の成功は、現在収録されたコードの検証成功を意味します。
+`lake build` は通常の Lean ビルドに加え、公理監査、Stacks アダプターの検証、Verso HTML の生成まで要求します。分類定理そのものの完成は意味しません。
 
 ## 固定した基盤
 
@@ -78,3 +77,24 @@ chapters, dependency graph, progress summary, and links to proved Lean
 declarations. Build locally with `bash scripts/build_blueprint.sh`.
 The Blueprint package is separate from the proof library and has no
 GitHub Actions deployment. Its first live build remains to be verified.
+
+### 単一コマンドのデフォルトビルド（v0.3.0）
+
+Lean 4.35.0 と Lake が利用できる場合、clone したリポジトリの
+**ルートで `lake build` を実行するだけ**で、次が順に実行される設定です。
+
+1. `NcCubic` のビルド
+2. ソース整合性チェック、プロジェクト全宣言の公理監査
+3. `blueprint/tasks.json` と Verso の依存関係照合
+4. Axiom Stacks のKoszulアダプターの個別ビルド・公理監査
+5. Verso Blueprint のHTML生成と `index.html` の存在チェック
+
+実装は `lakefile.lean` のデフォルト `fullProject` ターゲットと
+`scripts/full_build.sh`。下位のLakeコマンドには明示的なターゲットを
+指定しているので、デフォルトターゲットを再帰起動しません。
+
+開発中にLeanソースだけを速く検証するには `lake build NcCubic`。
+完全な数学的最終判定には従来通り `bash scripts/check.sh --complete`。
+最初の `lake build` はVersoの追加依存をネットワークから取得する必要があり、
+依存の競合・環境制限で失敗する可能性があります。失敗は無視しません。
+**新しいデフォルトターゲットの実ビルドは未実施です。**

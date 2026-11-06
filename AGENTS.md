@@ -103,3 +103,15 @@ available, run `bash scripts/build_blueprint.sh` and check the HTML graph,
 summary, and links. No GitHub Actions or GitHub Pages setup is authorized.
 The first actual Verso build and lockfile are pending. Do not report them
 as complete until successfully executed and inspected.
+
+## Default build entry point (v0.3.0)
+
+Root `lake build` is intended to run NcCubic build, global axiom audit,
+Stacks adapter build/audit, Blueprint consistency check, and Verso HTML
+rendering through a default Lake custom target and `scripts/full_build.sh`.
+Do not remove these checks to mask a dependency or build failure.
+For fast proof iterations, `lake build NcCubic` remains available; use
+`lake build` before reporting a verified, complete project checkpoint.
+The custom target and Verso's dependency closure have NOT YET passed a
+fresh real Lake build. Your first task is to run and fix the actual build
+on Lean 4.35.0, and record all newly verified facts.

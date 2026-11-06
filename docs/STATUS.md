@@ -72,3 +72,20 @@ Consequently no generated HTML and no resolved subworkspace lockfile are
 claimed. The root mathlib and Stacks pins remain unchanged; Codex must perform
 the initial dependency resolution, build, and visual check and then commit the
 subworkspace manifest. The original theorem remains open.
+
+## Single-command root build (2026-11-07 / v0.3.0)
+
+The root Lake configuration has been changed from TOML to a Lean-format
+`lakefile.lean` with a default `fullProject` target. It builds `NcCubic`,
+then runs `scripts/full_build.sh` to audit project declarations, verify
+Blueprint label/dependency consistency, build and audit the selected Stacks
+adapters, and render the Verso HTML site. Subprocesses use explicit targets
+or a distinct subworkspace to avoid recursive default builds.
+
+**This change is saved as configuration, not yet proven working**:
+the current execution environment has no Lean/Lake binary and no accessible
+Verso dependency closure, so the full fresh-clone `lake build` was not run.
+The possible first-run obstacles are downloading and resolving the Verso
+subworkspace dependencies, version collisions, and compiling its API. Never
+report the single-command build as successful until a real run completes.
+The underlying classification theorem remains open.

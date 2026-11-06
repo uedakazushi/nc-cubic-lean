@@ -92,3 +92,13 @@ workspace to avoid adding a heavy documentation dependency there.
 - https://github.com/leanprover/verso-blueprint/blob/v4.35.0/doc/GETTING_STARTED.md
 - https://github.com/leanprover/verso-blueprint/blob/v4.35.0/doc/MANUAL.md
 - https://github.com/leanprover/verso-blueprint/tree/v4.35.0/project_template
+
+## Root default build
+
+The repository root has a custom default Lake target. Once Lean 4.35.0
+is installed, run `lake build` **at the root** to build the main proof
+library, audit it, build/audit the selected Stacks adapters, and render this
+Verso site. Use `lake build NcCubic` to build only the proof library.
+The new root custom target and Verso dependency closure have not yet passed
+an end-to-end build in a fresh clone. Treat any first-run failure as a
+required repair task, not as a successful verification.
