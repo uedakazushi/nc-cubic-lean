@@ -4,7 +4,7 @@
 
 ## 1. 環境を用意する
 
-Codex Cloudの環境作成で `uedakazushi/nc-cubic` を選択する。
+Codex Cloudの環境作成で `uedakazushi/nc-cubic-lean` を選択する。
 環境のセットアップに次を実行させる。
 
 ```bash

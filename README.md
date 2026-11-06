@@ -1,4 +1,4 @@
-# nc-cubic
+# nc-cubic-lean
 
 **滑らかな複素三次超曲面の Poisson 構造の正規形を Lean で形式化するプロジェクト。**
 
@@ -98,3 +98,5 @@ Lean 4.35.0 と Lake が利用できる場合、clone したリポジトリの
 最初の `lake build` はVersoの追加依存をネットワークから取得する必要があり、
 依存の競合・環境制限で失敗する可能性があります。失敗は無視しません。
 **新しいデフォルトターゲットの実ビルドは未実施です。**
+
+リポジトリ名は `uedakazushi/nc-cubic-lean` です。Lean の `NcCubic` 名前空間と Lake の `nc_cubic` package 名は意図的にそのまま保持します。旧リポジトリ名の GitHub URL はリダイレクトされますが、Codex の環境・Git remote には新URLを使用してください。

@@ -1,4 +1,4 @@
-# nc-cubic: autonomous formalization instructions
+# nc-cubic-lean: autonomous formalization instructions
 
 This repository formalizes **Theorem 1.1, item (3)** of
 `paper/cubic_poisson_paper_20261104.pdf` (printed pp. 2–3), also called
@@ -69,7 +69,7 @@ workaround must be documented separately from the mathematical proof.
 
 ## Git and handoff
 
-Use the existing private repository and `main`; no GitHub Actions or PR workflow
+Use the existing private repository `uedakazushi/nc-cubic-lean` and `main`; no GitHub Actions or PR workflow
 is needed. The user has authorized saving this project. Commit coherent verified
 changes and push to `main` when access is available. Check the remote head first;
 use ordinary fast-forward updates, never force-push or discard others' work.
