@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "path": "paper/cubic_poisson_paper_20261104.pdf",
+  "sha256": "795c25c36a6eba4d21c6ae4e5754f29c30515416866612d1c8d3a53e3613e9ec",
+  "title": "滑らかな3次超曲面のPoisson構造 — 分類・退化スキーム・量子化",
+  "source_date": "2026-11-04",
+  "project_date": "2026-11-07",
+  "target": "Theorem 1.1, item (3)",
+  "printed_pages": [
+    2,
+    3
+  ],
+  "pdf_pages": [
+    3,
+    4
+  ],
+  "proof_printed_pages": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "author": "not identified in supplied PDF; do not infer",
+  "origin": "user-supplied manuscript; source retained without mathematical changes"
+}

@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "project_version": "0.1.0",
+  "date": "2026-11-07",
+  "geometric_statement_review": "open",
+  "tasks": [
+    {
+      "id": "P0",
+      "title": "座標・trivector・正規形の定義と変換則",
+      "depends_on": [],
+      "status": "open",
+      "required": true,
+      "acceptance": "Statement.lean の型を元の定理と照合し、Λ³V・縮約・基底変換との比較定理を証明する。定義のコンパイルのみでは完了にしない。",
+      "declarations": [],
+      "priority": 3
+    },
+    {
+      "id": "P1",
+      "title": "斉次三次式の微分とHessian対称性",
+      "depends_on": [],
+      "status": "open",
+      "required": true,
+      "acceptance": "Euler等式、偏微分の次数、Hess_F(p)(w,w)=2 dF_w(p) を証明する。",
+      "declarations": [],
+      "priority": 1
+    },
+    {
+      "id": "P2",
+      "title": "滑らかさから低次数gradient syzygy消滅",
+      "depends_on": [
+        "P1"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "実際の滑らかさ仮定から正則列・Koszul exactnessを経て次数0/1のsyzygyを消去する。正則列を追加仮定として残さない。",
+      "declarations": [],
+      "priority": 5
+    },
+    {
+      "id": "P3",
+      "title": "JacobiとK(P)のHessian条件の同値",
+      "depends_on": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "全多項式Jacobiと座標係数Jacobiの同値、および補題3.1の符号込み展開を証明する。",
+      "declarations": [],
+      "priority": 9
+    },
+    {
+      "id": "P4",
+      "title": "Hessian線形系の基点自由性",
+      "depends_on": [
+        "P1"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "非零wに対してHess_F(p)(w,w)≠0となるpが存在することを実際のgradient仮定から証明する。",
+      "declarations": [],
+      "priority": 4
+    },
+    {
+      "id": "L0",
+      "title": "基点自由な対称形式の系に非退化元がある",
+      "depends_on": [],
+      "status": "open",
+      "required": true,
+      "acceptance": "研究ノートの最大階数・行列式一次係数の証明をLean化。有限次元・無限体の仮定を明示。",
+      "declarations": [],
+      "priority": 2
+    },
+    {
+      "id": "L1",
+      "title": "supportと非退化形式からLie代数を構成",
+      "depends_on": [
+        "P0",
+        "L0"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "Jacobi、不変性、[W,W]=W、Z(W)=0を証明する。複素双線形形式を使う。",
+      "declarations": [],
+      "priority": 10
+    },
+    {
+      "id": "L2",
+      "title": "共通零点を作る代数的証拠",
+      "depends_on": [],
+      "status": "proved",
+      "required": true,
+      "acceptance": "最高ウェイト型・最高根型の証拠からH(v,v)=0を得る補題と、可換因子間の消滅を証明する。証拠の存在はL3/L4に分離。",
+      "declarations": [
+        "NcCubic.LieObstruction.cross_bracket_pairing_zero",
+        "NcCubic.LieObstruction.radical_witness_isotropic",
+        "NcCubic.LieObstruction.highest_root_witness_isotropic",
+        "NcCubic.LieObstruction.no_radical_witness",
+        "NcCubic.LieObstruction.no_highest_root_witness"
+      ],
+      "priority": 7
+    },
+    {
+      "id": "L3",
+      "title": "可解根基の消滅",
+      "depends_on": [
+        "L1",
+        "L2"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "非零根基からL2の非零証拠を構成し、基点自由性と矛盾させる。",
+      "declarations": [],
+      "priority": 11
+    },
+    {
+      "id": "L4",
+      "title": "単純因子が全て三次元",
+      "depends_on": [
+        "L3",
+        "L2"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "階数≥2の単純因子の最高根証拠を構成し除外。階数1の三次元性を証明する。",
+      "declarations": [],
+      "priority": 12
+    },
+    {
+      "id": "L5",
+      "title": "trivectorの独立三次元ブロック分解",
+      "depends_on": [
+        "L4"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "直和の基底を構成しvolume係数を正規化、元のPへの等式を証明する。",
+      "declarations": [],
+      "priority": 13
+    },
+    {
+      "id": "P5",
+      "title": "混合偏微分消滅から多項式のブロック分解",
+      "depends_on": [
+        "P3",
+        "L5",
+        "L2"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "混合単項式がないことを係数で証明し、中心のみの項をblock 0に配分して斉次fsを構成。",
+      "declarations": [],
+      "priority": 14
+    },
+    {
+      "id": "P6a",
+      "title": "一つのJacobian括弧のPoisson恒等式",
+      "depends_on": [],
+      "status": "proved",
+      "required": true,
+      "acceptance": "任意のf,g,hに対しJacobi、反対称性、Leibniz、potentialのCasimir性を証明する。",
+      "declarations": [
+        "NcCubic.Jacobian.skew",
+        "NcCubic.Jacobian.self",
+        "NcCubic.Jacobian.add_right",
+        "NcCubic.Jacobian.leibniz_right",
+        "NcCubic.Jacobian.potential_casimir",
+        "NcCubic.Jacobian.constant_central",
+        "NcCubic.Jacobian.other_variable_central",
+        "NcCubic.Jacobian.coordinate_bracket",
+        "NcCubic.Jacobian.jacobi"
+      ],
+      "priority": 6
+    },
+    {
+      "id": "P6b",
+      "title": "複数ブロックの互換性と基底変換",
+      "depends_on": [
+        "P6a",
+        "P0"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "中心変数を共有する任意個の独立activeブロックの和がPoissonで、座標変換に適合することを証明。",
+      "declarations": [],
+      "priority": 8
+    },
+    {
+      "id": "A",
+      "title": "アフィン多項式分類定理",
+      "depends_on": [
+        "P3",
+        "P4",
+        "L5",
+        "P5",
+        "P6b"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement を証明し公理監査。",
+      "declarations": [],
+      "priority": 15
+    },
+    {
+      "id": "G0",
+      "title": "全ての射影双ベクトルの表示",
+      "depends_on": [
+        "P2",
+        "P0"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "Euler列・コホモロジー・Koszulから命題2.3を証明。任意のπ_Xから一意なPを得る。",
+      "declarations": [],
+      "priority": 16
+    },
+    {
+      "id": "G1",
+      "title": "Jacobi恒等式のアフィン錐への持上げ",
+      "depends_on": [
+        "G0",
+        "P2"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "divergence・Euler場の恒等式を証明し命題2.4を示す。",
+      "declarations": [],
+      "priority": 17
+    },
+    {
+      "id": "G2",
+      "title": "射影降下と幾何学的定義の比較",
+      "depends_on": [
+        "G0",
+        "P0",
+        "P6b"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "smoothness、Poisson section、座標括弧を本来の幾何と接続。代数的/正則の比較の範囲を明記。",
+      "declarations": [],
+      "priority": 18
+    },
+    {
+      "id": "T",
+      "title": "元の定理1.1(3)の形式化完了",
+      "depends_on": [
+        "A",
+        "G0",
+        "G1",
+        "G2"
+      ],
+      "status": "open",
+      "required": true,
+      "acceptance": "幾何学的な最終型の独立レビューとNcCubic.theorem113の証明。scripts/check.sh --completeが成功。",
+      "declarations": [],
+      "priority": 19
+    }
+  ]
+}
