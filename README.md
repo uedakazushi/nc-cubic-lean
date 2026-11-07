@@ -32,7 +32,9 @@ lake build
 Stacks の Git partial clone が `HTTP 400` / `promisor remote` で中断された場合は、
 `scripts/resolve_deps.sh` が固定コミットを `HTTP/1.1`・`--no-filter` で取得し直して
 Lake の依存解決を一度だけ再試行します。通常の成功時には余分な取得をしません。
-同じ復旧処理は `integrations/stacks` の独立したビルドにも適用されます。
+同じ復旧処理は `integrations/stacks` および `blueprint/verso` の
+独立したビルドにも適用されます。いずれも固定済みのlockfileを使い、
+失敗時に限り `Stacks` の不完全なpartial cloneを修復します。
 未解決の場合は失敗を報告し、既存の checkout を無断で削除しません。
 最終定理の完成確認は別のコマンドです。
 

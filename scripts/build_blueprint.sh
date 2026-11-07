@@ -6,12 +6,14 @@ cd "$ROOT"
 python3 scripts/check_blueprint.py
 python3 scripts/project_check.py
 cd blueprint/verso
+# This independent Lake package also inherits the pinned Stacks dependency.
+# Reuse the same partial-clone repair as the root and integrations/stacks.
+# Do not silently update the checked-in lockfile if it is missing.
 if [[ ! -f lake-manifest.json ]]; then
-  echo "Resolving VersoBlueprint v4.35.0 dependencies on first use."
-  MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
-else
-  lake resolve-deps
+  echo "Missing blueprint/verso/lake-manifest.json; restore the pinned lockfile." >&2
+  exit 1
 fi
+bash "$ROOT/scripts/resolve_deps.sh" "$PWD"
 # Verso Blueprint v4.35.0 has a native LuaLaTeX PDF renderer.
 # Fail visibly if the required TeX environment is unavailable.
 command -v lualatex >/dev/null || { echo "Missing lualatex: install a TeX Live/MacTeX distribution." >&2; exit 1; }

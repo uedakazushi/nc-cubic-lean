@@ -67,6 +67,12 @@ Macでは日本語対応を含むMacTeXを推奨する。`scripts/blueprint_lual
 試験文書がPDFになり、日本語テキストを抽出できることを確認した。
 実際のVerso Blueprint全体のPDF生成は未検証である。
 初回はVersoBlueprint・Versoと補助依存の取得にネットワーク接続が必要。
+この独立した Lake package でも Stacks の Git partial clone が失敗し得るため、
+`scripts/build_blueprint.sh` はルート共通の `scripts/resolve_deps.sh` を呼ぶ。
+Stacks の HTTP 400 / promisor remote エラー時には、固定SHAのフィルターなしfetchで
+一度修復して依存解決を再試行する。手動で復旧する場合はリポジトリルートから
+`bash scripts/resolve_deps.sh blueprint/verso` とする。
+manifestが存在しない場合は依存の無断更新を避けるため停止する。
 固定した `lake-manifest.json` と、ルートと共有する9依存のpinを保持する。
 クリーンな新規cloneでの全依存再取得は未検証である。
 GitHub ActionsやGitHub Pagesへの公開は設定していない。
