@@ -89,9 +89,12 @@ Blueprint v0.4.0では、全19課題の正確な主張・仮定・証明設計�
 実装先候補を整理した。アフィン分類と元の幾何学的定理の完成条件を分け、
 条件付きの障害計算と証拠の存在定理も区別する。
 `leanprover/verso-blueprint` の固定版で、数式・依存グラフ・進捗表・
-証明済みLean宣言へのリンクを生成する。ルートで `bash scripts/build_blueprint.sh` を実行する。
+証明済みLean宣言へのリンクを生成する。ルートで `bash scripts/build_blueprint.sh` を実行すると、
+HTML と LuaLaTeX 製 PDF を同時生成する。PDF のためには MacTeX / TeX Live の
+`lualatex`・`kpsewhich`・`luatexja` と Verso が要求する TeX パッケージが必要である。
 証明ライブラリとは独立したpackageで、GitHub Actionsによる公開は設定していない。
-全体ビルド・HTML生成の検証は [STATUS](docs/STATUS.md) を参照する。
+以前の全体ビルド・HTML生成の検証は [STATUS](docs/STATUS.md) を参照する。
+新しい PDF 経路については日本語組版の単体テストのみ実行済みで、Lean を含む全体ビルドは未検証である。
 
 ### 単一コマンドのデフォルトビルド（v0.3.0）
 
@@ -102,7 +105,12 @@ Lean 4.35.0 と Lake が利用できる場合、clone したリポジトリの
 2. ソース整合性チェック、プロジェクト全宣言の公理監査
 3. `blueprint/tasks.json` と Verso の依存関係照合
 4. Axiom Stacks のKoszulアダプターの個別ビルド・公理監査
-5. Verso Blueprint のHTML生成と `index.html` の存在チェック
+5. Verso Blueprint のHTMLとLuaLaTeX製PDFの生成、および両出力の存在チェック
+
+生成先はHTMLが `blueprint/verso/_out/site/html-multi/index.html`、
+PDFが `blueprint/verso/_out/site/pdf/main.pdf`。PDF の元となる生成 TeX は
+`blueprint/verso/_out/site/tex/main.tex` に保存される。
+PDF は静的な印刷版で、依存グラフの対話操作はHTML版に残る。
 
 実装は `lakefile.lean` のデフォルト `fullProject` ターゲットと
 `scripts/full_build.sh`。下位のLakeコマンドには明示的なターゲットを

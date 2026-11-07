@@ -28,7 +28,7 @@ python3 fetch_mathlib_cache.py
 lake build NcCubicStacks NcCubicStacksAudit
 cd "$ROOT"
 
-echo "[nc-cubic] Rendering Verso Blueprint"
+echo "[nc-cubic] Rendering Verso Blueprint HTML and LuaLaTeX PDF"
 bash scripts/build_blueprint.sh
 
 echo "[nc-cubic] Full project build, audits, and Blueprint generation complete"

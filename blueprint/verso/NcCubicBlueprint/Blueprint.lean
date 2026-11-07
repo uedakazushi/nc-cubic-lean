@@ -78,7 +78,7 @@ L群は一般の基点自由な形式族についての補題群で、P3・P4 �
 命題の定義や一つの補助定理の検証だけで課題を完了にしない。
 
 ルートの `lake build` は証明ライブラリ、公理監査、Stacks アダプター、依存グラフの照合、
-この HTML の生成を実行する。分類定理の完成確認は別の
+この HTML と LuaLaTeX PDF の生成を実行する。分類定理の完成確認は別の
 `bash scripts/check.sh --complete` で行う。現在は4課題が残っているため失敗するのが正しい。
 
 {include 0 NcCubicBlueprint.Chapters.Foundations}

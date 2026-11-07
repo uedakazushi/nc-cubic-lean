@@ -18,7 +18,7 @@ lean_lib NcCubic where
 
 /--
 Default `lake build` entry point: build proof code, audit, then
-build the Stacks adapters and render the Verso Blueprint.
+build the Stacks adapters and render the Verso Blueprint as HTML and LuaLaTeX PDF.
 Subprocesses never recursively invoke the root default target.
 -/
 @[default_target]

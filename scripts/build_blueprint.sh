@@ -12,13 +12,29 @@ if [[ ! -f lake-manifest.json ]]; then
 else
   lake resolve-deps
 fi
+# Verso Blueprint v4.35.0 has a native LuaLaTeX PDF renderer.
+# Fail visibly if the required TeX environment is unavailable.
+command -v lualatex >/dev/null || { echo "Missing lualatex: install a TeX Live/MacTeX distribution." >&2; exit 1; }
+command -v kpsewhich >/dev/null || { echo "Missing kpsewhich: install a TeX Live/MacTeX distribution." >&2; exit 1; }
+[[ -n "$(kpsewhich luatexja.sty)" ]] || {
+  echo "Missing luatexja.sty: install LuaTeX-ja for Japanese Blueprint text." >&2
+  exit 1
+}
 # The renderer does not remove obsolete chapter paths after a title/file change.
-# Clear only generated HTML so old chapters cannot remain in the current site.
+# Clear generated HTML so old chapters cannot remain in the current site.
 rm -rf -- "$PWD/_out/site/html-multi"
-lake exe vbp build
+# --pdf also generates the HTML site and a TeX tree. The engine wrapper
+# enables Japanese text without adding unsupported preamble commands to KaTeX.
+lake exe vbp build --pdf --pdf-engine "$ROOT/scripts/blueprint_lualatex.sh"
 site="$PWD/_out/site/html-multi/index.html"
+pdf="$PWD/_out/site/pdf/main.pdf"
 if [[ ! -s "$site" ]]; then
-  echo "Verso output is missing or empty: $site" >&2
+  echo "Verso HTML output is missing or empty: $site" >&2
+  exit 1
+fi
+if [[ ! -s "$pdf" ]]; then
+  echo "Verso PDF output is missing or empty: $pdf" >&2
   exit 1
 fi
 echo "Blueprint HTML: $site"
+echo "Blueprint PDF:  $pdf"

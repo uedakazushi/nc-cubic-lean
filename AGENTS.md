@@ -100,15 +100,18 @@ Verso to the main mathlib-only root package just for documentation.
 After changing a task or proof, run `python3 scripts/check_blueprint.py`
 and update the corresponding labeled Verso statement. When dependencies are
 available, run `bash scripts/build_blueprint.sh` and check the HTML graph,
-summary, and links. No GitHub Actions or GitHub Pages setup is authorized.
+summary, links, and the LuaLaTeX-generated PDF at
+`blueprint/verso/_out/site/pdf/main.pdf`. The PDF build requires LuaTeX-ja
+for Japanese text. Do not silently skip PDF if the TeX toolchain is missing.
+No GitHub Actions or GitHub Pages setup is authorized.
 The Verso build, generated HTML/data checks, and resolved lockfile were verified
 in the prepared cloud environment on 2026-11-07. Preserve the pinned lockfile.
 
 ## Default build entry point (v0.3.0)
 
 Root `lake build` is intended to run NcCubic build, global axiom audit,
-Stacks adapter build/audit, Blueprint consistency check, and Verso HTML
-rendering through a default Lake custom target and `scripts/full_build.sh`.
+Stacks adapter build/audit, Blueprint consistency check, and Verso HTML +
+LuaLaTeX PDF rendering through a default Lake custom target and `scripts/full_build.sh`.
 Do not remove these checks to mask a dependency or build failure.
 For fast proof iterations, `lake build NcCubic` remains available; use
 `lake build` before reporting a verified, complete project checkpoint.
