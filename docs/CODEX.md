@@ -11,6 +11,10 @@ Codex Cloudの環境作成で `uedakazushi/nc-cubic-lean` を選択する。
 bash scripts/bootstrap.sh
 ```
 
+Stacks の大きな Git partial clone が `HTTP 400` で中断された場合は、
+固定 SHA に対する `--refetch --no-filter` を使って自動的に一度復旧を試みる。
+依存解決以外の失敗はそのまま報告し、プロキシ・認証・TLS設定は変更しない。
+
 準備済み環境を使う通常の作業では次を実行する。
 
 ```bash

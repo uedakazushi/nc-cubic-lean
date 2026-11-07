@@ -46,7 +46,7 @@ lake --version
 if [[ ! -f lake-manifest.json ]]; then
   MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
 else
-  lake resolve-deps
+  bash scripts/resolve_deps.sh
 fi
 python3 scripts/dependency_info.py check
 

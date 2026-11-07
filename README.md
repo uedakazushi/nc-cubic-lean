@@ -27,6 +27,11 @@ lake build
 `bootstrap.sh` は固定版のLeanを取得・検証し、固定した依存関係を解決し、
 必要なmathlibキャッシュを取得してビルドと公理監査を実行します。
 既に同じLeanが使える環境ではその実行系を利用します。
+Stacks の Git partial clone が `HTTP 400` / `promisor remote` で中断された場合は、
+`scripts/resolve_deps.sh` が固定コミットを `HTTP/1.1`・`--no-filter` で取得し直して
+Lake の依存解決を一度だけ再試行します。通常の成功時には余分な取得をしません。
+同じ復旧処理は `integrations/stacks` の独立したビルドにも適用されます。
+未解決の場合は失敗を報告し、既存の checkout を無断で削除しません。
 最終定理の完成確認は別のコマンドです。
 
 ```bash

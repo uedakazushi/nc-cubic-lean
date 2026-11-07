@@ -23,7 +23,7 @@ if [[ ! -f lake-manifest.json ]]; then
   echo "Stacks lockfile missing; explicit dependency resolution required." >&2
   exit 1
 fi
-lake resolve-deps
+bash "$ROOT/scripts/resolve_deps.sh" "$PWD"
 python3 fetch_mathlib_cache.py
 lake build NcCubicStacks NcCubicStacksAudit
 cd "$ROOT"

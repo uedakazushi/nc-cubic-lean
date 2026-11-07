@@ -71,7 +71,7 @@ Stacks 全体を列挙して監査するものではない。
 ```bash
 source scripts/env.sh
 cd integrations/stacks
-lake resolve-deps
+bash ../../scripts/resolve_deps.sh "$PWD"
 python3 fetch_mathlib_cache.py
 lake build NcCubicStacks NcCubicStacksAudit
 ```
