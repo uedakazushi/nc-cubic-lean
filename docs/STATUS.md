@@ -118,6 +118,15 @@ G0–G2の完成状態は未完了のまま、次を実際の定義に対して�
   実際の標準括弧の零性とPの零性の同値、および正規形から非零相対Poisson演算を構成。
   構成した演算を実際の双ベクトルとして復元する比較は引き続き構成中。
 
+- `BivectorLinearity`：実際の双ベクトル切断から誘導される括弧について、切断変数の
+  線形性・有限和への適合を局所・大域の両方で証明。
+- `ContractionFaithfulness`：実際のcotangent-to-tangent内部Homの大域切断から、
+  全開集合上の括弧を得る写像の単射性を証明。
+  双ベクトルからこの内部Homへの写像の単射性とは区別し、後者は比較の残件とする。
+- `ExteriorWedgeLaws`・`ProjectiveTwistExact`・`TangentTwistEuler`：
+  実際の局所外積と制限の適合、nativeなtwistの完全列保存、Euler外積のtwistと
+  線束直和との同型を検証。接束外積の必要なコホモロジー消滅への最終適用は未完了。
+
 `SheafKahler`は各開集合の切断環のKähler微分上の形式を構成する。
 任意の開集合で微分層の切断と切断環の微分を同一視したとは主張しない。
 
@@ -134,11 +143,11 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。189モジュールをビルドし、2410宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。194モジュールをビルドし、2488宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。
-上流依存のlinter warningは残る。新規cloneの全依存再取得は未検証である。
+linter warningは残る。新規cloneの全依存再取得は未検証である。
 
 HTML生成先は `blueprint/verso/_out/site/html-multi/index.html`。
 作業環境では `source scripts/env.sh` と `export XDG_CACHE_HOME=/workspace/.cache` を使う。
@@ -147,15 +156,17 @@ procfs互換処理は現在は不要。原論文はpaper/source.jsonのSHA256で
 ## 実装中の課題：元の射影幾何への接続
 
 アフィン分類の完成だけでは、任意の幾何学的Poisson切断に適用できない。
-G0–G2には次の実際のscheme/sheaf構成が残っている。
+scheme smoothnessと孤立gradient条件の比較、および実際の標準括弧のJacobi持上げは検証済み。
+残る接続は次の通りである。
 
-1. dehomogenized cubicの一式presentation・fibre次元条件を整え、
-   実際の射影超曲面のSmoothと検証済み座標Jacobian条件を比較する。
-2. 余接Euler列から接束外積・twistを同定し、コホモロジーと制限列から
-   任意の双ベクトル切断の一意なtrivector表示、および消えるJacobiatorの分解を導く。
-3. Poisson/Schoutenの幾何学的な定義・射影降下・正則切断と代数的切断の比較を接続する。
+1. Euler外積・twist完全列へコホモロジー消滅を適用して持上げ仮定を外し、
+   任意の双ベクトル切断を二次係数表示へ移す。標準のtwist乗法・Euler商写像による
+   括弧の評価と接性を比較し、Euler補正とKoszul表示から一意なPを得る。
+2. 有限局所自由な余接層について外積と双対の大域同型を構成し、標準縮約と比較する。
+   これにより、双導分から実際の双ベクトルへの逆構成と、双ベクトルから括弧への単射性を閉じる。
+3. 以上をアフィン分類と実際の標準括弧の比較へ接続し、最終定理を証明する。
 
-Stacksの既存Serre/Hodge計算・HypersurfaceChart・JacobianCriterionは調査済みだが、
-これらの比較写像を自動的に供給する定理ではない。座標条件をscheme smoothnessの代替定義にしたり、
-未証明の表示を公理にしてTを閉じることはしない。実際の型と次の具体的実験は
-RESEARCH_NOTES §6、LIBRARIES §4.2に記載した。最終幾何学的命題の型レビューも未完了。
+`Geometry.GeometricClassificationStatement` の代数的な最終型は原論文との独立レビュー済みだが、
+現時点では未証明の命題定義である。Poisson条件は標数0の誘導括弧のJacobiによる特徴付けを使い、
+別個のSchouten演算や解析的カテゴリーの実装を主張しない。未証明の表示や比較を入力仮定として
+Tを閉じることはしない。実際の型と次の接続はRESEARCH_NOTES §6に記載した。

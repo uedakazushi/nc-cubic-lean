@@ -228,3 +228,11 @@ public import NcCubic.Geometry.PairCoefficients
 
 public import NcCubic.Geometry.SheafBiderivationEvaluation
 public import NcCubic.Geometry.QuadraticRepresentative
+
+public import NcCubic.Geometry.ProjectiveTwistExact
+public import NcCubic.Geometry.ContractionFaithfulness
+
+public import NcCubic.Geometry.ExteriorWedgeLaws
+public import NcCubic.Geometry.BivectorLinearity
+
+public import NcCubic.Geometry.TangentTwistEuler

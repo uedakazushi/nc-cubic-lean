@@ -214,3 +214,23 @@ Poisson条件は標準的な標数0の特徴付け、すなわち実際の双ベ
 括弧のJacobi恒等式で記述する。別個のSchouten演算や解析的なカテゴリーの機構を
 実装したとは主張しない。実際の双ベクトルと括弧の行列式評価の一致・単射性を
 証明してから、この目標を完成した定理として扱う。
+
+### 次に接続する未完了部分
+
+1. 検証済みのEuler外積完全列・twist完全性・負の線束コホモロジーから、
+   Λ²T(-3)の実際のH⁰/H¹消滅と、元のEuler商写像の大域切断上の全射性を導く。
+   これにより `AmbientBivectorLift` の明示的な消滅仮定を外し、任意の切断を
+   `ProjectiveQuadraticSections` の係数表示へ移す。
+2. 実際のtwist乗法のcurryとしてO(1)→O(-1)の双対への同型を構成し、局所評価を比較する。
+   双対biconeの元の包含・射影を保ったまま、Euler商による切断の括弧と
+   `QuadraticRepresentative` の多項式括弧の一致を示す。
+   閉埋込みの接性からnormal方向の括弧の消滅を得て、既存の可除性・Euler補正・
+   Koszul表示を適用し、任意の幾何学的切断からPを得る。ここはまだ未証明である。
+3. `ExteriorRawDual` の標準precomposition写像の同型性と、外積接層からraw determinant
+   dualへの標準射を構成し、有限局所自由な場合の検証済みstalk双対性と比較する。
+   さらに余接外積の双対からcotangent-to-tangent内部Homへの標準縮約を構成して、
+   既存の `bivectorContraction` と一致させる。これが双導分から実際の双ベクトルへの
+   逆構成、および双ベクトルから括弧への単射性の残件である。
+4. 以上を、実際の標準括弧のJacobiと全多項式Jacobiの同値、証明済みアフィン分類、
+   非零性の比較に接続する。`GeometricClassificationStatement` は独立レビュー済みの
+   未証明の命題定義であり、`NcCubic.theorem113` はまだ証明されていない。
