@@ -120,7 +120,7 @@ theorem constant_trivector_array_zero (F : CubicPolynomial N) (hF : F.IsHomogene
   simp
 
 /-- A closed horizontal cubic trivector vanishes if its Euler wedge is
-F times a linear alternating four-array. The geometric divisibility remains
+F times a linear four-array skew in its first two indices. The geometric divisibility remains
 an explicit hypothesis; no cohomology lift is assumed here. -/
 theorem euler_divisibility_lift_vanishes (hN : 5 ≤ N)
     (F : CubicPolynomial N) (hF0 : F ≠ 0) (hF : F.IsHomogeneous 3)

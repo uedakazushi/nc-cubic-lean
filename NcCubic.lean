@@ -120,3 +120,65 @@ public import NcCubic.Geometry.BivectorContractionNaturality
 public import NcCubic.Geometry.HomogeneousLogHamiltonian
 public import NcCubic.Geometry.PolynomialKahlerBasis
 public import NcCubic.Geometry.HomogeneousDivision
+
+public import NcCubic.Geometry.RatioJacobi
+public import NcCubic.Geometry.LocalizedPrincipalIdeal
+public import NcCubic.Geometry.ChartComparison
+
+public import NcCubic.Geometry.ChartJacobiDivisibility
+public import NcCubic.Geometry.OpenPullbackSections
+
+public import NcCubic.Geometry.ProjectiveHypersurfaceSections
+
+public import NcCubic.Geometry.ContractionEvaluation
+public import NcCubic.Geometry.EulerTangency
+
+public import NcCubic.Geometry.HypersurfaceRefinementKernel
+public import NcCubic.Geometry.BivectorExteriorLinear
+public import NcCubic.Geometry.CanonicalHypersurface
+public import NcCubic.Geometry.ProjectiveCotangentRank
+
+public import NcCubic.Geometry.BracketDescent
+public import NcCubic.Geometry.HypersurfaceBasis
+public import NcCubic.Geometry.SheafTensorCurry
+
+public import NcCubic.Geometry.HypersurfaceRefinementBracket
+public import NcCubic.Geometry.NormalTangencyDivisibility
+
+public import NcCubic.Geometry.HomogeneousSectionNaturality
+
+public import NcCubic.Geometry.HypersurfaceRefinementNaturality
+public import NcCubic.Geometry.ProjectiveTwistInverse
+public import NcCubic.Geometry.PullbackDual
+
+public import NcCubic.Geometry.HypersurfaceGlobalPoisson
+
+public import NcCubic.Geometry.HypersurfaceGlobalRelative
+public import NcCubic.Geometry.ImmersionBivector
+
+public import NcCubic.Geometry.HypersurfaceStandardComparison
+public import NcCubic.Geometry.TwistSumSections
+
+public import NcCubic.Geometry.HypersurfaceBracketZero
+public import NcCubic.Geometry.AffineCotangentSections
+public import NcCubic.Geometry.AffineLocalHom
+public import NcCubic.Geometry.AffineTangent
+public import NcCubic.Geometry.RestrictionIsoTransport
+
+public import NcCubic.Geometry.PresheafExteriorDesc
+public import NcCubic.Geometry.ImmersionFaithfulness
+public import NcCubic.Geometry.PositiveTwistExterior
+public import NcCubic.Geometry.ExteriorSheafDescent
+public import NcCubic.Geometry.ProjectiveTangent
+public import NcCubic.Geometry.HypersurfaceSection
+public import NcCubic.Geometry.EulerTangentAction
+
+public import NcCubic.Geometry.BivectorSheafMap
+public import NcCubic.Geometry.LineExteriorFrame
+public import NcCubic.Geometry.HypersurfaceRestrictionSequence
+public import NcCubic.Geometry.StandardBracketClassification
+
+public import NcCubic.Geometry.BivectorSheafDesc
+public import NcCubic.Geometry.ExteriorSiteDescent
+public import NcCubic.Geometry.ExteriorRestriction
+public import NcCubic.Geometry.ExteriorFiniteLocallyFree

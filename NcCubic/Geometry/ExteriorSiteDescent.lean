@@ -1,0 +1,34 @@
+/- Copyright (c) 2026 nc-cubic contributors. All rights reserved. -/
+module
+public import NcCubic.Geometry.PresheafExteriorDesc
+public import StacksFrontier.Algebra.Category.ModuleCat.Sheaf.AlgebraBundleStalk
+@[expose] public section
+noncomputable section
+namespace NcCubic.Geometry
+open CategoryTheory Opposite
+universe u v w
+variable {C : Type u} [Category.{v} C] (J : GrothendieckTopology C)
+  [J.HasSheafCompose (forget₂ CommRingCat.{w} RingCat.{w})]
+  [J.WEqualsLocallyBijective AddCommGrpCat.{w}] [HasWeakSheafify J AddCommGrpCat.{w}]
+  {O : Sheaf J CommRingCat.{w}}
+set_option backward.isDefEq.respectTransparency false in
+/-- The actual exterior universal descent on any site, including a scheme's slice sites. -/
+def descendExteriorOnSite (F G : SheafOfModules.{w} (Sheaf.toRingCat J O)) (n : ℕ)
+    (α : PresheafOfModules.extPow (O := O.obj) n (SheafOfModules.valPresheaf J F) ⟶
+      SheafOfModules.valPresheaf J G) :
+    (SheafOfModules.algebras J F).exteriorPower n ⟶ G :=
+  (SheafOfModules.exteriorPowerSheafifyIso J (SheafOfModules.algebras J F) n).hom ≫
+    (PresheafOfModules.moduleSheafification J (𝟙 O.obj)).map α ≫
+      (SheafOfModules.sheafifyValIso J G).hom
+
+/-- The full universal property: every actual exterior-sheaf morphism is uniquely
+represented by a compatible sectionwise exterior morphism. -/
+def exteriorSiteHomEquiv (F G : SheafOfModules.{w} (Sheaf.toRingCat J O)) (n : ℕ) :
+    (PresheafOfModules.extPow (O := O.obj) n (SheafOfModules.valPresheaf J F) ⟶
+      SheafOfModules.valPresheaf J G) ≃
+    ((SheafOfModules.algebras J F).exteriorPower n ⟶ G) :=
+  ((PresheafOfModules.sheafificationAdjunction (J := J) (Sheaf.toRingCatMap J (𝟙 O.obj))).homEquiv _ G).symm.trans
+    (Iso.homCongr (SheafOfModules.exteriorPowerSheafifyIso J
+      (SheafOfModules.algebras J F) n).symm (Iso.refl G))
+
+end NcCubic.Geometry

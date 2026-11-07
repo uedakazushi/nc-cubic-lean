@@ -63,8 +63,8 @@ theorem eulerWedge3_swap_first
   rw [hs a b d,hs a b c]
   ring
 
-/-- Mere coefficientwise divisibility supplies all required homogeneous and
-alternating quotient data, using the genuine nonzero cubic equation. -/
+/-- Mere coefficientwise divisibility supplies homogeneous quotient data and
+the required antisymmetry, using the genuine nonzero cubic equation. -/
 theorem exists_euler_quotient (F : CubicPolynomial N) (hF0 : F ≠ 0) (hF : F.IsHomogeneous 3)
     (J : Fin N → Fin N → Fin N → CubicPolynomial N)
     (hs : ∀ a b c, J b a c = -J a b c)

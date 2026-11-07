@@ -92,8 +92,9 @@ G0 の証明には、G2 にまとめる最終比較に先立って、smoothness 
 `NcCubic.contraction_jacobi_of_geometric_lift` の代数計算は検証済みであり、
 座標Jacobiatorの交代性と三次斉次性も検証した。
 代替経路として、Euler場との外積の係数がFで割り切れれば全多項式Jacobiが従うことも
-斉次商の交代性・divergence計算を含めて検証した。可除性の幾何学的導出は残る。
-射影的に消えるJacobiatorから分解の存在を導く部分が残る。
+斉次商の交代性・divergence計算を含めて検証した。実際の超曲面構造層上のJacobiから
+この可除性を導き、全多項式Jacobiとの同値まで検証済み。
+幾何学的双ベクトルからの標準括弧との比較は未完了である。
 :::
 
 証明設計：原論文の命題2.4。標準体積形式による divergence $`\delta` を定義し、
@@ -119,10 +120,10 @@ Schouten 括弧の座標式と A の Jacobiator の関係（係数2を含む）�
 射影的 smoothness と斉次三次式の gradient 条件、幾何学的 Poisson 切断と
 座標環上の括弧を比較し、標準代表の射影降下・$`X` への制限・座標変換を接続する。
 原論文の切断を解析的な正則切断として扱う場合は、代数的切断との比較も必要である。
-実際の一式presentation、Jacobianの素点被覆、schemeの滑らかさからアフィン切断環への比較、
+実際の一式presentation、Jacobianの素点被覆、scheme smoothnessと孤立gradient条件の同値、
 商環・局所化環・次数0チャート環の括弧と重なりでの適合性は検証済み。
 全正次数斉次基本開から実際の構造層全体への相対Poisson演算の貼り合わせ、
-Euler代表の独立性とKähler外積の評価も証明したが、
+超曲面への全開集合での降下、Euler代表の独立性とKähler外積の評価も証明したが、
 実際の射影双ベクトル切断との比較は未完了。
 :::
 

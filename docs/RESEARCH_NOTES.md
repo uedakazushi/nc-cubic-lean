@@ -100,7 +100,7 @@ mathlibの型へ合わせる依存関係をさらに詰める。URL等は `refer
 
 ## 6. 幾何学的な橋渡しの現在の契約と次の実験
 
-**元のscheme上のPoisson切断の表示G0、scheme smoothnessとの比較G2は未完了。**
+**元のscheme上の任意のPoisson切断の表示G0と双ベクトル・括弧の比較は未完了。**
 座標条件を新たにsmoothnessの定義として置き、元の定理を置き換えることはしない。
 
 初期の座標的な入口は次の二つであり、さらに下記の実装を追加した。
@@ -113,7 +113,7 @@ mathlibの型へ合わせる依存関係をさらに詰める。URL等は `refer
   評価・非pivot偏微分がこの代入と交換することを証明した。
   斉次式の零点ではEuler等式によりpivot偏微分も回復し、両方のJacobian条件が一致する。
 
-### G2でまだ必要な実際のschemeとの比較
+### G2の実際のschemeとの比較
 
 固定版Stacksの `ProjectiveChart.HypersurfaceChart.chartQuotientEquiv` は、実際の閉埋込み
 `i : Z ⟶ Proj ...` と `Proj.idealOfClosedSubscheme ... i = Ideal.span {F}` から、
@@ -121,14 +121,11 @@ chartの切断環と `R[Y]/(dehomCoeff R j F)` の環同型を供給する。
 そのため幾何学的データはscheme Z・閉埋込みi・その斉次イデアルの等式で持てる。
 任意のsectionがtrivectorで表せるという結論を、このデータの仮定に含めない。
 
-次の具体的な実験は、まず `Fin (n+1)` のpivotを除いた座標を `Fin n ⊕ Unit` に
-並べ替え、`AffineChart.dehomogenize` と `Stacks.ProjectiveChart.dehomCoeff` の等式を
-多項式生成元の像で証明すること。その後、一式関係の `Algebra.Presentation` を構成する。
-`Algebra.Presentation.isSmoothAt_iff_exists_jacobian_notMem` の適用には、全素イデアルpで
-非零fibreの次元が「変数数−関係数」であることが必要である。これはsmoothnessを
-仮定として得るのではなく、実際の一式商環について証明する。
-さらにschemeのsmooth morphismとこの局所環上の `Algebra.IsSmoothAt`、
-chartの被覆・貼り合わせを接続する。これらの接続は未証明である。
+`ChartComparison` はpivotの並べ替え、dehomogenizeとの一致、一式presentation、
+全素点のfibre次元とJacobian判定を実装し、実際のscheme smoothnessと
+`HasIsolatedGradientZero F` の同値を証明した。`CanonicalHypersurface` は標準の
+Proj商の定義イデアルが(F)に一致することを飽和性で証明し、同じ同値を適用する。
+座標条件をschemeのsmoothnessの定義として採用したものではない。
 
 ### G0でまだ必要な切断と接束の構成
 
@@ -137,7 +134,9 @@ chartの被覆・貼り合わせを接続する。これらの接続は未証明
 計算する。後者の正twist消滅はq>0の結論であり、H⁰(Λ²T(-3))=0を直接与えない。
 原論文補題2.2に必要な双対Euler列、接束の外積・twistと短完全列の具体的な射、
 H⁰(Λ³T(-3))≃Λ³Vの同型を構成して、既存の線束計算を適用する必要がある。
-超曲面への制限列、接性から厳密な縮約等式への修正、標準代表の一意性も未実装。
+実際の双対Euler列、有限局所自由な加群の超曲面制限列は検証済み。制限列の最後の射は
+元の閉埋込みのpullback-pushforward随伴の単位写像そのものである。
+コホモロジー消滅の適用と、実際の切断から接性の係数式を得る比較を接続中。
 G0が使う高次のgraded Koszul完全性は、今回 `Geometry/GradedKoszul.lean` と
 `ExteriorKoszul.lean` で証明した。配列から定数Pへの一意な表示は
 `PolynomialRepresentation.lean`、勾配縮約そのものによる線形同値は
@@ -194,8 +193,10 @@ Euler場との外積の全係数がFで割り切れることからJ=0を導く�
 四重配列Qを一次斉次部分へ射影してE∧J=FQを保ち、Fの非零性から縮約に必要なQの最初の2添字の反対称性を回収する。
 閉性・水平性とEuler公式よりδ(E∧J)=N J、i_dF(E∧J)=3FJなのでi_dF Q=3J。
 δと勾配縮約の反交換、定数gradient syzygy消滅によりδQ=0、従って(N−3)J=0となる。
-この経路はJ=FT+E∧Bの構成を必要としないが、実際の射影Poisson条件から係数の可除性を
-得る証明は別途必要である。G1は未完了のままとする。
-可除性の次の接続は、比座標のJacobiator分子の計算、超曲面商環での消滅、
-局所化の分母の消去である。異なる二つの変数の冪を消去する
-`PrincipalSaturation.dvd_of_two_mul`により、既約性なしに大域可除性へ戻せる。
+この経路はJ=FT+E∧Bの構成を必要としない。`RatioJacobi` は比座標のJacobiator分子を
+Euler∧Jと比較し、`ChartJacobiDivisibility` と `LocalizedPrincipalIdeal` は実際の商環での
+消滅から局所化の分母を消去する。異なる二つの変数の冪を消去する
+`PrincipalSaturation.dvd_of_two_mul`により、既約性なしに大域可除性へ戻す。
+`HypersurfaceStandardComparison.polynomialJacobi_iff_hypersurfaceGlobalJacobi` は、
+標準代表から構成された全開集合上の括弧について双方向を接続済み。
+任意の幾何学的双ベクトルとこの標準括弧の一致は別の未完了の比較であり、G1は未完了とする。

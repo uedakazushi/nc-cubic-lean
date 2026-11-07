@@ -77,18 +77,31 @@ G0–G2の完成状態は未完了のまま、次を実際の定義に対して�
   Euler場との外積で代表を変えても全ての実際の開集合上で括弧が一致する。
 - `EulerJacobiLift`・`HomogeneousDivision`：Euler∧Jacobiatorの各係数がFで割り切れれば、
   商の斉次性・必要な反対称性を回収し、divergenceと勾配独立性から全多項式Jacobiを導く。
-  射影Poisson条件からの可除性の導出は未完了。符号・N−3の係数・条件付き範囲は独立レビュー済み。
+  実際の超曲面構造層上のJacobiから可除性を導出し、全多項式Jacobiとの同値まで接続済み。
+  双ベクトルから誘導される括弧との比較は別途未完了。符号・N−3の係数・代数補題の範囲は独立レビュー済み。
 - `PrincipalSaturation`：異なる二変数から主斉次イデアルの飽和性を証明。
 - `LineExteriorEuler`・`PolynomialKahlerBasis`：階数1部分束の外積完全列の標準商写像と、
   実際の多項式代数同型からのKähler基底。射影接束への適用は実装中。
-- `BivectorContraction`・`BivectorContractionNaturality`：実際の接層上の局所交代縮約と制限適合性。
-  外積層全体から括弧への写像は引き続き接続中。
+- `BivectorContraction`・`BivectorSheafMap`・`BivectorSheafDesc`：実際の接層上の局所交代縮約と制限適合性、
+  外積層全体から接縮約層への標準射、実際の双ベクトル切断から全開集合上の括弧への写像を構成。
+  その単射性・逆写像と標準多項式代表との一致は引き続き構成中。
+
+- `ChartComparison`・`CanonicalHypersurface`：実際の閉埋込みの定義イデアルが(F)である場合、
+  および標準的なProj商で、scheme Smoothと孤立gradient条件の同値を証明。
+- `HypersurfaceGlobalPoisson`・`HypersurfaceGlobalRelative`・`HypersurfaceStandardComparison`：
+  超曲面の全開集合上に実際の相対Poisson括弧を構成し、そのJacobiと全多項式Jacobiの同値を証明。
+- `ProjectiveCotangentRank`・`ProjectiveTangent`・`ImmersionFaithfulness`：
+  実際の射影余接束の有限局所自由性、双対Euler列、滑らかな閉埋込みから誘導される
+  双ベクトル大域切断写像の単射性を証明。
+- `TwistSumSections`・`EulerTangentAction`：標準biproduct成分によるtwist切断と斉次多項式の同値、
+  実際の接束Euler商写像の局所関数への作用を比較。任意の双ベクトルの係数表示は引き続き構成中。
+- `AffineCotangentSections`・`AffineLocalHom`・`AffineTangent`：アフィン開上でのみ、実際の
+  微分層・内部Homの切断を切断環の微分・Homと比較し、標準の接切断導分写像との一致を証明。
 
 `SheafKahler`は各開集合の切断環のKähler微分上の形式を構成する。
 任意の開集合で微分層の切断と切断環の微分を同一視したとは主張しない。
 
-実際の射影切断からの係数代表の取得、scheme smoothnessとの比較、接束外積の切断の
-貼り合わせは、これらの多項式補題で置き換えたとはしない。未完了の比較は次節以下に明示する。
+実際の射影切断からの係数代表の取得と、接束外積の切断から標準括弧への比較は未完了である。未完了の比較は次節以下に明示する。
 
 ## 依存と検証
 
@@ -101,7 +114,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。108モジュールをビルドし、1356宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。154モジュールをビルドし、1883宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。

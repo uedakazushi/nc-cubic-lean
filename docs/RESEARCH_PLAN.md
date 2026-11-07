@@ -39,10 +39,12 @@
 P0–P5・P6a・P6b・L0–L5・Aは実装済み。課題の現在状態はSTATUSとtasks.jsonを正本とする。
 
 1. G0/G2：実際の射影超曲面のschemeとチャートpresentationを結ぶ。
-   座標Jacobian条件は検証済みだが、scheme smoothnessとの比較は未完了。
+   実際の閉埋込みの定義イデアルが(F)である場合、および標準的なProj商について、
+   scheme smoothnessと孤立gradient条件の同値は検証済み。
    余接Euler列の双対・外積・twistと接束の制限列も具体的な写像として構成する。
-2. G1：射影的に消えるJacobiatorからJ=FT+E∧B₂を得る。
-   この分解から全多項式Jacobiへ進むdivergence/Eulerの代数部分は実装済み。
+2. G1：実際の構造層上でのJacobiと全多項式Jacobiの同値は検証済み。
+   Euler∧Jacobiatorの係数可除性とdivergenceを使う経路を採用し、
+   幾何学的双ベクトルからの標準括弧との比較を接続する。
 3. T：全幾何学的切断と正則/代数的カテゴリーの比較を終えて最終型をレビューする。
 
 正確な依存関係・受入条件は [tasks.json](../blueprint/tasks.json)。
