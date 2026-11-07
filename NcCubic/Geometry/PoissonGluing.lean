@@ -2,6 +2,7 @@
 Project-local implementation; upstream dependencies retain their licenses. -/
 module
 public import NcCubic.Geometry.PoissonSheaf
+public import NcCubic.Geometry.BasisPoissonGluing
 @[expose] public section
 noncomputable section
 namespace NcCubic.Geometry
@@ -148,4 +149,23 @@ theorem LocalPoissonData.glued_relative {R : Type u} [CommRing R]
     exact congrArg (fun g => g ((Scheme.ΓSpecIso (CommRingCat.of R)).inv r)) h
   rw [hc]
   exact hR i _ inf_le_right _ r
+/-- Relative Poisson brackets on a basis glue to a relative bracket on the
+actual full structure sheaf, using its actual base coefficient maps. -/
+theorem BasisPoissonData.glued_relative {R : Type u} [CommRing R]
+    {W : ι → X.Opens} (D : BasisPoissonData X W)
+    (f : X ⟶ Spec (CommRingCat.of R))
+    (hR : ∀ i a r, D.bracket i a (AffineSmoothness.coefficientMap f (W i) r) = 0) :
+    D.glued.IsRelative f := by
+  intro U a r
+  apply D.toBasisBracketData.eq_of_basis
+  intro i hi
+  rw [D.glued_restrict, map_zero]
+  have hc : (X.presheaf.map (homOfLE hi).op) (AffineSmoothness.coefficientMap f U r) =
+      AffineSmoothness.coefficientMap f (W i) r := by
+    unfold AffineSmoothness.coefficientMap
+    simp only [RingHom.comp_apply]
+    have h := f.appLE_map (U := ⊤) (V := U) (V' := W i) le_top (homOfLE hi).op
+    exact congrArg (fun g => g ((Scheme.ΓSpecIso (CommRingCat.of R)).inv r)) h
+  rw [hc]
+  exact hR i _ r
 end NcCubic.Geometry

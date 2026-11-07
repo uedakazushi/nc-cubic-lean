@@ -95,3 +95,28 @@ public import NcCubic.Geometry.ImmersionExterior
 public import NcCubic.Geometry.ProjectiveSectionOverlap
 public import NcCubic.Geometry.TangentNaturality
 public import NcCubic.Geometry.LocalSectionHom
+public import NcCubic.Geometry.PrincipalSaturation
+public import NcCubic.Geometry.TangentRelative
+
+public import NcCubic.Geometry.HomogeneousBasicBracket
+public import NcCubic.Geometry.PullbackLocallyFree
+public import NcCubic.Geometry.LocalHomFamily
+
+public import NcCubic.Geometry.HomogeneousSectionBracket
+public import NcCubic.Geometry.BasisPoissonGluing
+public import NcCubic.Geometry.LineExteriorEuler
+
+public import NcCubic.Geometry.AmbientProjectivePoisson
+public import NcCubic.Geometry.EulerLocalization
+public import NcCubic.Geometry.ProjectiveRepresentative
+
+public import NcCubic.Geometry.AmbientProjectiveRelative
+public import NcCubic.Geometry.BivectorContraction
+
+public import NcCubic.Geometry.AmbientChartAlgebra
+public import NcCubic.Geometry.EulerJacobiLift
+public import NcCubic.Geometry.BivectorContractionNaturality
+
+public import NcCubic.Geometry.HomogeneousLogHamiltonian
+public import NcCubic.Geometry.PolynomialKahlerBasis
+public import NcCubic.Geometry.HomogeneousDivision

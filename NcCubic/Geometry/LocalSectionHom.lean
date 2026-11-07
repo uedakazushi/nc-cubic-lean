@@ -68,4 +68,40 @@ theorem localSectionHom_restrict_apply (s : Γ(M,U))
   rw [hh,smul_add]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
+theorem localSectionHom_smul {X : Scheme.{u}} (M : X.Modules) (U : X.Opens)
+    (c : Γ(X,U)) (s : Γ(M,U)) :
+    localSectionHom M U (c • s) =
+      smulHom X.sheaf.obj (SheafOfModules.unit (structureSheaf X.sheaf)).val M.val U c
+        (localSectionHom M U s) := by
+  apply PresheafOfModules.hom_ext
+  intro Z
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro r
+  change (show Γ(X,Z.unop.left) from r) • (show Γ(M,Z.unop.left) from M.val.map Z.unop.hom.op (c • s)) =
+    (show Γ(X,Z.unop.left) from X.presheaf.map Z.unop.hom.op c) •
+      ((show Γ(X,Z.unop.left) from r) • (show Γ(M,Z.unop.left) from M.val.map Z.unop.hom.op s))
+  have hs := M.val.map_smul Z.unop.hom.op c s
+  change (show Γ(M,Z.unop.left) from M.val.map Z.unop.hom.op (c • s)) =
+    (show Γ(X,Z.unop.left) from X.presheaf.map Z.unop.hom.op c) •
+      (show Γ(M,Z.unop.left) from M.val.map Z.unop.hom.op s) at hs
+  exact (congrArg (fun m : Γ(M,Z.unop.left) => (show Γ(X,Z.unop.left) from r) • m) hs).trans
+    (smul_comm _ _ _)
+set_option backward.isDefEq.respectTransparency false in
+theorem localSectionHom_restrict {X : Scheme.{u}} (M : X.Modules)
+    {U V : X.Opens} (h : V ⟶ U) (s : Γ(M,U)) :
+    homRestr X.sheaf.obj (SheafOfModules.unit (structureSheaf X.sheaf)).val M.val h
+      (localSectionHom M U s) = localSectionHom M V (M.presheaf.map h.op s) := by
+  apply PresheafOfModules.hom_ext
+  intro Z
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro r
+  change (show Γ(X,Z.unop.left) from r) •
+      (show Γ(M,Z.unop.left) from M.val.map (Z.unop.hom ≫ h).op s) =
+    (show Γ(X,Z.unop.left) from r) •
+      (show Γ(M,Z.unop.left) from M.val.map Z.unop.hom.op (M.val.map h.op s))
+  exact congrArg (fun m : Γ(M,Z.unop.left) => (show Γ(X,Z.unop.left) from r) • m)
+    (M.val.map_comp_apply h.op Z.unop.hom.op s)
 end NcCubic.Geometry

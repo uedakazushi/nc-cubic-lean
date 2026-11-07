@@ -378,7 +378,7 @@
       ],
       "status": "in_progress",
       "required": true,
-      "acceptance": "twistした三重接束の制限列からJ=FT+E∧B₂を得て、divergenceとEuler場の恒等式、(1−3/N)F i_dF T=0、定数syzygy消滅からJ=0を証明。全多項式Jacobiと比較する。",
+      "acceptance": "twistした三重接束の制限列からJ=FT+E∧B₂を得て、divergenceとEuler場の恒等式、(1−3/N)F i_dF T=0、定数syzygy消滅からJ=0を証明。全多項式Jacobiと比較する。 同じ結論をEuler∧JacobiatorのF可除性・斉次商・divergence計算から導く代替経路も許すが、射影Poisson条件からの可除性を仮定に残さない。",
       "declarations": [],
       "priority": 17,
       "source": "命題2.4",
@@ -386,7 +386,8 @@
       "verified_components": [
         "divergence・Euler計算とJacobiatorの水平性",
         "J=FT+E∧B₂からのJacobi持上げ（幾何学的分解の存在は未完了）",
-        "実際の座標Jacobiatorの交代性と三次斉次性"
+        "実際の座標Jacobiatorの交代性と三次斉次性",
+        "Euler∧Jacobiatorの係数のF可除性から全多項式Jacobiを導出（可除性の幾何学的証明は未完了）"
       ]
     },
     {
@@ -410,7 +411,8 @@
         "実際の局所化括弧と比座標・次数0環（scheme切断への貼り合わせは未完了）",
         "実際の超曲面商環のJacobi・斉次局所化の重なりでの括弧適合性",
         "実際の構造層の局所Poisson演算の一意な貼り合わせ",
-        "双導分と実際のKähler外積・有限自由接加群外積の比較"
+        "双導分と実際のKähler外積・有限自由接加群外積の比較",
+        "全正次数斉次基本開から実際の全構造層上への相対Poisson括弧とEuler代表独立性"
       ]
     },
     {
