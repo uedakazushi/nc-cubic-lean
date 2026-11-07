@@ -17,7 +17,9 @@
 
 ## 実行
 
-Linux/macOS で Bash、Python 3.11以降、Git、curl、tar、zstd を用意します。
+Linux/macOS で Bash、Python 3.9以降、Git、curl、tar、zstd を用意します。
+システムの Python 3.9/3.10 でも `lake build` の整合性検査が動作するよう、
+SHA-256 はストリーミング計算を使います（Python 3.11 固有の API は不要）。
 
 ```bash
 bash scripts/bootstrap.sh  # 必要な場合のみ初回環境準備

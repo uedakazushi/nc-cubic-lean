@@ -6,7 +6,7 @@ cd "$NC_CUBIC_ROOT"
 for cmd in curl git python3 tar; do
   command -v "$cmd" >/dev/null || { echo "Missing prerequisite: $cmd" >&2; exit 1; }
 done
-python3 -c 'import sys; sys.version_info >= (3, 11) or sys.exit("Python 3.11 or later is required.")'
+python3 -c 'import sys; sys.version_info >= (3, 9) or sys.exit("Python 3.9 or later is required.")'
 version="$(sed -n 's|^leanprover/lean4:v||p' lean-toolchain)"
 if [[ -z "$version" ]]; then
   echo 'Unsupported lean-toolchain format; inspect it before changing anything.' >&2
@@ -31,8 +31,11 @@ if ! command -v lean >/dev/null || ! lean --version 2>/dev/null | grep -Fq "vers
   python3 - "$archive" "$digest" <<'PY'
 import hashlib, pathlib, sys
 p = pathlib.Path(sys.argv[1])
-h = hashlib.file_digest(p.open('rb'), 'sha256').hexdigest()
-if h != sys.argv[2]:
+digest = hashlib.sha256()
+with p.open('rb') as stream:
+    for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+        digest.update(chunk)
+if digest.hexdigest() != sys.argv[2]:
     raise SystemExit(f'Official Lean archive checksum mismatch: {p.name}')
 print('Official Lean archive SHA256 verified.')
 PY
