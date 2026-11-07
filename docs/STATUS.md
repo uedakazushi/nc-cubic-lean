@@ -98,6 +98,26 @@ G0–G2の完成状態は未完了のまま、次を実際の定義に対して�
 - `AffineCotangentSections`・`AffineLocalHom`・`AffineTangent`：アフィン開上でのみ、実際の
   微分層・内部Homの切断を切断環の微分・Homと比較し、標準の接切断導分写像との一致を証明。
 
+- `HypersurfaceRestrictionSequence`・`HypersurfaceRestrictionSections`・`AmbientBivectorLift`：
+  実際の随伴の単位写像を最後の射とする制限完全列から、負twistのH⁰/H¹消滅を仮定した
+  一意な大域持上げを構成。滑らかな閉埋込みでは実際の双ベクトルからの持上げの単射性も証明。
+  接束外積に対する必要な消滅の適用は引き続き接続中。
+- `ProjectiveCohomology`・`TangentEulerResolution`・`ProjectiveTwistDual`：
+  負の線束twistと有限直和の全次数コホモロジー消滅、実際の接束Euler外積完全列、
+  双対Euler列の中央項とO(1)直和の同型を検証。
+- `SheafExteriorFrame`・`ProjectiveExteriorFrame`・`ProjectiveQuadraticSections`：
+  元の包含・射影とtwist乗法から標準の二次係数表示を構成し、実際の大域切断と
+  二次斉次多項式係数族の線形同値、および明示的な和による再構成を証明。
+- `ExteriorUnitGenerators`・`BivectorLocalDescent`・`BivectorEvaluation`：
+  実際の外積の生成元と層化の単位写像を比較し、局所的な外積の括弧が導分の行列式になること、
+  大域双ベクトルの括弧がその実際の制限切断の評価であることを証明。
+- `StructureSheafBiderivation`・`SheafBiderivationPairing`・`SheafBiderivationExterior`：
+  相対双導分から実際の余接外積の双対の大域切断を構成。微分層の切断と切断環の微分の
+  比較はアフィン開上だけで行い、任意の開集合へは層として貼り合わせる。
+- `RepresentativeFaithfulness`・`HypersurfaceBracketFaithfulness`・`StandardPoissonConverse`：
+  実際の標準括弧の零性とPの零性の同値、および正規形から非零相対Poisson演算を構成。
+  構成した演算を実際の双ベクトルとして復元する比較は引き続き構成中。
+
 `SheafKahler`は各開集合の切断環のKähler微分上の形式を構成する。
 任意の開集合で微分層の切断と切断環の微分を同一視したとは主張しない。
 
@@ -114,7 +134,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。154モジュールをビルドし、1883宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。189モジュールをビルドし、2410宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。

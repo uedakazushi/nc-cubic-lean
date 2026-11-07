@@ -200,3 +200,17 @@ Euler∧Jと比較し、`ChartJacobiDivisibility` と `LocalizedPrincipalIdeal` 
 `HypersurfaceStandardComparison.polynomialJacobi_iff_hypersurfaceGlobalJacobi` は、
 標準代表から構成された全開集合上の括弧について双方向を接続済み。
 任意の幾何学的双ベクトルとこの標準括弧の一致は別の未完了の比較であり、G1は未完了とする。
+
+### 最終の幾何学的な型
+
+`Geometry.GeometricClassificationStatement` は未証明の命題定義である。
+入力は実際の滑らかな射影三次超曲面の閉埋込みと、相対余接層の双対の二重外積の
+非零大域切断であり、表示定理・持上げ・比較定理を仮定に含めない。
+結論は実際の全開集合上の括弧の標準表示と `HasBlockNormalForm`、逆方向は
+各正規形からの実際の非零双ベクトルの存在である。原論文§1.1・定理1.1(3)との
+独立の型レビューで、代数的な分類目標としての忠実性を確認した。
+
+Poisson条件は標準的な標数0の特徴付け、すなわち実際の双ベクトルから誘導される
+括弧のJacobi恒等式で記述する。別個のSchouten演算や解析的なカテゴリーの機構を
+実装したとは主張しない。実際の双ベクトルと括弧の行列式評価の一致・単射性を
+証明してから、この目標を完成した定理として扱う。

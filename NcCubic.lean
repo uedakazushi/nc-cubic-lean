@@ -182,3 +182,49 @@ public import NcCubic.Geometry.BivectorSheafDesc
 public import NcCubic.Geometry.ExteriorSiteDescent
 public import NcCubic.Geometry.ExteriorRestriction
 public import NcCubic.Geometry.ExteriorFiniteLocallyFree
+
+public import NcCubic.Geometry.ExteriorSheafDescentUnit
+public import NcCubic.Geometry.HypersurfaceBracketInjective
+public import NcCubic.Geometry.RepresentativeFaithfulness
+public import NcCubic.Geometry.HypersurfaceRestrictionSections
+public import NcCubic.Geometry.AmbientBivectorLift
+public import NcCubic.Geometry.TensorCurryIso
+
+public import NcCubic.Geometry.HypersurfaceBracketFaithfulness
+public import NcCubic.Geometry.SheafExteriorFrame
+
+public import NcCubic.Geometry.ProjectiveCohomology
+public import NcCubic.Geometry.TangentEulerResolution
+public import NcCubic.Geometry.ExteriorDualStalk
+public import NcCubic.Geometry.ProjectiveExteriorFrame
+
+public import NcCubic.Geometry.ContractionBracketLaws
+public import NcCubic.BlockNonzero
+
+public import NcCubic.Geometry.SheafBiderivation
+public import NcCubic.Geometry.RawExteriorWedge
+
+public import NcCubic.Geometry.BasisModulePairingGluing
+
+public import NcCubic.Geometry.ProjectiveTwistDual
+public import NcCubic.Geometry.StandardPoissonConverse
+
+public import NcCubic.Geometry.AffineBiderivationPairing
+public import NcCubic.Geometry.ExteriorUnitGenerators
+public import NcCubic.Geometry.GeometricStatement
+public import NcCubic.Geometry.BivectorWedgeBracket
+public import NcCubic.Geometry.ExteriorDescentApply
+public import NcCubic.Geometry.CoordinateWedgeUnit
+public import NcCubic.Geometry.BivectorLocalDescent
+
+public import NcCubic.Geometry.SheafBiderivationPairing
+public import NcCubic.Geometry.ProjectiveQuadraticSections
+
+public import NcCubic.Geometry.SheafBiderivationExterior
+public import NcCubic.Geometry.BivectorEvaluation
+public import NcCubic.Geometry.ExteriorDualLocalPairing
+public import NcCubic.Geometry.ExteriorRawDual
+public import NcCubic.Geometry.PairCoefficients
+
+public import NcCubic.Geometry.SheafBiderivationEvaluation
+public import NcCubic.Geometry.QuadraticRepresentative

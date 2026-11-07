@@ -59,7 +59,9 @@ $$`\Lambda^3V\xrightarrow{\sim}H^0(X,\Lambda^2T_X),\qquad P\longmapsto(\iota_{dF
 を構成する。右辺への写像は斉次二次 bivector の射影化である。
 任意の切断がこの形で表されることと、$`P` の一意性の両方を示す。
 係数段階の高次Koszul表示・Euler補正・代表独立性・縮約による線形同値は
-`PolynomialRepresentation.lean` と関連モジュールで検証済み。実際の射影切断との比較は未完了。
+`PolynomialRepresentation.lean` と関連モジュールで検証済み。
+実際の接束Euler外積完全列、負の線束twistの消滅、随伴の単位写像による条件付き持上げ、
+標準包含・射影による二次多項式係数表示も検証済み。これらを任意の射影切断に接続する比較は未完了。
 :::
 
 証明設計は原論文の補題2.2・命題2.3（印刷 pp.4–5）に沿う。
@@ -149,6 +151,12 @@ $`F=\sum_s f_s(x_s,u)` により表示される。括弧は各三変数の Jacob
 $`X` 上の Poisson 構造を与える。
 最終宣言は `NcCubic.theorem113 : NcCubic.GeometricClassificationStatement` とする。
 :::
+
+最終型の未証明の命題定義 `NcCubic.Geometry.GeometricClassificationStatement` は、
+実際の接層外積の非零大域切断と、その切断から誘導される全開集合上の括弧を使う。
+表示・持上げ・比較定理を入力仮定に含めない。代数的な原定理第3項との独立の型レビュー済みである。
+Poisson条件は標数0での誘導括弧のJacobiによる特徴付けを用い、別個のSchouten演算の実装を主張しない。
+この命題定義は証明済み宣言ではない。
 
 証明設計：G0 で $`\pi_X` を一意な $`P` に移し、非零性も同型で移す。
 G1・G2 で A の仮定を満たして正規形を得て、G2 で幾何学的な結論へ戻す。
