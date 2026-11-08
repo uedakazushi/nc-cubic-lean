@@ -122,6 +122,8 @@ HTML・PDF 出力、および検証ターゲットは独立である。
 `python3 scripts/reuse_legacy_builds.py --apply` で移行できる。
 旧ディレクトリは自動削除されない。移行後の正常ビルドを確認してから不要な
 旧キャッシュを整理する。共有には同一固定 SHA、root workspace、同一 toolchain が必要。
+`python3 scripts/dependency_info.py shared-check` で、ビルド前にも
+3 workspace の lockfile・設定・共有 SHA の整合性だけを検査できる。
 
 生成先はHTMLが `blueprint/verso/_out/site/html-multi/index.html`、
 PDFが `blueprint/verso/_out/site/pdf/main.pdf`。PDF の元となる生成 TeX は

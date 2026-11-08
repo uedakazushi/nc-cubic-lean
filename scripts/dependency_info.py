@@ -33,7 +33,52 @@ def check():
     upstream_toolchain = (ROOT / '.lake/packages/mathlib/lean-toolchain').read_text().strip()
     if upstream_toolchain != toolchain:
         raise SystemExit('mathlib requires a different Lean toolchain')
+    shared_check()
     print('Pinned toolchain, lockfile, and dependency checkouts agree.')
+
+def shared_check():
+    """Verify that every workspace uses one pinned Git checkout/build store."""
+    root_manifest = json.loads((ROOT / 'lake-manifest.json').read_text())
+    root_deps = {p['name']: p for p in root_manifest['packages']}
+    if root_manifest.get('packagesDir') != '.lake/packages':
+        raise SystemExit('Root package store must remain .lake/packages')
+    for rel in ('integrations/stacks', 'blueprint/verso'):
+        workspace = ROOT / rel
+        manifest = json.loads((workspace / 'lake-manifest.json').read_text())
+        if manifest.get('packagesDir') != '../../.lake/packages':
+            raise SystemExit(f'{rel}: Lake manifest does not use the shared package store')
+        config = (workspace / 'lakefile.toml').read_text()
+        if not re.search(
+            r'^packagesDir\s*=\s*"\.\./\.\./\.lake/packages"\s*
+    targets = set()
+    for path in sorted((ROOT / 'NcCubic').rglob('*.lean')):
+        for module in re.findall(r'^\s*(?:public\s+)?import\s+(Mathlib\.[\w.]+)', path.read_text(), re.M):
+            targets.add(module)
+    print('\n'.join(sorted(targets)))
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        raise SystemExit('Usage: dependency_info.py check|shared-check|imports|lean-digest PLATFORM')
+    if sys.argv[1] == 'check':
+        check()
+    elif sys.argv[1] == 'shared-check':
+        shared_check()
+    elif sys.argv[1] == 'imports':
+        imports()
+    elif sys.argv[1] == 'lean-digest' and len(sys.argv) == 3:
+        print(PINS['lean']['sha256'][sys.argv[2]])
+    else:
+        raise SystemExit('Unknown dependency_info command')
+, config, re.M
+        ):
+            raise SystemExit(f'{rel}: Lake config does not use the shared package store')
+        for pkg in manifest['packages']:
+            other = root_deps.get(pkg['name'])
+            if other and pkg.get('type') == 'git':
+                if (pkg.get('url'), pkg.get('rev')) != (other.get('url'), other.get('rev')):
+                    raise SystemExit(f'{rel}: conflicting pinned dependency {pkg["name"]}')
+    print('All three workspaces share identical pinned dependencies and root .lake/packages.')
+
 
 def imports():
     targets = set()
