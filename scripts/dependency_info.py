@@ -49,27 +49,7 @@ def shared_check():
             raise SystemExit(f'{rel}: Lake manifest does not use the shared package store')
         config = (workspace / 'lakefile.toml').read_text()
         if not re.search(
-            r'^packagesDir\s*=\s*"\.\./\.\./\.lake/packages"\s*
-    targets = set()
-    for path in sorted((ROOT / 'NcCubic').rglob('*.lean')):
-        for module in re.findall(r'^\s*(?:public\s+)?import\s+(Mathlib\.[\w.]+)', path.read_text(), re.M):
-            targets.add(module)
-    print('\n'.join(sorted(targets)))
-
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        raise SystemExit('Usage: dependency_info.py check|shared-check|imports|lean-digest PLATFORM')
-    if sys.argv[1] == 'check':
-        check()
-    elif sys.argv[1] == 'shared-check':
-        shared_check()
-    elif sys.argv[1] == 'imports':
-        imports()
-    elif sys.argv[1] == 'lean-digest' and len(sys.argv) == 3:
-        print(PINS['lean']['sha256'][sys.argv[2]])
-    else:
-        raise SystemExit('Unknown dependency_info command')
-, config, re.M
+            r'^packagesDir\s*=\s*"\.\./\.\./\.lake/packages"\s*$', config, re.M
         ):
             raise SystemExit(f'{rel}: Lake config does not use the shared package store')
         for pkg in manifest['packages']:
@@ -89,9 +69,11 @@ def imports():
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        raise SystemExit('Usage: dependency_info.py check|imports|lean-digest PLATFORM')
+        raise SystemExit('Usage: dependency_info.py check|shared-check|imports|lean-digest PLATFORM')
     if sys.argv[1] == 'check':
         check()
+    elif sys.argv[1] == 'shared-check':
+        shared_check()
     elif sys.argv[1] == 'imports':
         imports()
     elif sys.argv[1] == 'lean-digest' and len(sys.argv) == 3:
