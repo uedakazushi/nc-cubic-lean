@@ -39,7 +39,8 @@ def main() -> int:
     parser.add_argument("--list-only", action="store_true", help="print roots without downloading")
     args = parser.parse_args()
     here = Path(__file__).resolve().parent
-    stacks = here / ".lake" / "packages" / "Stacks"
+    # All three Lake workspaces share the root package store and build artifacts.
+    stacks = here.parents[1] / ".lake" / "packages" / "Stacks"
     if not (stacks / "lakefile.toml").is_file():
         raise SystemExit("Stacks checkout missing; run MATHLIB_NO_CACHE_ON_UPDATE=1 lake update first.")
 

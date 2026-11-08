@@ -5,7 +5,9 @@
 [VersoBlueprint](https://github.com/leanprover/verso-blueprint) の **v4.35.0** で記述する。
 Lean 4.35.0を使う独立したLake packageであり、本文の数式、依存グラフ、進捗表、
 検証済みLean宣言へのリンクをHTMLに、印刷用の静的版をLuaLaTeXでPDFに生成する。
-主ライブラリの依存pinは変更しない。
+主ライブラリの依存pinは変更しない。`packagesDir = "../../.lake/packages"` により
+ルートと依存チェックアウト・コンパイル結果を共有する（独立したローカルビルド成果物と
+HTML・PDF 出力は引き続き独立）。
 
 ## 本文
 
@@ -69,6 +71,9 @@ Macでは日本語対応を含むMacTeXを推奨する。`scripts/blueprint_lual
 初回はVersoBlueprint・Versoと補助依存の取得にネットワーク接続が必要。
 この独立した Lake package でも Stacks の Git partial clone が失敗し得るため、
 `scripts/build_blueprint.sh` はルート共通の `scripts/resolve_deps.sh` を呼ぶ。
+旧 `blueprint/verso/.lake/packages` が残っている場合は再利用されない。
+必要なら、ビルドが停止している状態でルートから
+`python3 scripts/reuse_legacy_builds.py --apply` を実行し、既存の成果物を移行する。
 Stacks の HTTP 400 / promisor remote エラー時には、固定SHAのフィルターなしfetchで
 一度修復して依存解決を再試行する。手動で復旧する場合はリポジトリルートから
 `bash scripts/resolve_deps.sh blueprint/verso` とする。

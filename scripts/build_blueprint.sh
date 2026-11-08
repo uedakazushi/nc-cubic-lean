@@ -3,10 +3,15 @@ set -euo pipefail
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 source "$ROOT/scripts/env.sh"
 cd "$ROOT"
-python3 scripts/check_blueprint.py
-python3 scripts/project_check.py
+case "${1:-}" in
+  "") python3 scripts/check_blueprint.py
+      python3 scripts/project_check.py ;;
+  --already-checked) ;; # full_build.sh has already checked both
+  *) echo "Usage: bash scripts/build_blueprint.sh [--already-checked]" >&2; exit 2 ;;
+esac
 cd blueprint/verso
-# This independent Lake package also inherits the pinned Stacks dependency.
+# This independent Lake package inherits root NcCubic and its dependencies.
+# Both git checkouts and compiled artifacts live in ROOT/.lake/packages.
 # Reuse the same partial-clone repair as the root and integrations/stacks.
 # Do not silently update the checked-in lockfile if it is missing.
 if [[ ! -f lake-manifest.json ]]; then

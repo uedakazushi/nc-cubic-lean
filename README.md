@@ -32,6 +32,8 @@ lake build
 Stacks の Git partial clone が `HTTP 400` / `promisor remote` で中断された場合は、
 `scripts/resolve_deps.sh` が固定コミットを `HTTP/1.1`・`--no-filter` で取得し直して
 Lake の依存解決を一度だけ再試行します。通常の成功時には余分な取得をしません。
+全 workspace は `nc-cubic-lean/.lake/packages/` を共有するため、同じ
+mathlib・Stacks のソースや `.olean` を重複取得・コンパイルしません。
 同じ復旧処理は `integrations/stacks` および `blueprint/verso` の
 独立したビルドにも適用されます。いずれも固定済みのlockfileを使い、
 失敗時に限り `Stacks` の不完全なpartial cloneを修復します。
@@ -110,6 +112,16 @@ Lean 4.35.0 と Lake が利用できる場合、clone したリポジトリの
 3. `blueprint/tasks.json` と Verso の依存関係照合
 4. Axiom Stacks のKoszulアダプターの個別ビルド・公理監査
 5. Verso Blueprint のHTMLとLuaLaTeX製PDFの生成、および両出力の存在チェック
+
+依存構成の最適化（2026-11-08）：`integrations/stacks` と `blueprint/verso` の
+`packagesDir = "../../.lake/packages"` により、固定したGit checkout・コンパイル済み
+Mathlib/Stacks・Verso依存をルートと共有する。各 workspace 固有の `.lake/build`、
+HTML・PDF 出力、および検証ターゲットは独立である。
+既存の旧キャッシュを捨てずに共通側へ引き継ぐには、実行中のビルド終了後、
+`python3 scripts/reuse_legacy_builds.py` で対象を確認し、
+`python3 scripts/reuse_legacy_builds.py --apply` で移行できる。
+旧ディレクトリは自動削除されない。移行後の正常ビルドを確認してから不要な
+旧キャッシュを整理する。共有には同一固定 SHA、root workspace、同一 toolchain が必要。
 
 生成先はHTMLが `blueprint/verso/_out/site/html-multi/index.html`、
 PDFが `blueprint/verso/_out/site/pdf/main.pdf`。PDF の元となる生成 TeX は

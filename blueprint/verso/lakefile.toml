@@ -1,5 +1,7 @@
 name = "nc_cubic_blueprint"
 version = "0.1.0"
+# Share pinned Git checkouts and compiled dependency artifacts with the root workspace.
+packagesDir = "../../.lake/packages"
 defaultTargets = ["NcCubicBlueprint"]
 
 [leanOptions]

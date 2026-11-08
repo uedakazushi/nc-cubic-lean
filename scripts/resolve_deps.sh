@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Resolve a locked Lake package, repairing an incomplete Stacks partial clone once.
+# Resolve a locked Lake workspace with shared root package cache;
+# repair an incomplete Stacks partial clone once.
 # Never change global Git settings or silently discard a dependency checkout.
 set -euo pipefail
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -35,8 +36,15 @@ import sys
 pins = json.loads(Path(sys.argv[1]).read_text())['stacks']
 manifest = json.loads(Path(sys.argv[2]).read_text())
 packages = [p for p in manifest['packages'] if p['name'] == 'Stacks']
-if len(packages) != 1 or manifest.get('packagesDir') != '.lake/packages':
-    raise SystemExit('Unexpected Stacks package or packagesDir in Lake manifest')
+root = Path(sys.argv[1]).resolve().parent
+package_dir = Path(sys.argv[2]).resolve().parent
+packages_dir = manifest.get('packagesDir')
+if not isinstance(packages_dir, str) or (
+    package_dir / packages_dir
+).resolve() != (root / '.lake/packages').resolve():
+    raise SystemExit('Unexpected packagesDir: must point to the root shared .lake/packages')
+if len(packages) != 1:
+    raise SystemExit('Expected exactly one pinned Stacks package')
 package = packages[0]
 if (package.get('type') != 'git' or package['url'] != pins['url']
         or package['rev'] != pins['rev']
@@ -46,7 +54,7 @@ print(pins['url'], pins['rev'])
 PY
 )"
 read -r stacks_url stacks_rev <<< "$pin_line"
-stacks_dir="$PWD/.lake/packages/Stacks"
+stacks_dir="$ROOT/.lake/packages/Stacks"
 
 if [[ ! -e "$stacks_dir" ]]; then
   # Lake may remove a failed clone. Fetch just the pinned commit, not main.

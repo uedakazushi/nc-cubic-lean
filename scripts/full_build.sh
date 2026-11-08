@@ -24,12 +24,13 @@ if [[ ! -f lake-manifest.json ]]; then
   exit 1
 fi
 bash "$ROOT/scripts/resolve_deps.sh" "$PWD"
-python3 fetch_mathlib_cache.py
+# NcCubic already built against the same shared mathlib/Stacks artifacts.
+# Avoid repeatedly resolving and downloading the selected mathlib cache.
 lake build NcCubicStacks NcCubicStacksAudit
 cd "$ROOT"
 
 echo "[nc-cubic] Rendering Verso Blueprint HTML and LuaLaTeX PDF"
-bash scripts/build_blueprint.sh
+bash scripts/build_blueprint.sh --already-checked
 
 echo "[nc-cubic] Full project build, audits, and Blueprint generation complete"
 echo "[nc-cubic] Note: this is NOT proof of Theorem 1.1(3)."
