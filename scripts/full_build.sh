@@ -23,13 +23,14 @@ if [[ ! -f lake-manifest.json ]]; then
   echo "Stacks lockfile missing; explicit dependency resolution required." >&2
   exit 1
 fi
-lake resolve-deps
-python3 fetch_mathlib_cache.py
+bash "$ROOT/scripts/resolve_deps.sh" "$PWD"
+# NcCubic already built against the same shared mathlib/Stacks artifacts.
+# Avoid repeatedly resolving and downloading the selected mathlib cache.
 lake build NcCubicStacks NcCubicStacksAudit
 cd "$ROOT"
 
-echo "[nc-cubic] Rendering Verso Blueprint"
-bash scripts/build_blueprint.sh
+echo "[nc-cubic] Rendering Verso Blueprint HTML and LuaLaTeX PDF"
+bash scripts/build_blueprint.sh --already-checked
 
 echo "[nc-cubic] Full project build, audits, and Blueprint generation complete"
 echo "[nc-cubic] Note: this is NOT proof of Theorem 1.1(3)."

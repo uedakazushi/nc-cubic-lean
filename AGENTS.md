@@ -97,18 +97,28 @@ apply throughout. Git-backed project files are persisted in this repository.
 The authored Verso chapters are in `blueprint/verso/NcCubicBlueprint/Chapters/`.
 This is a separate Lake package that uses VersoBlueprint v4.35.0; do not add
 Verso to the main mathlib-only root package just for documentation.
+Both independent workspaces use the same pinned dependency package directory,
+root `.lake/packages/`, via `packagesDir = "../../.lake/packages"`. This shares
+Git checkouts and compiled Mathlib/Stacks artifacts, while keeping their own
+local targets and site outputs. Never revert to separate package stores.
+To reuse pre-existing legacy builds, run `scripts/reuse_legacy_builds.py --apply`
+only while no Lake or Lean build is running. The migration does not delete
+legacy caches; only clean them up after a successful build.
 After changing a task or proof, run `python3 scripts/check_blueprint.py`
 and update the corresponding labeled Verso statement. When dependencies are
 available, run `bash scripts/build_blueprint.sh` and check the HTML graph,
-summary, and links. No GitHub Actions or GitHub Pages setup is authorized.
+summary, links, and the LuaLaTeX-generated PDF at
+`blueprint/verso/_out/site/pdf/main.pdf`. The PDF build requires LuaTeX-ja
+for Japanese text. Do not silently skip PDF if the TeX toolchain is missing.
+No GitHub Actions or GitHub Pages setup is authorized.
 The Verso build, generated HTML/data checks, and resolved lockfile were verified
 in the prepared cloud environment on 2026-11-07. Preserve the pinned lockfile.
 
 ## Default build entry point (v0.3.0)
 
 Root `lake build` is intended to run NcCubic build, global axiom audit,
-Stacks adapter build/audit, Blueprint consistency check, and Verso HTML
-rendering through a default Lake custom target and `scripts/full_build.sh`.
+Stacks adapter build/audit, Blueprint consistency check, and Verso HTML +
+LuaLaTeX PDF rendering through a default Lake custom target and `scripts/full_build.sh`.
 Do not remove these checks to mask a dependency or build failure.
 For fast proof iterations, `lake build NcCubic` remains available; use
 `lake build` before reporting a verified, complete project checkpoint.

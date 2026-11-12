@@ -17,7 +17,9 @@
 
 ## 実行
 
-Linux/macOS で Bash、Python 3.11以降、Git、curl、tar、zstd を用意します。
+Linux/macOS で Bash、Python 3.9以降、Git、curl、tar、zstd を用意します。
+システムの Python 3.9/3.10 でも `lake build` の整合性検査が動作するよう、
+SHA-256 はストリーミング計算を使います（Python 3.11 固有の API は不要）。
 
 ```bash
 bash scripts/bootstrap.sh  # 必要な場合のみ初回環境準備
@@ -27,6 +29,15 @@ lake build
 `bootstrap.sh` は固定版のLeanを取得・検証し、固定した依存関係を解決し、
 必要なmathlibキャッシュを取得してビルドと公理監査を実行します。
 既に同じLeanが使える環境ではその実行系を利用します。
+Stacks の Git partial clone が `HTTP 400` / `promisor remote` で中断された場合は、
+`scripts/resolve_deps.sh` が固定コミットを `HTTP/1.1`・`--no-filter` で取得し直して
+Lake の依存解決を一度だけ再試行します。通常の成功時には余分な取得をしません。
+全 workspace は `nc-cubic-lean/.lake/packages/` を共有するため、同じ
+mathlib・Stacks のソースや `.olean` を重複取得・コンパイルしません。
+同じ復旧処理は `integrations/stacks` および `blueprint/verso` の
+独立したビルドにも適用されます。いずれも固定済みのlockfileを使い、
+失敗時に限り `Stacks` の不完全なpartial cloneを修復します。
+未解決の場合は失敗を報告し、既存の checkout を無断で削除しません。
 最終定理の完成確認は別のコマンドです。
 
 ```bash
@@ -84,9 +95,12 @@ Blueprint v0.4.0では、全19課題の正確な主張・仮定・証明設計�
 実装先候補を整理した。アフィン分類と元の幾何学的定理の完成条件を分け、
 条件付きの障害計算と証拠の存在定理も区別する。
 `leanprover/verso-blueprint` の固定版で、数式・依存グラフ・進捗表・
-証明済みLean宣言へのリンクを生成する。ルートで `bash scripts/build_blueprint.sh` を実行する。
+証明済みLean宣言へのリンクを生成する。ルートで `bash scripts/build_blueprint.sh` を実行すると、
+HTML と LuaLaTeX 製 PDF を同時生成する。PDF のためには MacTeX / TeX Live の
+`lualatex`・`kpsewhich`・`luatexja` と Verso が要求する TeX パッケージが必要である。
 証明ライブラリとは独立したpackageで、GitHub Actionsによる公開は設定していない。
-全体ビルド・HTML生成の検証は [STATUS](docs/STATUS.md) を参照する。
+以前の全体ビルド・HTML生成の検証は [STATUS](docs/STATUS.md) を参照する。
+新しい PDF 経路については日本語組版の単体テストのみ実行済みで、Lean を含む全体ビルドは未検証である。
 
 ### 単一コマンドのデフォルトビルド（v0.3.0）
 
@@ -97,7 +111,24 @@ Lean 4.35.0 と Lake が利用できる場合、clone したリポジトリの
 2. ソース整合性チェック、プロジェクト全宣言の公理監査
 3. `blueprint/tasks.json` と Verso の依存関係照合
 4. Axiom Stacks のKoszulアダプターの個別ビルド・公理監査
-5. Verso Blueprint のHTML生成と `index.html` の存在チェック
+5. Verso Blueprint のHTMLとLuaLaTeX製PDFの生成、および両出力の存在チェック
+
+依存構成の最適化（2026-11-08）：`integrations/stacks` と `blueprint/verso` の
+`packagesDir = "../../.lake/packages"` により、固定したGit checkout・コンパイル済み
+Mathlib/Stacks・Verso依存をルートと共有する。各 workspace 固有の `.lake/build`、
+HTML・PDF 出力、および検証ターゲットは独立である。
+既存の旧キャッシュを捨てずに共通側へ引き継ぐには、実行中のビルド終了後、
+`python3 scripts/reuse_legacy_builds.py` で対象を確認し、
+`python3 scripts/reuse_legacy_builds.py --apply` で移行できる。
+旧ディレクトリは自動削除されない。移行後の正常ビルドを確認してから不要な
+旧キャッシュを整理する。共有には同一固定 SHA、root workspace、同一 toolchain が必要。
+`python3 scripts/dependency_info.py shared-check` で、ビルド前にも
+3 workspace の lockfile・設定・共有 SHA の整合性だけを検査できる。
+
+生成先はHTMLが `blueprint/verso/_out/site/html-multi/index.html`、
+PDFが `blueprint/verso/_out/site/pdf/main.pdf`。PDF の元となる生成 TeX は
+`blueprint/verso/_out/site/tex/main.tex` に保存される。
+PDF は静的な印刷版で、依存グラフの対話操作はHTML版に残る。
 
 実装は `lakefile.lean` のデフォルト `fullProject` ターゲットと
 `scripts/full_build.sh`。下位のLakeコマンドには明示的なターゲットを

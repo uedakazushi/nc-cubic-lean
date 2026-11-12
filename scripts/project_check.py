@@ -69,7 +69,13 @@ def main():
             raise SystemExit(f'Unbounded umbrella import: {path.relative_to(ROOT)}')
     provenance = json.loads((ROOT / 'paper/source.json').read_text())
     source = ROOT / provenance['path']
-    if hashlib.file_digest(source.open('rb'), 'sha256').hexdigest() != provenance['sha256']:
+    # hashlib.file_digest is only available since Python 3.11. Read in chunks
+    # so the integrity check works with the system Python on macOS as well.
+    digest = hashlib.sha256()
+    with source.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    if digest.hexdigest() != provenance['sha256']:
         raise SystemExit('Original paper checksum differs from source.json')
     proved = []
     for task in nodes.values():

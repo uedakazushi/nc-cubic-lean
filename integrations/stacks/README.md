@@ -7,6 +7,8 @@
 証明本体も同じ固定版Stacksに依存し、`NcCubic/GradientRegularity.lean` で
 CM・Koszul局所大域接続を用いて低次数gradient syzygy消滅を証明する。
 この独立packageからrootへの依存はなく、循環依存は導入しない。
+`packagesDir = "../../.lake/packages"` を設定し、ルートと同じ mathlib・Stacks
+チェックアウトおよびその `.olean` を使用する。ローカルのアダプター build は独立。
 
 ## 固定する依存
 
@@ -71,9 +73,10 @@ Stacks 全体を列挙して監査するものではない。
 ```bash
 source scripts/env.sh
 cd integrations/stacks
-lake resolve-deps
-python3 fetch_mathlib_cache.py
+bash ../../scripts/resolve_deps.sh "$PWD"
 lake build NcCubicStacks NcCubicStacksAudit
+# 初回の mathlib cache が不足するときだけ:
+# python3 fetch_mathlib_cache.py
 ```
 
 Cohen–Macaulay 側も検証するときだけ、続けて実行する。

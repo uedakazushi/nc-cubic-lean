@@ -4,7 +4,10 @@
 定理1.1(3)の数学的な設計を、公式
 [VersoBlueprint](https://github.com/leanprover/verso-blueprint) の **v4.35.0** で記述する。
 Lean 4.35.0を使う独立したLake packageであり、本文の数式、依存グラフ、進捗表、
-検証済みLean宣言へのリンクをHTMLに生成する。主ライブラリの依存pinは変更しない。
+検証済みLean宣言へのリンクをHTMLに、印刷用の静的版をLuaLaTeXでPDFに生成する。
+主ライブラリの依存pinは変更しない。`packagesDir = "../../.lake/packages"` により
+ルートと依存チェックアウト・コンパイル結果を共有する（独立したローカルビルド成果物と
+HTML・PDF 出力は引き続き独立）。
 
 ## 本文
 
@@ -44,16 +47,37 @@ bash scripts/bootstrap.sh
 bash scripts/build_blueprint.sh
 ```
 
-生成先は `blueprint/verso/_out/site/html-multi/index.html`。
-同じディレクトリに数式のある章、依存グラフ、進捗表とリンクを生成する。
+生成先はHTMLが `blueprint/verso/_out/site/html-multi/index.html`、
+PDFが `blueprint/verso/_out/site/pdf/main.pdf`、生成TeXが
+`blueprint/verso/_out/site/tex/main.tex` である。
+HTMLには数式のある章、対話的な依存グラフ、進捗表とリンクを生成する。
+PDFにはVersoの静的TeXレンダリングを用い、対話的機能は含めない。
+
+PDFのビルドには `lualatex`、`kpsewhich`、`luatexja.sty` と
+Versoが要求するTeX Liveパッケージ・Source系フォントパッケージが必要である。
+Macでは日本語対応を含むMacTeXを推奨する。`scripts/blueprint_lualatex.sh` は
+生成TeXのプリアンブルに `\\usepackage{luatexja}` を一度だけ挿入して
+日本語を組版する。原稿ソースやHTML用KaTeXのマクロには変更を加えない。
 各章に固有の参照名と英字の出力パスを指定し、日本語見出しからのURL衝突を避ける。
 生成前にこのHTMLディレクトリを置換し、改名前の章を残さない。
 全体ビルド・公理監査を含めて検証するときはルートで `lake build`。
 元の分類定理の完成判定は `bash scripts/check.sh --complete` で別に行う。
 現在は4課題が未完了であり、最終ゲートは失敗するのが正しい。
 
-2026-11-07、準備済みクラウド環境で全体ビルドとHTML生成を検証した。
+2026-11-07、準備済みクラウド環境で従来の全体ビルドとHTML生成を検証した。
+2026-11-08、LuaLaTeXエンジンラッパーを単体テストし、日本語と数式を含む
+試験文書がPDFになり、日本語テキストを抽出できることを確認した。
+実際のVerso Blueprint全体のPDF生成は未検証である。
 初回はVersoBlueprint・Versoと補助依存の取得にネットワーク接続が必要。
+この独立した Lake package でも Stacks の Git partial clone が失敗し得るため、
+`scripts/build_blueprint.sh` はルート共通の `scripts/resolve_deps.sh` を呼ぶ。
+旧 `blueprint/verso/.lake/packages` が残っている場合は再利用されない。
+必要なら、ビルドが停止している状態でルートから
+`python3 scripts/reuse_legacy_builds.py --apply` を実行し、既存の成果物を移行する。
+Stacks の HTTP 400 / promisor remote エラー時には、固定SHAのフィルターなしfetchで
+一度修復して依存解決を再試行する。手動で復旧する場合はリポジトリルートから
+`bash scripts/resolve_deps.sh blueprint/verso` とする。
+manifestが存在しない場合は依存の無断更新を避けるため停止する。
 固定した `lake-manifest.json` と、ルートと共有する9依存のpinを保持する。
 クリーンな新規cloneでの全依存再取得は未検証である。
 GitHub ActionsやGitHub Pagesへの公開は設定していない。

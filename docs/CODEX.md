@@ -11,6 +11,15 @@ Codex Cloudの環境作成で `uedakazushi/nc-cubic-lean` を選択する。
 bash scripts/bootstrap.sh
 ```
 
+ルートの `lake build` は Verso HTML に加えて LuaLaTeX PDF も生成する。
+環境に `lualatex`、`kpsewhich`、`luatexja` と必要な TeX Live パッケージを
+インストールする。出力先は `blueprint/verso/_out/site/pdf/main.pdf`。
+TeX が無い場合、PDF の生成を黙って省略せず全体ビルドは失敗する。
+
+Stacks の大きな Git partial clone が `HTTP 400` で中断された場合は、
+固定 SHA に対する `--refetch --no-filter` を使って自動的に一度復旧を試みる。
+依存解決以外の失敗はそのまま報告し、プロキシ・認証・TLS設定は変更しない。
+
 準備済み環境を使う通常の作業では次を実行する。
 
 ```bash
