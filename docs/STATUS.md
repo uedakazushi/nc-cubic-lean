@@ -155,7 +155,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML・LuaLaTeX PDF生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。221モジュールをビルドし、2724宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。257モジュールをビルドし、2982宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。
@@ -167,6 +167,28 @@ PDF生成先は `blueprint/verso/_out/site/pdf/main.pdf`。
 この環境のTeX補完手順は [TEX_RUNTIME.md](TEX_RUNTIME.md) を参照。
 作業環境では `source scripts/env.sh` と `export XDG_CACHE_HOME=/workspace/.cache` を使う。
 procfs互換処理は現在は不要。原論文はpaper/source.jsonのSHA256で照合する。
+
+## 幾何学的比較の追加の検証済み補題
+
+- `CoordinateTwistFrame`・`CanonicalEulerCoordinateEvaluation`・`QuadraticCoefficientRatio`：
+  標準チャートの任意の部分開集合上でO(2)の自由生成元とO(1)生成元の積を比較し、
+  Euler場の比座標への作用と二次係数の実際の分数c/X_i²を証明した。
+- `QuadraticLocalReconstruction`・`QuadraticBracketReconstruction`・
+  `CanonicalQuadraticBracketReconstruction`：実際の大域切断の制限を標準二次係数から再構成し、
+  その括弧を座標成分の和へ分解した。最後の座標Euler公式への接続には、
+  元の包含写像との一致を明示的な仮定として残す。
+- `ProjectiveBiderivationExt`：実際の相対双導分が標準比座標の生成元対で一致すれば、
+  全開集合の全切断上で一致する。アフィン開上の準連接層の比較を経由し、
+  任意の開集合の切断加群に有限自由性を仮定しない。
+- `ExteriorRawPairing`：外積接層から余接外積の双対への標準の大域射を構成した。
+  `ExteriorDualityCriterion` は、実際のunit上の行列式評価から、その射の有限局所自由な場合の
+  同型性を導く。標準射に対する評価公式の接続は実装中。
+- `ExteriorFunctionalAgreement`・`BivectorFaithfulness`：実際の行列式公式と同型を明示した場合、
+  双導分からの実際の双ベクトルへの逆構成、全開集合の括弧の回収と単射性を証明した。
+- `ConstantRepresentativeOfTangency`：接性の係数可除性から、全射影開上で同じ括弧を与える
+  定数trivectorを構成した。可除性を幾何学的接性から得る比較は別途未完了。
+
+これらはG0・G2・Tを無条件に閉じるものではない。最終定理の状態は未証明のままである。
 
 ## 実装中の課題：元の射影幾何への接続
 

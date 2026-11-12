@@ -195,6 +195,15 @@ public import NcCubic.Geometry.CanonicalTwistEvaluation
 public import NcCubic.Geometry.ImmersionBracketNaturality
 public import NcCubic.Geometry.TensorPullbackExt
 public import NcCubic.Geometry.ScalarPairingPullback
+public import NcCubic.Geometry.ExteriorHomExt
+public import NcCubic.Geometry.TensorMapSections
+public import NcCubic.Geometry.ExteriorPullbackSections
+public import NcCubic.Geometry.ExteriorPairingPullback
+public import NcCubic.Geometry.CanonicalDeterminantPairing
+public import NcCubic.Geometry.DeterminantBracketAgreement
+public import NcCubic.Geometry.DeterminantBiderivation
+public import NcCubic.Geometry.ImmersionPairingCompatibility
+public import NcCubic.Geometry.ImmersionBracketCompatibility
 
 public import NcCubic.Geometry.HypersurfaceBracketFaithfulness
 public import NcCubic.Geometry.SheafExteriorFrame
@@ -269,3 +278,33 @@ public import NcCubic.Geometry.QuadraticSectionReadout
 public import NcCubic.Geometry.ProjectiveCoordinateDerivatives
 public import NcCubic.Geometry.DualFunctionalPullback
 public import NcCubic.Geometry.CoordinateComponentBracket
+public import NcCubic.Geometry.ExteriorFunctionalAgreement
+public import NcCubic.Geometry.CoordinateTwistFrame
+public import NcCubic.Geometry.CanonicalEulerCoordinateEvaluation
+
+public import NcCubic.Geometry.AmbientProjectiveBiderivation
+public import NcCubic.Geometry.ExteriorNativeStalk
+public import NcCubic.Geometry.ExteriorDualityCriterion
+public import NcCubic.Geometry.QuadraticCoefficientRatio
+public import NcCubic.Geometry.ExteriorRawPairingLinear
+public import NcCubic.Geometry.QuadraticComponentEvaluation
+
+public import NcCubic.Geometry.ProjectiveBiderivationExt
+public import NcCubic.Geometry.QuadraticLocalReconstruction
+public import NcCubic.Geometry.QuadraticCoefficientBracket
+public import NcCubic.Geometry.ExteriorRawPairing
+public import NcCubic.Geometry.QuadraticBracketReconstruction
+public import NcCubic.Geometry.ExteriorRawDualEvaluation
+public import NcCubic.Geometry.BivectorFaithfulness
+public import NcCubic.Geometry.CanonicalQuadraticRatioBracket
+public import NcCubic.Geometry.CanonicalQuadraticBracketReconstruction
+public import NcCubic.Geometry.CanonicalEulerFrame
+public import NcCubic.Geometry.AlgebraicQuadraticBracket
+public import NcCubic.Geometry.GeometricConverse
+public import NcCubic.Geometry.ConstantRepresentativeOfTangency
+public import NcCubic.Geometry.GeometricForward
+
+public import NcCubic.Geometry.LocalizedPairBracket
+public import NcCubic.Geometry.ExteriorRawPairingEvaluation
+public import NcCubic.Geometry.DualIsoTransport
+public import NcCubic.Geometry.SmoothBivectorDuality

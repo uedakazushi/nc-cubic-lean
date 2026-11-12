@@ -217,22 +217,29 @@ Poisson条件は標準的な標数0の特徴付け、すなわち実際の双ベ
 
 ### 次に接続する未完了部分
 
-1. `TangentCohomology` でΛ²T(-3)の全次数消滅と元のEuler商のΓ全射性を証明し、
-   `CubicAmbientLift` の追加の消滅仮定は外した。`QuadraticEulerLift`・`CubicQuadraticLift` は
-   明示的な実際の中央項同型eを入力として二次切断σを与える。残るのは、標準乗法のcurryに基づく
-   中央項同型の列と、係数frameが実際に使う包含写像の一致である。
-2. `CanonicalTwistDuality`・`CanonicalTwistEvaluation` は実際のtwist乗法のcurryと局所積の公式を
-   検証済み。`CanonicalEulerField` と `CoordinateComponentBracket` は座標Euler場と外積生成元の
-   実際の導分・括弧評価を比較する。これを任意の二次係数切断へ拡張し、
-   `QuadraticRepresentative` の多項式括弧との一致を証明する。
-   閉埋込みの接性からnormal方向の括弧の消滅を得て、既存の可除性・Euler補正・
-   Koszul表示を適用し、任意の幾何学的切断からPを得る部分は未完了である。
-3. `ExteriorRawDualIso` の標準precomposition写像の同型性は証明済み。
-   `ExteriorUnitPairing` は有限局所自由な層の実際のstalk同型と行列式の評価を与える。
-   残るのは外積接層からraw determinant dualへの大域射、その標準unit評価とstalk同型の一致である。
-   `ExteriorFunctionalContraction`・`ExteriorFunctionalBracket` は余接外積dualから実際の内部Homへの縮約と
-   双導分の全開集合での回収を証明済み。これを構成する大域外積双対射と元の
-   `bivectorContraction` に比較し、実際の双ベクトルへの逆構成・単射性を閉じる。
-4. 以上を、実際の標準括弧のJacobiと全多項式Jacobiの同値、証明済みアフィン分類、
-   非零性の比較に接続する。`GeometricClassificationStatement` は独立レビュー済みの
-   未証明の命題定義であり、`NcCubic.theorem113` はまだ証明されていない。
+1. `TangentCohomology` と `CubicAmbientLift` は追加の消滅仮定なしのambient持上げを与える。
+   `QuadraticEulerLift`・`CubicQuadraticLift` は実際の中央項同型eから二次切断σを与える。
+   `CanonicalEulerFrame` は係数frameが使う元のnative包含とbiconeの一致を固定した。
+   標準twist乗法のcurryに基づく中央項同型の列を、この包含へ接続する部分が残る。
+2. `CoordinateTwistFrame`・`QuadraticCoefficientRatio` は任意の部分開上のO(2)生成元、
+   そのO(1)同士の積、実際の分数c/X_i²を比較する。`CanonicalEulerCoordinateEvaluation` は
+   座標Euler場が比座標へ作用する商の微分公式を与える。
+   `CanonicalQuadraticBracketReconstruction`・`AlgebraicQuadraticBracket` は、中央項の列の一致を
+   明示すれば、実際の大域切断の括弧を抽出した二次係数の和で評価する。
+   `ProjectiveBiderivationExt` は比座標の生成元対での一致を全開集合へ移す。
+   これを標準多項式括弧へ比較し、閉埋込みの接性からnormal括弧の消滅・係数可除性を得る。
+   その後は `ConstantRepresentativeOfTangency` が既存のEuler補正・Koszul表示・代表独立性を
+   接続し、全射影開で同じ括弧を与える定数Pを供給する。
+3. `ExteriorRawDualIso` の実際のprecompositionは同型であり、`ExteriorRawPairing` は
+   外積双対性の標準大域射を構成する。`ExteriorDualityCriterion` は実際のunit上の行列式公式から
+   有限局所自由な場合の同型性を証明する。標準射のunit評価をこの条件へ接続する部分が残る。
+   `ExteriorFunctionalAgreement`・`BivectorFaithfulness` は、実際の同型と行列式公式を明示すれば
+   双導分からの逆構成、全開集合での括弧の回収、実際の双ベクトルの単射性を与える。
+   `DeterminantBiderivation` は同じ評価公式から実際の双ベクトルの双導分性と相対性を回収する。
+   `ImmersionBracketCompatibility` は実際のunit制限の等式を、全開集合の括弧のpullbackの等式へ移す。
+4. `GeometricForward`・`GeometricConverse` は実際の外積双対同型と行列式公式を明示した補助定理である。
+   正方向は個々のPの実際の標準表示から正規形へ移し、逆方向は正規形から実際の非零双ベクトルを作る。
+   前者に任意のπの表示定理を仮定として隠してはいない。標準写像の同型性・評価公式、任意πの表示と
+   全開集合の比較を証明してから最終型へ適用する。
+   `GeometricClassificationStatement` は独立レビュー済みの未証明の命題定義であり、
+   `NcCubic.theorem113` はまだ証明されていない。
