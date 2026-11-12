@@ -1,6 +1,6 @@
 # 現在の状態
 
-2026-11-07。**アフィン分類Aは証明済み。元の幾何学的定理1.1(3)は未証明。**
+2026-11-13。**アフィン分類Aは証明済み。元の幾何学的定理1.1(3)は未証明。**
 
 `NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement` を証明した。
 元からある契約の仮定・量化・結論を変更せず、正方向と逆方向を接続している。
@@ -100,8 +100,8 @@ G0–G2の完成状態は未完了のまま、次を実際の定義に対して�
 
 - `HypersurfaceRestrictionSequence`・`HypersurfaceRestrictionSections`・`AmbientBivectorLift`：
   実際の随伴の単位写像を最後の射とする制限完全列から、負twistのH⁰/H¹消滅を仮定した
-  一意な大域持上げを構成。滑らかな閉埋込みでは実際の双ベクトルからの持上げの単射性も証明。
-  接束外積に対する必要な消滅の適用は引き続き接続中。
+  一意な大域持上げを構成。`TangentCohomology` の消滅計算を適用した
+  `CubicAmbientLift` ではその仮定を外し、滑らかな閉埋込みで持上げの単射性も証明した。
 - `ProjectiveCohomology`・`TangentEulerResolution`・`ProjectiveTwistDual`：
   負の線束twistと有限直和の全次数コホモロジー消滅、実際の接束Euler外積完全列、
   双対Euler列の中央項とO(1)直和の同型を検証。
@@ -125,7 +125,19 @@ G0–G2の完成状態は未完了のまま、次を実際の定義に対して�
   双ベクトルからこの内部Homへの写像の単射性とは区別し、後者は比較の残件とする。
 - `ExteriorWedgeLaws`・`ProjectiveTwistExact`・`TangentTwistEuler`：
   実際の局所外積と制限の適合、nativeなtwistの完全列保存、Euler外積のtwistと
-  線束直和との同型を検証。接束外積の必要なコホモロジー消滅への最終適用は未完了。
+  線束直和との同型を検証。`TangentCohomology` で必要な負twist消滅と元のEuler商のΓ全射性まで接続した。
+
+- `TangentCohomology`・`CubicAmbientLift`・`QuadraticEulerLift`・`CubicQuadraticLift`：
+  実際のΛ²T(-3)の全次数コホモロジー消滅、元のEuler商の大域切断上の全射性、
+  任意の双ベクトルの追加コホモロジー仮定なしのambient持上げを証明。
+  明示的な実際のEuler中央項同型eを入力とする二次切断の持上げも構成した。
+- `CanonicalTwistDuality`・`CanonicalTwistEvaluation`・`CanonicalEulerField`：
+  実際のtwist乗法をcurryした同型と局所積の評価、各座標Euler場の導分作用を比較。
+  これを係数frameの元の包含と結ぶ中央項同型、および任意係数切断の括弧との比較は未完了。
+- `ExteriorRawDualIso`・`ExteriorUnitStalk`・`ExteriorFunctionalContraction`・`ExteriorFunctionalBracket`：
+  余接外積のdualからraw汎関数層への標準写像の同型性と、標準unitに固定したstalk比較、
+  実際の双導分から得たdual切断の縮約と全開集合上の括弧の回収を証明。
+  有限局所自由な層の外積双対性の大域同型と、元のbivectorContractionとの一致は未完了。
 
 `SheafKahler`は各開集合の切断環のKähler微分上の形式を構成する。
 任意の開集合で微分層の切断と切断環の微分を同一視したとは主張しない。
@@ -143,7 +155,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。194モジュールをビルドし、2488宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。221モジュールをビルドし、2724宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。
@@ -159,8 +171,8 @@ procfs互換処理は現在は不要。原論文はpaper/source.jsonのSHA256で
 scheme smoothnessと孤立gradient条件の比較、および実際の標準括弧のJacobi持上げは検証済み。
 残る接続は次の通りである。
 
-1. Euler外積・twist完全列へコホモロジー消滅を適用して持上げ仮定を外し、
-   任意の双ベクトル切断を二次係数表示へ移す。標準のtwist乗法・Euler商写像による
+1. 検証済みのambient持上げと元のEuler商のΓ全射性を、標準twist乗法を使う中央項同型へ接続する。
+   任意の双ベクトル切断の二次係数表示について、標準のtwist乗法・Euler商写像による
    括弧の評価と接性を比較し、Euler補正とKoszul表示から一意なPを得る。
 2. 有限局所自由な余接層について外積と双対の大域同型を構成し、標準縮約と比較する。
    これにより、双導分から実際の双ベクトルへの逆構成と、双ベクトルから括弧への単射性を閉じる。

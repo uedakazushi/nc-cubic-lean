@@ -189,6 +189,12 @@ public import NcCubic.Geometry.RepresentativeFaithfulness
 public import NcCubic.Geometry.HypersurfaceRestrictionSections
 public import NcCubic.Geometry.AmbientBivectorLift
 public import NcCubic.Geometry.TensorCurryIso
+public import NcCubic.Geometry.CanonicalTwistDuality
+public import NcCubic.Geometry.TwistPairingEvaluation
+public import NcCubic.Geometry.CanonicalTwistEvaluation
+public import NcCubic.Geometry.ImmersionBracketNaturality
+public import NcCubic.Geometry.TensorPullbackExt
+public import NcCubic.Geometry.ScalarPairingPullback
 
 public import NcCubic.Geometry.HypersurfaceBracketFaithfulness
 public import NcCubic.Geometry.SheafExteriorFrame
@@ -236,3 +242,30 @@ public import NcCubic.Geometry.ExteriorWedgeLaws
 public import NcCubic.Geometry.BivectorLinearity
 
 public import NcCubic.Geometry.TangentTwistEuler
+public import NcCubic.Geometry.ExteriorFunctionalPairing
+public import NcCubic.Geometry.EulerCoordinateAction
+
+public import NcCubic.Geometry.TangentCohomology
+
+public import NcCubic.Geometry.CubicAmbientLift
+public import NcCubic.Geometry.CanonicalEulerField
+public import NcCubic.Geometry.ExteriorRawDualIso
+public import NcCubic.Geometry.ExteriorFunctionalContraction
+public import NcCubic.Geometry.ExteriorWedgeMap
+
+public import NcCubic.Geometry.QuadraticEulerLift
+
+public import NcCubic.Geometry.CubicQuadraticLift
+public import NcCubic.Geometry.ExteriorFunctionalBracket
+public import NcCubic.Geometry.BiconeDualColumns
+public import NcCubic.Geometry.NativeExteriorWedge
+public import NcCubic.Geometry.ExteriorUnitStalk
+public import NcCubic.Geometry.ExteriorUnitPairing
+public import NcCubic.Geometry.StalkFiniteFamily
+public import NcCubic.Geometry.ExteriorRawPairingCore
+
+public import NcCubic.Geometry.QuadraticSectionReadout
+
+public import NcCubic.Geometry.ProjectiveCoordinateDerivatives
+public import NcCubic.Geometry.DualFunctionalPullback
+public import NcCubic.Geometry.CoordinateComponentBracket

@@ -60,7 +60,7 @@ $$`\Lambda^3V\xrightarrow{\sim}H^0(X,\Lambda^2T_X),\qquad P\longmapsto(\iota_{dF
 任意の切断がこの形で表されることと、$`P` の一意性の両方を示す。
 係数段階の高次Koszul表示・Euler補正・代表独立性・縮約による線形同値は
 `PolynomialRepresentation.lean` と関連モジュールで検証済み。
-実際の接束Euler外積完全列、負の線束twistの消滅、随伴の単位写像による条件付き持上げ、
+実際の接束Euler外積完全列、必要な接束外積の負twist消滅、随伴の単位写像による無条件のambient持上げ、
 標準包含・射影による二次多項式係数表示も検証済み。これらを任意の射影切断に接続する比較は未完了。
 :::
 

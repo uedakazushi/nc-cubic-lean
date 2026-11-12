@@ -1,6 +1,6 @@
 # 定理1.1(3)のBlueprint
 
-2026-11-07 / Blueprint v0.4.0。原典は `paper/source.json` に固定する。
+2026-11-13 / Blueprint v0.4.0。原典は `paper/source.json` に固定する。
 これは依存関係と証明設計であり、未形式化の結果を証明済みとする文書ではない。
 
 数学的な本文は [Verso Blueprint](verso/README.md) の3章に置く。全19課題について、
@@ -72,7 +72,7 @@ P(\alpha_0,\alpha_1,\alpha_2)
 \(F\) の変換は \(z_i=\sum_j(b_j)_i y_j\) の代入であり、\(P\) と同じ共変変換を誤って
 施してはいけない。
 
-`HasIsolatedGradientZero` と幾何学的smoothnessの同値も未証明の橋渡しである。
+`HasIsolatedGradientZero` と実際のscheme smoothnessの同値は `ChartComparison`・`CanonicalHypersurface` で検証済み。
 全多項式Jacobiと座標生成元でのJacobiの同値はP3で証明済みである。
 
 ## 3. 証明の中心
