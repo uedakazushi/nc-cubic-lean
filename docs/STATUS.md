@@ -152,16 +152,19 @@ P2の実証明に必要なCM/Koszulの個別モジュールだけを主ライブ
 Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し、既存依存のrevisionは変更しない。
 
 主な検証コマンドはルートの `lake build`。証明ライブラリ、全NcCubic宣言の公理監査、
-課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML生成を要求する。
+課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML・LuaLaTeX PDF生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
 今回の全体 `lake build` は成功した。221モジュールをビルドし、2724宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。
+日本語PDFも21ページ生成され、日本語の抽出を確認した。Unicode記号3文字のフォント警告と
 linter warningは残る。新規cloneの全依存再取得は未検証である。
 
 HTML生成先は `blueprint/verso/_out/site/html-multi/index.html`。
+PDF生成先は `blueprint/verso/_out/site/pdf/main.pdf`。
+この環境のTeX補完手順は [TEX_RUNTIME.md](TEX_RUNTIME.md) を参照。
 作業環境では `source scripts/env.sh` と `export XDG_CACHE_HOME=/workspace/.cache` を使う。
 procfs互換処理は現在は不要。原論文はpaper/source.jsonのSHA256で照合する。
 
