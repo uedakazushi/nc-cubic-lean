@@ -44,7 +44,8 @@ theorem eulerFirstArrow_component_on_d
 /-- The actual tangent Euler quotient on one dual coordinate summand. -/
 def eulerTangentColumn (j : Fin (n+1)) :
     dualSheaf (X := AlgebraicGeometry.Proj (polyGrading R n)) (twistMinusOneFamily R n j) ⟶
-      tangentSheaf (projToSpecCoeff R n) :=
+      tangentSheaf (X := AlgebraicGeometry.Proj (polyGrading R n))
+      (S := Spec (CommRingCat.of R)) (projToSpecCoeff R n) :=
   dualMap (X := AlgebraicGeometry.Proj (polyGrading R n))
     (biproduct.π (twistMinusOneFamily R n) j) ≫ eulerTangentMap R n
 

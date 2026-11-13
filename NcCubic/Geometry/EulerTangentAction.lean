@@ -19,7 +19,8 @@ variable (R : Type u) [CommRing R] (n : ℕ)
 /-- The actual quotient map in the tangent Euler sequence, as a morphism into
 the genuine relative tangent sheaf. -/
 def eulerTangentMap : dualSheaf (X := AlgebraicGeometry.Proj (polyGrading R n)) (twistMinusOneSum R n) ⟶
-    tangentSheaf (projToSpecCoeff R n) := dualMap (X := AlgebraicGeometry.Proj (polyGrading R n)) (eulerFirstArrow R n)
+    tangentSheaf (X := AlgebraicGeometry.Proj (polyGrading R n))
+      (S := Spec (CommRingCat.of R)) (projToSpecCoeff R n) := dualMap (X := AlgebraicGeometry.Proj (polyGrading R n)) (eulerFirstArrow R n)
 
 /-- The actual cotangent Euler map on the universal differential of any local
 function, with the canonical coordinate partial derivatives. -/

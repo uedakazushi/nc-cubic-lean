@@ -1,6 +1,7 @@
 /- Copyright (c) 2026 nc-cubic contributors. All rights reserved. -/
 module
 public import NcCubic.Geometry.CanonicalTwistDuality
+public import NcCubic.Geometry.CanonicalEulerMiddle
 public import NcCubic.Geometry.EulerCoordinateAction
 @[expose] public noncomputable section
 namespace NcCubic.Geometry
@@ -16,9 +17,10 @@ variable (R : Type u) [CommRing R] (n : ℕ)
 /-- The canonical coordinate Euler field: use actual twist multiplication to
 identify the positive line with the dual negative line, then the original Euler quotient. -/
 def canonicalEulerField (j : Fin (n+1)) :
-    (CanonicalTwistDuality.twist R n 1 : (CanonicalTwistDuality.projective R n).Modules) ⟶
-      tangentSheaf (projToSpecCoeff R n) :=
-  CanonicalTwistDuality.twistDualMap R n 1 ≫ eulerTangentColumn R n j
+    (CanonicalTwistDuality.twist R n 1 : (AlgebraicGeometry.Proj (polyGrading R n)).Modules) ⟶
+      tangentSheaf (X := AlgebraicGeometry.Proj (polyGrading R n))
+      (S := Spec (CommRingCat.of R)) (projToSpecCoeff R n) :=
+  (CanonicalEulerMiddle.positiveLineFactorIso R n j).hom ≫ eulerTangentColumn R n j
 
 /-- Coordinate Euler fields pair the positive coefficient with the actual
 twisted partial derivative through the literal multiplication pairing. -/
@@ -33,6 +35,10 @@ theorem canonicalEulerField_action
           (CanonicalTwistDuality.twist R n 1) (CanonicalTwistDuality.twist R n (-1))
           (op U) (s ⊗ₜ[(CanonicalTwistDuality.projective R n).presheaf.obj (op U)]
             (pderivApp R n j U a))) := by
+  have hκ : (CanonicalEulerMiddle.positiveLineFactorIso R n j).hom =
+      CanonicalTwistDuality.twistDualMap R n 1 := rfl
+  dsimp only [canonicalEulerField]
+  rw [hκ]
   exact (eulerTangentColumn_action R n U j
     (Scheme.Modules.Hom.app (CanonicalTwistDuality.twistDualMap R n 1) U s) a).trans
     (CanonicalTwistDuality.twistDualMap_isTensorCurry R n 1 U s (pderivApp R n j U a))

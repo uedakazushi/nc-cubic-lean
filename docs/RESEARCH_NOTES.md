@@ -218,6 +218,16 @@ Poisson条件は標準的な標数0の特徴付け、すなわち実際の双ベ
 実装したとは主張しない。実際の双ベクトルと括弧の行列式評価の一致・単射性を
 証明してから、この目標を完成した定理として扱う。
 
+### 層の比較を実装するときの型指定
+
+Schemeの射・ModulesのcarrierからScheme引数を暗黙に復元すると、同じ射影空間の別表記が
+余接・双対・外積の型の内部で比較され、短い証明でもkernelのメモリ上限に達することがある。
+一般補題の宣言時点で `X`・`S` を明示し、具体的なProjへ代入する前に型を固定する。
+`CotangentCoordinates.ambientProjection` は同じ元の射を保ち、始域・終域を明示した略記とする。
+構造射の等式による実際の切断の移送には `BivectorMorphismCongr` と
+`ProjectiveBivectorTransport` を使い、元の幾何学的目標を変更せず括弧の一致を戻す。
+新しい具体化はメモリ上限を付けて単独検証し、失敗したworkの証明をproductionへ含めない。
+
 ### 次に接続する未完了部分
 
 1. `TangentCohomology` と `CubicAmbientLift` は追加の消滅仮定なしのambient持上げを与える。

@@ -155,7 +155,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML・LuaLaTeX PDF生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。283モジュールをビルドし、3132宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。288モジュールをビルドし、3198宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。
@@ -221,3 +221,8 @@ Tを閉じることはしない。実際の型と次の接続はRESEARCH_NOTES �
 `BivectorMorphismCongr` と `ProjectiveBivectorTransport` は、構造射の等式による
 双ベクトルの移送と全開集合上の括弧の保存を証明した。これらは個別にビルド・
 標準3公理監査済みであり、任意の双ベクトルの標準表示の存在への接続は作業中である。
+
+`QuadraticExteriorMap` を介する二次係数の成分評価・自由生成元による再構成・
+比座標上の括弧公式は、6つのモジュールで検証済み。座標場の作用を明示した
+`HasCanonicalRatioAction` 版も含む。標準Euler写像に対するこの作用条件の供給と、
+実際のambient持上げとの接続は引き続き作業中であり、G0–G2・Tは未完了。
