@@ -3,8 +3,8 @@
 **滑らかな複素三次超曲面の Poisson 構造の正規形を Lean で形式化するプロジェクト。**
 
 対象は [原論文](paper/cubic_poisson_paper_20261104.pdf) の **定理1.1、第3項**
-（Theorem 1.1.3、印刷 pp. 2–3）です。2026-11-07、初期版 v0.1.0。
-**定理全体は未証明です。** 現在の到達点と実行済みの検証は
+（Theorem 1.1.3、印刷 pp. 2–3）です。2026-11-13。
+**原定理の代数的解釈を証明済みです。** 現在の到達点と実行済みの検証は
 [STATUS](docs/STATUS.md) に記載します。
 
 ## 最初に読むもの
@@ -44,8 +44,8 @@ mathlib・Stacks のソースや `.olean` を重複取得・コンパイルし�
 bash scripts/check.sh --complete
 ```
 
-未解決の課題が残る初期版では、この最終ゲートは意図的に失敗します。
-`lake build` は通常の Lean ビルドに加え、公理監査、Stacks アダプターの検証、Verso HTML の生成まで要求します。分類定理そのものの完成は意味しません。
+最終ゲートは、全課題の証明・元の幾何学的な最終型・公理監査・独立レビューを検査します。
+`lake build` は通常の Lean ビルドに加え、公理監査、Stacks アダプターの検証、Verso HTMLとLuaLaTeX PDFの生成まで要求します。最終定理の確認には上記の完成ゲートも使います。
 
 ## 固定した基盤
 
@@ -63,13 +63,16 @@ bash scripts/check.sh --complete
 
 ## コードと証明状態
 
-**アフィン分類は証明済みです。**
-[`NcCubic/AffineClassification.lean`](NcCubic/AffineClassification.lean) の
-`theorem113_affine : AffineClassificationStatement` が、既存の目標型を変更せずに
-正規形の必要十分性を証明します。19課題中15課題が完了しました。
-元の幾何学的定理には、任意の射影Poisson切断との表示・持上げ・比較
-（G0・G1・G2）が必要で、最終目標Tは未証明です。
+**元の幾何学的定理を証明済みです。**
+[`NcCubic/Completion.lean`](NcCubic/Completion.lean) の
+`NcCubic.theorem113 : NcCubic.Geometry.GeometricClassificationStatement` が、
+実際の非零Poisson双ベクトルの正規形と逆方向を証明します。
+任意の双ベクトルの標準表示、元の外積三乗との複素線形同型、Jacobi持上げ、
+全開集合上の括弧比較まで接続し、19課題すべてを証明しました。
+アフィン分類 `theorem113_affine` も保持しています。
 
+対象は代数的な切断で、Poisson条件は標準的な誘導括弧のJacobi恒等式で定義します。
+最終型と実際の証明依存は原論文に対して独立レビュー済みです。
 - `NcCubic/Statement.lean`：仮定・座標変換・ブロック正規形と、アフィン分類の
   **目標命題の定義**。この定義自体は分類定理の証明ではありません。
 - `NcCubic/Jacobian.lean`：三方向のJacobian括弧の基本恒等式。
@@ -99,8 +102,8 @@ Blueprint v0.4.0では、全19課題の正確な主張・仮定・証明設計�
 HTML と LuaLaTeX 製 PDF を同時生成する。PDF のためには MacTeX / TeX Live の
 `lualatex`・`kpsewhich`・`luatexja` と Verso が要求する TeX パッケージが必要である。
 証明ライブラリとは独立したpackageで、GitHub Actionsによる公開は設定していない。
-以前の全体ビルド・HTML生成の検証は [STATUS](docs/STATUS.md) を参照する。
-新しい PDF 経路については日本語組版の単体テストのみ実行済みで、Lean を含む全体ビルドは未検証である。
+全体ビルド・HTML・日本語PDF生成の検証は [STATUS](docs/STATUS.md) を参照する。
+作業環境のTeX補完手順は [TEX_RUNTIME](docs/TEX_RUNTIME.md) に記載する。
 
 ### 単一コマンドのデフォルトビルド（v0.3.0）
 

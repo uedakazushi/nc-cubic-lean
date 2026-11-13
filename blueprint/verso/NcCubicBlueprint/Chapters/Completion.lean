@@ -14,165 +14,103 @@ file := "completion"
 htmlSplit := .never
 %%%
 
-分類する対象は $`X=V(F)\subset\mathbf P(V)` 上の全 Poisson 双ベクトル切断である。
-アフィン錐上にあらかじめ与えた $`q=\iota_{dF}P` の分類だけでは元の定理にならない。
-原論文 §2 の表示・Jacobi の持上げと、幾何学的な定義の比較をこの章で接続する。
-アフィン分類Aは証明済み。G0–G2・Tは未証明である。
+原論文の定理1.1(3)を、実際の滑らかな複素射影三次超曲面上の双ベクトル切断について証明した。
+アフィン分類Aだけでなく、任意の切断の標準表示G0、Jacobi比較G1、幾何学的比較G2を接続している。
+最終型と実際の証明の依存関係は独立レビュー済みである。
 
-# アフィン核心の正確な完成条件
+# アフィン分類
 %%%
 tag := "affine-classification"
 %%%
 
 :::theorem "A" (uses := "P3, P4, L5, P5, P6b") (lean := "NcCubic.theorem113_affine")
-$`N\ge5`、$`0\ne F\in\mathbf C[z_1,\ldots,z_N]_3`、
-`HasIsolatedGradientZero F`、$`0\ne P\in\Lambda^3\mathbf C^N` の下で、
-$`\iota_{dF}P` が全多項式上で Jacobi を満たすことと、
-`HasBlockNormalForm F P` が同値である。
-最終的な Lean 宣言は
-`NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement`。
+$`N\ge5`、非零三次斉次式 $`F`、孤立gradient零点条件、非零 $`P\in\Lambda^3\mathbf C^N` の下で、
+$`\iota_{dF}P` が全多項式上でJacobiを満たすことと、$`F,P` がブロック正規形を持つことは同値である。
 :::
 
 :::proof "A"
-`NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement` を検証済み。
-既存の目標命題の型を変更せず、全仮定・量化・正規形・逆方向を満たす。
-この結果だけでは元の幾何学的定理Tは完成しない。
+Hessianのcompatible形式族の基点自由性からL5を適用し、元の $`P` を保持したvolumeブロック分解を得る。
+P5で混合偏微分を消して $`F` を分解する。逆方向はP6bと可逆な座標変換による。
+基底、$`N=3k+m`、全summandの三次斉次性、任意の共変ベクトルに対する $`P` の等式を含む。
 :::
 
-順方向では P3・P4 から $`K(P)` の基点自由性を得て L5 を適用し、P5 で
-$`F` を分解する。逆方向は P6b と可逆な座標変換を使う。
-基底を伴う存在量化、$`N=3k+m`、全 $`f_s` の三次斉次性、
-任意の共変ベクトルに対する $`P` の等式まで `HasBlockNormalForm` に詰める。
-`AffineClassificationStatement` は命題の定義であり、その証明を
-`theorem113_affine` が与える。ファイル候補は `NcCubic/AffineClassification.lean`。
-
-# 任意の射影双ベクトルを取り込む
+# 任意の射影双ベクトルの表示
 %%%
 tag := "geometric-bridge"
 %%%
 
-:::lemma_ "G0" (uses := "P2, P0")
-$`F` が滑らかな射影三次超曲面 $`X` を定めるとき、固定した $`F` に対して線形同型
-
+:::lemma_ "G0" (uses := "P2, P0") (lean := "NcCubic.Geometry.hypersurfaceExteriorBivectorEquiv_standardRepresentative")
+滑らかな複素射影三次超曲面 $`X=V(F)\subset\mathbf P(V)`、$`\dim V\ge5` に対し、
+固定した $`F` による複素線形同型
 $$`\Lambda^3V\xrightarrow{\sim}H^0(X,\Lambda^2T_X),\qquad P\longmapsto(\iota_{dF}P)|_X`
-
-を構成する。右辺への写像は斉次二次 bivector の射影化である。
-任意の切断がこの形で表されることと、$`P` の一意性の両方を示す。
-係数段階の高次Koszul表示・Euler補正・代表独立性・縮約による線形同値は
-`PolynomialRepresentation.lean` と関連モジュールで検証済み。
-実際の接束Euler外積完全列、必要な接束外積の負twist消滅、随伴の単位写像による無条件のambient持上げ、
-標準包含・射影による二次多項式係数表示も検証済み。任意の部分開上の二次係数とEuler場の比座標評価、
-大域切断の括弧の座標成分分解も証明したが、元の包含写像との比較を明示的な仮定として残す。
-接性の係数可除性から、全射影開で同じ括弧を与える定数trivectorへの接続は検証済み。
-これらを任意の射影切断に接続する比較は未完了。
+を構成する。任意の切断は一意な定数trivectorで表される。
 :::
 
-証明設計は原論文の補題2.2・命題2.3（印刷 pp.4–5）に沿う。
+:::proof "G0"
+実際のEuler列・その外積とtwistのコホモロジー消滅から、任意の切断を周囲へ持ち上げる。
+標準twist双対同型によるEuler中央項の同型と、元のEuler商の大域切断上の全射性から二次切断を得る。
+site側とnative側の外積は、一般のschemeで証明した標準同型で比較する。
 
-1. $`\mathbf P=\mathbf P(V)` として Euler 列、その外積と twist から
-   $`H^0(\mathbf P,\Lambda^2T_{\mathbf P}(-3))=H^1(\mathbf P,\Lambda^2T_{\mathbf P}(-3))=0`
-   と $`H^0(\mathbf P,\Lambda^3T_{\mathbf P}(-3))\simeq\Lambda^3V` を示す。
-   必要な線束の中間コホモロジー消滅は $`\dim\mathbf P=N-1\ge4` の範囲で供給する。
-2. 制限列から切断を周囲へ一意に延長し、二次係数 bivector $`B` で代表させる。
-   接性を $`\iota_{dF}B=FA+hE`、$`A` は一次ベクトル場、$`h` は三次式、と書く。
-   Euler 場は $`E=\sum_i z_i\partial_{z_i}`。再度縮約すると $`h=-A(F)/3`。
-3. $`q=B-\frac13E\wedge A` とすれば $`\iota_{dF}q=0`。
-   Koszul の次数部分
-   $`S_0\otimes\Lambda^3V\to S_2\otimes\Lambda^2V\to S_4\otimes V`
-   の完全性から一意な定数 $`P` を得る。左隣は係数次数が負なので0。
-4. 代表の差 $`E\wedge Z` が $`F` を Casimir に持てば
-   $`3FZ=Z(F)E`。この等式にEuler場を外積し、多項式環で非零な $`3F` を消去すれば
-   $`E\wedge Z=0` を得る。既約性は不要で、この代表独立性は検証済みである。
-   任意の $`P` から接する切断を作る逆も確認する。
+標準Euler写像の比座標への作用を実際に計算し、二次係数から得た括弧と切断の括弧を全開集合上で比較する。
+引き戻しの自然性と法線方向の消滅から係数の可除性を得て、Euler補正と高次Koszul完全性から定数 $`P` を構成する。
+代表独立性には多項式環での非零積の消去を使い、既約性を追加仮定にしない。
 
-線束の切断の持上げ、sheaf の接性とアフィンの等式、正則列の高次 Koszul 完全性を
-それぞれ独立の補題にする。P2 の低次数 syzygy だけを引用して高次完全性まで済ませない。
-G0 の証明には、G2 にまとめる最終比較に先立って、smoothness から gradient 条件を得る
-補題を用意する。これにより G0 と G2 の循環依存を避ける。
-非零性の比較 $`P\ne0\iff\pi_X\ne0` も線形同型から得る。
-ファイル候補は `NcCubic/Geometry/Representation.lean`。
-
-:::lemma_ "G1" (uses := "G0, P2")
-標準代表 $`q=\iota_{dF}P` の $`X` 上の射影化が Poisson ならば、
-アフィン錐上でも $`[q,q]=0`。従って A の全多項式 Jacobi 仮定を満たす。
-`NcCubic.contraction_jacobi_of_geometric_lift` の代数計算は検証済みであり、
-座標Jacobiatorの交代性と三次斉次性も検証した。
-代替経路として、Euler場との外積の係数がFで割り切れれば全多項式Jacobiが従うことも
-斉次商の交代性・divergence計算を含めて検証した。実際の超曲面構造層上のJacobiから
-この可除性を導き、全多項式Jacobiとの同値まで検証済み。
-幾何学的双ベクトルからの標準括弧との比較は未完了である。
+`exists_standardRepresentative` は表示の存在を無条件に証明する。
+`hypersurfaceBivectorEquiv` は実際の構成写像の線形性・単射性・全射性から得た同型であり、
+`hypersurfaceExteriorBivectorEquiv` は元の外積三乗との比較を合成した同型である。
+順写像・逆写像の標準表示と、全開集合上の括弧の式も証明した。
 :::
 
-証明設計：原論文の命題2.4。標準体積形式による divergence $`\delta` を定義し、
-交代性と Hessian 対称性から $`\delta q=0` を示す。
-Schouten 括弧との符号を含む恒等式、および Casimir 性から、
-$`J=[q,q]` は $`\delta J=0`、$`\iota_{dF}J=0` を満たす。
-$`X` 上での射影化の消滅を、twist した三重接束の制限列と G0 のコホモロジー計算から
-
-$$`J=FT+E\wedge B_2,\qquad T\in\Lambda^3V,\quad B_2\in S_2\otimes\Lambda^2V`
-
-と表す。恒等式
-
-$$`\delta(FT)=\iota_{dF}T,\qquad \delta(E\wedge B_2)=NB_2-E\wedge\delta B_2`
-
-に $`E` を外積して $`E\wedge B_2=-N^{-1}E\wedge\iota_{dF}T` を得る。
-元の式を縮約すると $`(1-3/N)F\iota_{dF}T=0`。
-$`N\ge5`、整域性、$`F\ne0` から縮約は0、P2 の定数係数の独立性から $`T=0`、従って $`J=0`。
-Schouten 括弧の座標式と A の Jacobiator の関係（係数2を含む）も証明する。
-接性や $`\iota_{dF}q=0` だけではこの持上げを結論できない。
-ファイル候補は `NcCubic/Geometry/JacobiLift.lean`。
-
-:::lemma_ "G2" (uses := "G0, P0, P6b")
-射影的 smoothness と斉次三次式の gradient 条件、幾何学的 Poisson 切断と
-座標環上の括弧を比較し、標準代表の射影降下・$`X` への制限・座標変換を接続する。
-原論文の切断を解析的な正則切断として扱う場合は、代数的切断との比較も必要である。
-実際の一式presentation、Jacobianの素点被覆、scheme smoothnessと孤立gradient条件の同値、
-商環・局所化環・次数0チャート環の括弧と重なりでの適合性は検証済み。
-全正次数斉次基本開から実際の構造層全体への相対Poisson演算の貼り合わせ、
-超曲面への全開集合での降下、Euler代表の独立性とKähler外積の評価も証明した。
-双ベクトル切断変数に関する括弧の線形性と、cotangent-to-tangent内部Homから全開集合上の括弧への
-単射性も証明済み。実際の射影相対双導分は標準比座標の生成元対で一致すれば全開集合で一致する。
-標準の大域外積双対射、計算されたunit行列式公式、有限局所自由性だけからの同型性を証明した。
-実際の外積双対同型と行列式公式を明示すれば、双導分からの逆構成と双ベクトルの単射性も証明できた。
-Smoothから標準同型を供給し、正規形から実際の非零Poisson双ベクトルを構成する逆方向も検証した。
-任意の射影双ベクトル切断からの標準表示への接続は未完了。
+:::lemma_ "G1" (uses := "G0, P2") (lean := "NcCubic.Geometry.polynomialJacobi_iff_hypersurfaceGlobalJacobi")
+標準代表 $`q=\iota_{dF}P` の超曲面上の全開集合におけるJacobi恒等式と、
+全多項式上のJacobi恒等式は同値である。
 :::
 
-証明設計：smoothness と「gradient の零点は原点のみ」の比較は Euler 等式と
-射影超曲面の Jacobian criterion により先に独立して証明する。
-斉次二次 bivector のスカラー作用への適合性、degree 0 の局所関数上での括弧、
-チャート間の貼り合わせを検証する。$`F` の Casimir 性からイデアル $`(F)` が保たれ、
-超曲面に降下することを示す。逆構成では P6b を使う。
-必要な代数的・正則な大域切断の比較は、この射影的な対象の範囲を明示し、
-Schouten 括弧との適合も確認して接続する。未確認の比較を定義に埋め込まない。
-ファイル候補は `NcCubic/Geometry/Comparison.lean`。
+:::proof "G1"
+実際の構造層上のJacobiから、Euler場と座標Jacobiatorの外積の各係数が $`F` で割り切れることを導く。
+斉次商の交代性、divergence消滅、gradient horizontality、Euler恒等式を使ってJacobiatorを消す。
+低次数の定数syzygy消滅はP2から供給する。射影Poisson条件からの可除性を入力仮定に残さない。
+逆方向は標準括弧の降下による。G0の全開集合上の表示により、任意の実際の双ベクトルにも適用できる。
+:::
 
-# 元の定理と終了判定
+:::lemma_ "G2" (uses := "G0, P0, P6b") (lean := "NcCubic.Geometry.GeometricConverse.exists_bivector_of_normalForm")
+射影的smoothnessと孤立gradient条件、実際の接層外積切断と標準的な誘導双導分を比較する。
+標準代表の射影降下、超曲面への制限、座標変換、双ベクトルと誘導括弧の相互回収を接続する。
+:::
+
+:::proof "G2"
+実際のアフィンpresentationとJacobianの素点被覆から、scheme smoothnessとgradient条件を比較する。
+斉次基本開の次数0環、局所化、超曲面商環で括弧を構成し、全開集合へ貼り合わせる。
+標準外積双対射の行列式公式を計算し、実際の有限局所自由性から同型性を証明する。
+Smooth仮定からこの標準同型を供給し、誘導括弧の回収と単射性を得る。
+任意の定数trivectorから実際の双ベクトルを構成し、正規形から非零Poisson切断を得る。
+
+対象は代数的な切断で、Poisson条件は標準の誘導括弧のJacobi恒等式で定義する。
+これは標数0でSchouten自己括弧の消滅と同値になる通常の定義の選択である。
+別個のSchouten演算やその同値定理、解析的切断・GAGA比較のLean実装は主張しない。
+:::
+
+# 元の定理
 %%%
 tag := "geometric-classification"
 %%%
 
-:::theorem "T" (uses := "A, G0, G1, G2")
-滑らかな複素射影三次超曲面 $`X=V(F)\subset\mathbf P(V)`、$`\dim X=N-2\ge3` 上の
-任意の非零 Poisson 切断 $`\pi_X` は、正規化された三次元 volume trivector の和と
-$`F=\sum_s f_s(x_s,u)` により表示される。括弧は各三変数の Jacobian 括弧で、
-異なる active ブロックの間と中心変数の括弧は0である。逆にこの正規形は
-$`X` 上の Poisson 構造を与える。
-最終宣言は `NcCubic.theorem113 : NcCubic.Geometry.GeometricClassificationStatement` とする。
+:::theorem "T" (uses := "A, G0, G1, G2") (lean := "NcCubic.theorem113")
+滑らかな複素射影三次超曲面 $`X=V(F)\subset\mathbf P(V)`、$`\dim V=N\ge5` 上の任意の非零Poisson双ベクトルは、
+正規化された非空の三次元volumeブロックの和に対応する。
+適切な基底に対して $`N=3k+m`、$`F=\sum_s f_s(x_s,u)` となり、
+各 $`f_s` は三次斉次である。斉次座標のアフィン錐上の表示では、括弧は各active三変数のJacobian括弧となり、異なるactiveブロック間と中心変数との括弧は0である。
+逆にこの正規形は実際の非零Poisson双ベクトルを与える。
 :::
 
-最終型の未証明の命題定義 `NcCubic.Geometry.GeometricClassificationStatement` は、
-実際の接層外積の非零大域切断と、その切断から誘導される全開集合上の括弧を使う。
-表示・持上げ・比較定理を入力仮定に含めない。代数的な原定理第3項との独立の型レビュー済みである。
-Poisson条件は標数0での誘導括弧のJacobiによる特徴付けを用い、別個のSchouten演算の実装を主張しない。
-この命題定義は証明済み宣言ではない。
+:::proof "T"
+`NcCubic.theorem113 : NcCubic.Geometry.GeometricClassificationStatement`。
+任意の実際の双ベクトルにG0を適用し、標準表示からG1・G2でAの仮定を得て正規形へ進む。
+逆方向は標準外積双対同型とG2の逆構成による。
+最終型は表示・持上げ・同型・比較を追加仮定に含めない。
+全開集合上の全切断の括弧の等式を結論し、正方向・逆方向をともに証明した。
+:::
 
-証明設計：G0 で $`\pi_X` を一意な $`P` に移し、非零性も同型で移す。
-G1・G2 で A の仮定を満たして正規形を得て、G2 で幾何学的な結論へ戻す。
-逆方向も射影降下まで行う。最終命題の定義は Lean に導入済みで、証明は未完了である。
-原論文の量化対象・全仮定・式(1.1)(1.2)・逆構成と型の照合は独立レビュー済み。
-ファイル候補は `NcCubic/Completion.lean`。
-
-終了時は全プロダクション宣言の公理監査と、最終型の独立レビューを行う。
-`bash scripts/check.sh --complete` が通ることを最終ゲートとする。
-一般階数、退化スキーム、moduli、量子化は定理第3項の完成条件には含めない。
+最終型と実際の証明依存は、原論文の定理1.1(3)の代数的解釈と独立に照合した。
+全production宣言の公理監査と `bash scripts/check.sh --complete` が最終ゲートである。
+一般階数、退化スキーム、moduli、量子化は第3項の完成条件に含めない。

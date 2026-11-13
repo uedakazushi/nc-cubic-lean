@@ -4,7 +4,7 @@
 
 ## 1. 非退化な対称形式の存在：Bertiniを不要にする証明
 
-**状態：通常の数学として証明を検討済み。Leanでは未証明。新規性は主張しない。**
+**状態：Leanの `NondegenerateForm.lean` で証明済み。新規性は主張しない。**
 
 無限体 \(K\) 上の有限次元空間 \(E\) と、対称双線形形式の線形部分空間 \(L\) を考える。
 任意の \(v\ne0\) に対して、ある \(H\in L\) が \(H(v,v)\ne0\) を満たすと仮定する。
@@ -98,164 +98,68 @@ EtingofのMIT講義ノートで、Proposition 16.9（根基のスカラー作用
 参照位置を確認した。具体的なroot bracket非零性と階数1の三次元性については、
 mathlibの型へ合わせる依存関係をさらに詰める。URL等は `references.bib` に記載する。
 
-## 6. 幾何学的な橋渡しの現在の契約と次の実験
+## 6. 完成した幾何学的接続
 
-**元のscheme上の任意のPoisson切断の表示G0と双ベクトル・括弧の比較は未完了。**
-座標条件を新たにsmoothnessの定義として置き、元の定理を置き換えることはしない。
+`NcCubic.theorem113 : NcCubic.Geometry.GeometricClassificationStatement` を証明した。
+実際の非零大域双ベクトルとその全開集合上の誘導括弧を対象とし、標準表示や比較を入力しない。
 
-初期の座標的な入口は次の二つであり、さらに下記の実装を追加した。
+### 任意の切断から標準表示へ
 
-- `Geometry/JacobianCondition.lean`：非零同次座標xでF(x)=0ならgradientの一成分が
-  非零という条件と、`HasIsolatedGradientZero F` の同値。Eulerの係数3を割る箇所はℂ上。
-  pivot座標x_i≠0のchartでは、非pivot偏微分だけの非零性と同値である。
-- `Geometry/AffineChart.lean`：変数を `σ ⊕ Unit` とし、右側の一変数を1にする
-  `dehomogenize`、正規化された `lift`、その多項式商環 `CoordinateRing` と点評価写像。
-  評価・非pivot偏微分がこの代入と交換することを証明した。
-  斉次式の零点ではEuler等式によりpivot偏微分も回復し、両方のJacobian条件が一致する。
+1. `CubicAmbientLift` は実際のEuler外積列・twistのコホモロジー消滅と制限列から、
+   任意の超曲面上の双ベクトルをambientへ一意に持ち上げる。
+   その制限は元の引き戻し・押し出し随伴の単位写像である。
+2. `CanonicalEulerLiteralData` は標準twist双対同型と実際のbiproductの包含・射影から
+   Euler中央項の同型を構成する。`CanonicalDataRatioAction` はこの同型と元のEuler商の
+   合成が持つ比座標への作用を計算する。
+3. `ExteriorSiteNativeBridge` は一般のschemeでsite側とnative側の直和・外積を比較する。
+   `BufferedExteriorSurjectivity` と `BufferedQuadraticLift` は、元のEuler商のΓ全射性から
+   実際の二次切断を直接構成する。
+4. `QuadraticProjectiveComparison` は、任意の標準チャートの部分開上で二次係数と括弧を比較する。
+   比座標の生成元対での一致から、実際の相対双導分の全開集合上の一致を得る。
+5. 実際の引き戻し自然性と超曲面の法線方程式の消滅から係数の可除性を導く。
+   Euler補正で水平な二次代表を作り、graded Koszulの高次完全性と次数比較から定数trivectorを得る。
+   `GeometricRepresentationCore` がこれらを接続し、`GeometricRepresentation` が実際の標準Euler同型を代入する。
+6. 構成した標準表示と括弧の単射性から、元の構成写像の全射性を得る。
+   `GeometricRepresentationEquiv` は単射性・線形性と合わせ、元の外積三乗と実際の大域切断の複素線形同型を構成する。
 
-### G2の実際のschemeとの比較
+### Jacobiと逆方向
 
-固定版Stacksの `ProjectiveChart.HypersurfaceChart.chartQuotientEquiv` は、実際の閉埋込み
-`i : Z ⟶ Proj ...` と `Proj.idealOfClosedSubscheme ... i = Ideal.span {F}` から、
-chartの切断環と `R[Y]/(dehomCoeff R j F)` の環同型を供給する。
-そのため幾何学的データはscheme Z・閉埋込みi・その斉次イデアルの等式で持てる。
-任意のsectionがtrivectorで表せるという結論を、このデータの仮定に含めない。
+実際の超曲面上の標準括弧がJacobiを満たすことと、勾配縮約が全多項式上でJacobiを満たすことを比較した。
+Euler場との外積のF可除性を幾何から導き、斉次商の交代性・divergence・gradient horizontality・
+Euler恒等式・定数syzygy消滅を使う代替経路で、可除性を仮定に残さない。
 
-`ChartComparison` はpivotの並べ替え、dehomogenizeとの一致、一式presentation、
-全素点のfibre次元とJacobian判定を実装し、実際のscheme smoothnessと
-`HasIsolatedGradientZero F` の同値を証明した。`CanonicalHypersurface` は標準の
-Proj商の定義イデアルが(F)に一致することを飽和性で証明し、同じ同値を適用する。
-座標条件をschemeのsmoothnessの定義として採用したものではない。
+標準外積双対射の行列式公式を計算し、有限局所自由性から実際の同型性を証明した。
+Smoothからこの標準同型を供給し、任意の定数trivectorから実際の双ベクトルを構成する。
+`GeometricCanonicalDirections` は、標準表示からブロック正規形への方向と、
+正規形から非零Poisson切断への方向を接続する。`Completion.lean` が元の最終型を証明する。
 
-### G0でまだ必要な切断と接束の構成
+### Koszulの数学的範囲
 
-`SerreComputation.serreTwistCohomology`（01XU）は線束O(d)の各次数のコホモロジーを
-計算し、`ProjectiveSpaceHodgeCohomology`（0FUK）は余接外積Ω^pのHodgeコホモロジーを
-計算する。後者の正twist消滅はq>0の結論であり、H⁰(Λ²T(-3))=0を直接与えない。
-原論文補題2.2に必要な双対Euler列、接束の外積・twistと短完全列の具体的な射、
-H⁰(Λ³T(-3))≃Λ³Vの同型を構成して、既存の線束計算を適用する必要がある。
-実際の双対Euler列、有限局所自由な加群の超曲面制限列は検証済み。制限列の最後の射は
-元の閉埋込みのpullback-pushforward随伴の単位写像そのものである。
-コホモロジー消滅の適用と、実際の切断から接性の係数式を得る比較を接続中。
-G0が使う高次のgraded Koszul完全性は、今回 `Geometry/GradedKoszul.lean` と
-`ExteriorKoszul.lean` で証明した。配列から定数Pへの一意な表示は
-`PolynomialRepresentation.lean`、勾配縮約そのものによる線形同値は
-`RepresentationLinearEquiv.lean` にある。実際の切断から配列を取得する段階は未完了。
+P2は孤立gradient条件からgradient商の次元0を示し、局所Cohen–Macaulay性と正則列を使い、
+局所化したKoszul完全性を大域へ戻す。大域正則列そのものは主張しない。
+表示に使う高次完全性は `GradedKoszul` と `ExteriorKoszul` で別途供給し、
+係数次数の射影から定数preimageを得る。低次数syzygy消滅だけで高次完全性を済ませない。
 
-### P2の数学的な型の確認
+### 層の比較での型指定
 
-`cubic_linear_syzygy_zero` は代数閉体K、N個の変数、N個のgradient成分についての定理。
-CM切断判定に渡す商次元は0、列の長さと多項式環の次元はいずれもNなので、必要な
-次元等式は実際の型から成立する。idealを含まない素イデアルでは単元生成元を使い、
-idealを含む場合だけ局所正則列を使う。gradient ideal全体を単位イデアルとは仮定しない。
-次数比較は全次数≤1の非斉次係数も扱い、Jacobiatorの一次斉次係数を特に含む。
-結論を仮定するtypeclassや未知の正則性を引数に持たず、ℂ上の元のアフィン仮定へ適用できる。
-これは元の射影smoothnessとの比較を証明したことにはならない。
+`AlgebraicBivector`・`bivectorSheaf`・`tangentSheaf` の引数には `X := ...`・`S := ...` を明示する。
+同じ射影scheme・構造射でも、推論で選ばれるAPIの表記が異なると、Kähler微分や外積の内部で
+大きな定義的等式の検証が生じる。直和・外積の境界は一般のscheme上で証明した明示的同型を使う。
+構造射の表記を変える場合は、まず射の通常の等式を証明し、`BivectorMorphismCongr` で移送する。
+`ProjectiveBivectorTransport` と `ProjectiveAmbientReindex` はこの移送と全開集合上の括弧の保存を実装する。
+これらは実際の等式・同型による移送であり、幾何学的な比較を新たな仮定にしない。
 
-### 接性・一意性の現在の実装経路
+### Poisson条件の形式化の範囲
 
-`TangentRepresentative.lean` は、実際の二次skew配列Bと接性の係数式
-ΣᵢBⁱʲFᵢ=FAʲ+hXʲから、q=B−(1/3)E∧Aを構成し、厳密なgradient水平性と二次斉次性を得る。
-この係数式自体をschemeの接性から得る比較は別途必要である。
-`RepresentativeUniqueness.lean` では3FZ=Z(F)Eの成分を交差乗算し、非零3Fを消去してE∧Z=0を得る。
-したがって原論文の代表独立性に使われたFの既約性は、この証明経路では不要である。
+原論文印刷p.2は基礎体をℂとし、p.4のEuler/Koszul論では射影schemeと飽和イデアルを用いる。
+本文はholomorphic・解析的カテゴリーと明示していない。現在のSchemeによる型はこの代数的読解に忠実である。
+Poisson条件は、実際の双ベクトルの標準的な誘導双導分の全開集合上のJacobi恒等式で定義する。
+これは標数0でSchouten自己括弧の消滅と同値になる通常の定義選択である。
+別個のSchouten演算やその同値定理、解析的切断・GAGAの比較をLeanで証明したとは主張しない。
+G2の受入条件とBlueprintはこの範囲にそろえ、最終型と実際の証明依存は独立レビューした。
 
-`ChartPresentation.lean` は一式の実際のAlgebra.Presentationと1×1 Jacobianを構成した。
-`JacobianIdeal.lean` はdehomogenized equationと偏微分の単位イデアル生成、商環の全素点での
-偏微分被覆を証明した。これらを実際のAlgebra.IsSmoothAtへ接続し、その後Scheme.Smoothと比較する。
+### 依存生成物
 
-`ConeBracket.lean` は実際のS/(F)に括弧とJacobiを降下する。
-`LocalChartHamiltonian.lean` は局所化環の比座標の導分と次数0射影チャート環の括弧係数を構成し、
-両者の値が一致することを証明した。全次数0環の安定性は `ProjectiveBracketDescent.lean` で追加証明した。
-`LocalizedBracket.lean` は局所化環の全要素での実際の括弧とJacobiを構成する。
-異なるpivot間の貼り合わせと実際のΛ²T切断との同定は引き続き必要である。
-
-### この準備環境での依存生成物の共有
-
-rootとVersoのmathlib/Stacksのgitコミット一致を確認し、無視対象の.lake/package checkoutを
-同一固定版のcheckoutへsymlinkして生成物を共有した。manifestや証明kernelの設定は変更しない。
-元のVerso cacheは無視対象work/cache-backupに退避しており、これは環境内の再生成可能なcache処理である。
-新規cloneでは通常通り固定manifestから取得する。
-
-### 構造層上の括弧への接続
-
-`PoissonSheaf`は各開集合の実際の構造層切断環上の演算・制限適合性・
-交代性・Leibniz則・Jacobiを明示する。`PoissonGluing`は被覆の全ての部分開集合上の
-局所演算と重なりでの一致から、構造層の一意な貼り合わせで大域演算を構成する。
-基底定数は実際のscheme射からの引き戻しで定義し、相対性も局所判定する。
-この一般貼り合わせは、まだ射影チャートの演算が全ての部分開集合へ延長されたことや、
-接束外積の切断と比較されたことの代替ではない。
-
-### Jacobi持上げの代替代数経路
-
-`EulerJacobiLift`と`HomogeneousDivision`は、三次Jacobiator Jについて、
-Euler場との外積の全係数がFで割り切れることからJ=0を導く。
-四重配列Qを一次斉次部分へ射影してE∧J=FQを保ち、Fの非零性から縮約に必要なQの最初の2添字の反対称性を回収する。
-閉性・水平性とEuler公式よりδ(E∧J)=N J、i_dF(E∧J)=3FJなのでi_dF Q=3J。
-δと勾配縮約の反交換、定数gradient syzygy消滅によりδQ=0、従って(N−3)J=0となる。
-この経路はJ=FT+E∧Bの構成を必要としない。`RatioJacobi` は比座標のJacobiator分子を
-Euler∧Jと比較し、`ChartJacobiDivisibility` と `LocalizedPrincipalIdeal` は実際の商環での
-消滅から局所化の分母を消去する。異なる二つの変数の冪を消去する
-`PrincipalSaturation.dvd_of_two_mul`により、既約性なしに大域可除性へ戻す。
-`HypersurfaceStandardComparison.polynomialJacobi_iff_hypersurfaceGlobalJacobi` は、
-標準代表から構成された全開集合上の括弧について双方向を接続済み。
-任意の幾何学的双ベクトルとこの標準括弧の一致は別の未完了の比較であり、G1は未完了とする。
-
-### 最終の幾何学的な型
-
-`Geometry.GeometricClassificationStatement` は未証明の命題定義である。
-入力は実際の滑らかな射影三次超曲面の閉埋込みと、相対余接層の双対の二重外積の
-非零大域切断であり、表示定理・持上げ・比較定理を仮定に含めない。
-結論は実際の全開集合上の括弧の標準表示と `HasBlockNormalForm`、逆方向は
-各正規形からの実際の非零双ベクトルの存在である。原論文§1.1・定理1.1(3)との
-独立の型レビューで、代数的な分類目標としての忠実性を確認した。原典pp.2–5は基礎体C、
-射影スキーム、飽和イデアル層、代数的Euler列・Hartshorne IIIのコホモロジーを使い、
-holomorphic・解析的カテゴリーとは明示していない。現在のSchemeによる型はこの代数的読解に忠実である。
-別途、解析的Poisson構造まで追加で主張する場合にのみGAGAの比較が必要となる。
-
-Poisson条件は標準的な標数0の特徴付け、すなわち実際の双ベクトルから誘導される
-括弧のJacobi恒等式で記述する。別個のSchouten演算や解析的なカテゴリーの機構を
-実装したとは主張しない。実際の双ベクトルと括弧の行列式評価の一致・単射性を
-証明してから、この目標を完成した定理として扱う。
-
-### 層の比較を実装するときの型指定
-
-Schemeの射・ModulesのcarrierからScheme引数を暗黙に復元すると、同じ射影空間の別表記が
-余接・双対・外積の型の内部で比較され、短い証明でもkernelのメモリ上限に達することがある。
-一般補題の宣言時点で `X`・`S` を明示し、具体的なProjへ代入する前に型を固定する。
-`CotangentCoordinates.ambientProjection` は同じ元の射を保ち、始域・終域を明示した略記とする。
-構造射の等式による実際の切断の移送には `BivectorMorphismCongr` と
-`ProjectiveBivectorTransport` を使い、元の幾何学的目標を変更せず括弧の一致を戻す。
-新しい具体化はメモリ上限を付けて単独検証し、失敗したworkの証明をproductionへ含めない。
-
-### 次に接続する未完了部分
-
-1. `TangentCohomology` と `CubicAmbientLift` は追加の消滅仮定なしのambient持上げを与える。
-   `QuadraticEulerLift`・`CubicQuadraticLift` は実際の中央項同型eから二次切断σを与える。
-   `CanonicalEulerFrame` は係数frameが使う元のnative包含とbiconeの一致を固定した。
-   標準twist乗法のcurryに基づく中央項同型の列を、この包含へ接続する部分が残る。
-2. `CoordinateTwistFrame`・`QuadraticCoefficientRatio` は任意の部分開上のO(2)生成元、
-   そのO(1)同士の積、実際の分数c/X_i²を比較する。`CanonicalEulerCoordinateEvaluation` は
-   座標Euler場が比座標へ作用する商の微分公式を与える。
-   `CanonicalQuadraticBracketReconstruction`・`AlgebraicQuadraticBracket` は、中央項の列の一致を
-   明示すれば、実際の大域切断の括弧を抽出した二次係数の和で評価する。
-   `ProjectiveBiderivationExt` は比座標の生成元対での一致を全開集合へ移す。
-   これを標準多項式括弧へ比較し、閉埋込みの接性からnormal括弧の消滅・係数可除性を得る。
-   その後は `ConstantRepresentativeOfTangency` が既存のEuler補正・Koszul表示・代表独立性を
-   接続し、全射影開で同じ括弧を与える定数Pを供給する。
-3. `ExteriorRawDualIso` の実際のprecompositionは同型であり、`ExteriorRawPairing` は
-   外積双対性の標準大域射を構成する。`ExteriorDualityCriterion` は実際のunit上の行列式公式から
-   有限局所自由な場合の同型性を証明する。`ExteriorDualPairingDeterminant` の計算されたunit評価に
-   適用し、標準射の実際の同型性まで検証できた。`SmoothBivectorDuality` がSmoothだけから標準同型を与える。
-   `ExteriorFunctionalAgreement`・`BivectorFaithfulness` は、実際の同型と行列式公式を明示すれば
-   双導分からの逆構成、全開集合での括弧の回収、実際の双ベクトルの単射性を与える。
-   `DeterminantBiderivation` は同じ評価公式から実際の双ベクトルの双導分性と相対性を回収する。
-   `ImmersionBracketCompatibility` は実際のunit制限の等式を、全開集合の括弧のpullbackの等式へ移す。
-4. `GeometricForward`・`GeometricConverse` は実際の外積双対同型と行列式公式を明示した補助定理である。
-   正方向は個々のPの実際の標準表示から正規形へ移し、逆方向は正規形から実際の非零双ベクトルを作る。
-   `GeometricCanonicalDirections` はこの同型・公式の条件を標準写像で実際に充足した。
-   逆方向は既に比較入力なしで証明できている。前者に任意のπの表示定理を仮定として隠してはいない。
-   `HypersurfaceBivectorLinear` は任意Pからの実際の双ベクトル写像を複素線形な単射にした。
-   任意πの表示と全開集合の比較を証明してから全射性と最終型へ適用する。
-   `GeometricClassificationStatement` は独立レビュー済みの未証明の命題定義であり、
-   `NcCubic.theorem113` はまだ証明されていない。
+3 workspaceは固定した同一のroot `.lake/packages` を共有する。
+TeX実行系の補完はworkspace内に置き、`docs/TEX_RUNTIME.md` に記録する。
+最終検証は `lake build` と `bash scripts/check.sh --complete` による。

@@ -11,7 +11,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000
 variable {n : ℕ} {Y : Scheme}
 theorem exists_standardBracket_of_quadratic_extension
-    (i : Y ⟶ ProjectiveAmbient n) [IsClosedImmersion i]
+    (i : Y ⟶ CanonicalTwistDuality.projective ℂ n) [IsClosedImmersion i]
     (F : CubicPolynomial (n+1)) (hF0 : F ≠ 0) (hF : F.IsHomogeneous 3)
     (hgrad : HasIsolatedGradientZero F)
     (hideal : ProjectiveSpectrum.Proj.idealOfClosedSubscheme
@@ -19,18 +19,18 @@ theorem exists_standardBracket_of_quadratic_extension
     (q : Fin (n+1) → Fin (n+1) → CubicPolynomial (n+1))
     (hd : ∀ a b, (q a b).IsHomogeneous 2) (hs : ∀ a b, q b a = -q a b)
     (hΩ : AlgebraicGeometry.SheafOfModules.IsFiniteLocallyFree
-      (Scheme.Hom.relativeDifferentials (ambientProjection n)))
-    (piP : AlgebraicBivector (ambientProjection n))
+      (Scheme.Hom.relativeDifferentials (X := CanonicalTwistDuality.projective ℂ n) (S := Spec (CommRingCat.of ℂ)) (ambientProjection n)))
+    (piP : AlgebraicBivector (X := CanonicalTwistDuality.projective ℂ n) (S := Spec (CommRingCat.of ℂ)) (ambientProjection n))
     (piY : AlgebraicBivector (i ≫ ambientProjection n))
-    (hext : BivectorExtends i (ambientProjection n) hΩ piP piY)
+    (hext : BivectorExtends (P := CanonicalTwistDuality.projective ℂ n) i (ambientProjection n) hΩ piP piY)
     (heq : ∀ U a b, (ambientProjectiveBiderivation q hd hs).bracket U a b =
-      (algebraicBivectorBracket (ambientProjection n) piP).bracket U a b) :
+      (algebraicBivectorBracket (X := CanonicalTwistDuality.projective ℂ n) (S := Spec (CommRingCat.of ℂ)) (ambientProjection n) piP).bracket U a b) :
     ∃ P : Trivector (n+1), ∀ (U : Y.Opens) (a b : Γ(Y,U)),
       (algebraicBivectorBracket (i ≫ ambientProjection n) piY).bracket U a b =
         (hypersurfaceGlobalBracket i F P hF hideal).bracket U a b := by
   let BY := algebraicBivectorBiderivation (i ≫ ambientProjection n) piY
   have hnat := bracket_pullback_of_extends_and_eq
-    (X := Y) (P := ProjectiveAmbient n) i (ambientProjection n) hΩ piP piY hext
+    (X := Y) (P := CanonicalTwistDuality.projective ℂ n) i (ambientProjection n) hΩ piP piY hext
     (ambientProjectiveBiderivation q hd hs).toStructureSheafBracket heq
   obtain ⟨P,hP⟩ := exists_standardBracket_of_quadratic_pullback
     i F hF0 hF hgrad hideal q hd hs BY hnat

@@ -140,8 +140,8 @@ Lie括弧を経由する場合は、可換で完全な因子の証拠を保持�
 3. **アフィン分類**：P5とP6bを接続してAを証明する。
 4. **元の幾何学的分類**：G0・G1・G2を接続し、最終型をレビューしてTを証明する。
 
-現在の着手順は `python3 scripts/next_task.py` で取得する。アフィン分類まで完了し、現在の独立な着手点はG0の幾何学的表示である。
-主要な未解決点はG0–G2の射影幾何の基盤。P2は大域Koszul H₁消滅の経路で解決済み。
+全19課題を証明済み。G0の任意の双ベクトルの表示と外積三乗の線形同型、G1のJacobi比較、
+G2の実際の切断・括弧の比較を接続し、Tの原定理を証明した。P2は大域Koszul H₁消滅の経路で解決した。
 予定モジュール名と原典の位置はtasks.jsonの `planned_module`・`source` に記録する。
 
 ## 6. 作業単位と終了条件
@@ -158,6 +158,7 @@ Lie括弧を経由する場合は、可換で完全な因子の証拠を保持�
 ## 現在の到達点
 
 `NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement` を証明済み。
-P0–P5・P6a・P6b・L0–L5・Aの15課題が完了した。G0・G1・G2・Tは未完了で、
-任意の幾何学的Poisson切断を取り込む表示・持上げ・比較の基盤が残る。
+P0–P5・P6a・P6b・L0–L5・A・G0–G2・Tの19課題が完了した。
+`NcCubic.theorem113 : NcCubic.Geometry.GeometricClassificationStatement` は、
+実際の双ベクトルを対象とする元の幾何学的分類を証明する。
 実際の型と検証状況は [STATUS](../docs/STATUS.md) を参照する。

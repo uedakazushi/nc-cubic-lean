@@ -33,4 +33,4 @@ echo "[nc-cubic] Rendering Verso Blueprint HTML and LuaLaTeX PDF"
 bash scripts/build_blueprint.sh --already-checked
 
 echo "[nc-cubic] Full project build, audits, and Blueprint generation complete"
-echo "[nc-cubic] Note: this is NOT proof of Theorem 1.1(3)."
+echo "[nc-cubic] Final theorem gate: bash scripts/check.sh --complete"

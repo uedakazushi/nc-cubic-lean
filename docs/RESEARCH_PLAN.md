@@ -9,11 +9,11 @@
 独立な三変数Jacobianブロックの和へ変換し、逆の構成も証明する。
 量子化、退化スキーム、moduli、定理第4項の一般階数は第一の完成条件に含めない。
 
+`NcCubic.theorem113 : NcCubic.Geometry.GeometricClassificationStatement` と
 `NcCubic.theorem113_affine : NcCubic.AffineClassificationStatement` は証明済み。
-続いて、任意の幾何学的Poisson双ベクトルから \(P,q=\iota_{dF}P\) を得る原論文§2を
-接続する。**アフィン版だけの完成を元の定理の完成としない。**
-代数的なPoisson sectionと原論文の正則なsectionの比較が必要な場合には、その範囲も
-明示して証明する。
+任意の実際の双ベクトルの標準表示、元の外積三乗との複素線形同型、Jacobi比較と降下を接続した。
+対象は代数的切断であり、Poisson条件は標準の誘導括弧のJacobiで定義する。
+最終型と実際の証明依存は原論文に対して独立レビュー済み。現在の検証はSTATUSを正本とする。
 
 ## 達成基準
 
@@ -25,31 +25,24 @@
 ## 主要な到達点と核心
 
 現在の検証状態は [STATUS.md](STATUS.md) を正本とする。多項式・Lie理論の分類は検証済みであり、
-現在の核心は実際の射影切断の二次係数表示、その括弧との一致、有限局所自由層の外積双対性である。
+射影切断の二次係数表示、その括弧との一致、有限局所自由層の外積双対性も接続済みである。
 追加のコホモロジー仮定なしのambient持上げと、元のEuler商の大域切断上の全射性は検証できた。
-これらの実際の写像を標準twist乗法・Euler補正・Koszul表示に接続する。
+これらの実際の写像を標準twist乗法・Euler補正・Koszul表示へ接続した。
 
 原論文のBertiniによる非退化形式の選択は、最大階数・行列式の一次係数を使う
 初等的証明へ置き換える方針とする。必要な数学的基盤を減らせるためである。
 元の分類目標は変更しない。証明の詳細と未形式化の補題は
 [RESEARCH_NOTES.md](RESEARCH_NOTES.md) §1に置く。
 
-## 優先する次の作業
+## 完成した課題
 
-P0–P5・P6a・P6b・L0–L5・Aは実装済み。課題の現在状態はSTATUSとtasks.jsonを正本とする。
-
-1. G0/G2：実際の射影超曲面のschemeとチャートpresentationを結ぶ。
-   実際の閉埋込みの定義イデアルが(F)である場合、および標準的なProj商について、
-   scheme smoothnessと孤立gradient条件の同値は検証済み。
-   実際のEuler列・外積・twist・制限列と消滅計算は検証済み。標準の係数表示と括弧の評価を比較する。
-2. G1：実際の構造層上でのJacobiと全多項式Jacobiの同値は検証済み。
-   Euler∧Jacobiatorの係数可除性とdivergenceを使う経路を採用し、
-   幾何学的双ベクトルからの標準括弧との比較を接続する。
-3. T：独立レビュー済みの代数的な最終型へ、表示・逆構成・Jacobi比較を接続して証明する。
-
-正確な依存関係・受入条件は [tasks.json](../blueprint/tasks.json)。
-P2は局所正則列→大域Koszul H₁消滅の経路を採用し、大域正則列そのものは主張しない。
-L1はambientとsupportで同時非退化な形式を行列式pencilで選び、annihilator比較でPを保持する。
+P0–P5・P6a・P6b・L0–L5・A・G0–G2・Tの全19課題を証明した。
+G0は実際のEuler列と外積・twistのコホモロジー、標準Euler写像の比座標への作用、
+全開集合上の括弧比較、法線方向の可除性とKoszul表示を接続する。
+G1は射影JacobiからEuler∧Jacobiatorの可除性を導く経路を使い、G2は標準外積双対同型と
+実際の切断の回収・降下を供給する。Tはそれらをアフィン分類へ接続する。
+正確な宣言・依存関係は [tasks.json](../blueprint/tasks.json)。
+新しい数学的目標は、定理第3項の完成範囲を越えて無断で追加しない。
 
 ## 一般原則（個別計画とは別に常に適用）
 

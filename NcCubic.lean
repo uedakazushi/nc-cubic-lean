@@ -339,3 +339,14 @@ public import NcCubic.Geometry.BivectorMorphismCongr
 public import NcCubic.Geometry.ProjectiveBivectorTransport
 public import NcCubic.Geometry.RetargetedColumnData
 public import NcCubic.Geometry.ExteriorSiteNativeBridge
+public import NcCubic.Geometry.QuadraticProjectiveComparison
+public import NcCubic.Geometry.BufferedExteriorSurjectivity
+public import NcCubic.Geometry.CanonicalEulerScalarColumn
+public import NcCubic.Geometry.ColumnScalarAction
+public import NcCubic.Geometry.CanonicalDataRatioAction
+public import NcCubic.Geometry.ProjectiveAmbientReindex
+public import NcCubic.Geometry.BufferedQuadraticLift
+public import NcCubic.Geometry.GeometricRepresentationCore
+public import NcCubic.Geometry.GeometricRepresentation
+public import NcCubic.Completion
+public import NcCubic.Geometry.GeometricRepresentationEquiv

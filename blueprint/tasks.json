@@ -2,7 +2,7 @@
   "schema_version": 1,
   "project_version": "0.1.0",
   "date": "2026-11-13",
-  "geometric_statement_review": "open",
+  "geometric_statement_review": "passed",
   "tasks": [
     {
       "id": "P0",
@@ -356,13 +356,18 @@
         "P2",
         "P0"
       ],
-      "status": "in_progress",
+      "status": "proved",
       "required": true,
       "acceptance": "Euler列・twistのコホモロジー・高次Koszul完全性から任意の幾何学的π_Xに一意なPを対応。smoothnessからgradient条件を比較し、代表独立性・非零性を証明する。Euler wedgeの消去で既約性を不要にする経路を許す。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.Geometry.exists_standardRepresentative",
+        "NcCubic.Geometry.hypersurfaceBivectorEquiv_symm_standardRepresentative",
+        "NcCubic.Geometry.hypersurfaceExteriorBivectorEquiv_standardRepresentative",
+        "NcCubic.Geometry.hypersurfaceExteriorBivectorEquiv_bracket"
+      ],
       "priority": 16,
       "source": "補題2.2、命題2.3",
-      "planned_module": "NcCubic/Geometry/Representation.lean",
+      "planned_module": "NcCubic/Geometry/GeometricRepresentation.lean",
       "verified_components": [
         "高次graded Koszul完全性と定数preimageの一意性",
         "水平二次代表と定数trivectorの実際の縮約による線形同値",
@@ -383,13 +388,15 @@
         "G0",
         "P2"
       ],
-      "status": "in_progress",
+      "status": "proved",
       "required": true,
       "acceptance": "twistした三重接束の制限列からJ=FT+E∧B₂を得て、divergenceとEuler場の恒等式、(1−3/N)F i_dF T=0、定数syzygy消滅からJ=0を証明。全多項式Jacobiと比較する。 同じ結論をEuler∧JacobiatorのF可除性・斉次商・divergence計算から導く代替経路も許すが、射影Poisson条件からの可除性を仮定に残さない。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.Geometry.polynomialJacobi_iff_hypersurfaceGlobalJacobi"
+      ],
       "priority": 17,
       "source": "命題2.4",
-      "planned_module": "NcCubic/Geometry/JacobiLift.lean",
+      "planned_module": "NcCubic/Geometry/HypersurfaceStandardComparison.lean",
       "verified_components": [
         "divergence・Euler計算とJacobiatorの水平性",
         "J=FT+E∧B₂からのJacobi持上げ（幾何学的分解の存在は未完了）",
@@ -405,13 +412,18 @@
         "P0",
         "P6b"
       ],
-      "status": "in_progress",
+      "status": "proved",
       "required": true,
-      "acceptance": "smoothnessとgradient、斉次bivectorと射影切断、イデアル(F)への降下、座標変換を比較。代数的/正則切断の比較の範囲とSchouten括弧との適合を明記して証明する。",
-      "declarations": [],
+      "acceptance": "射影的smoothnessとgradient条件、実際の接層外積の大域切断とその標準的な全開集合上の双導分を比較する。標準代表の射影降下・超曲面への制限・座標変換との適合、および双ベクトルと誘導括弧の相互回収を証明する。Poisson条件は誘導括弧のJacobi恒等式で定義する代数的解釈を採用する。",
+      "declarations": [
+        "NcCubic.Geometry.ChartComparison.scheme_smooth_iff_isolated_gradient",
+        "NcCubic.Geometry.hypersurfaceBivector_standardRepresentative",
+        "NcCubic.Geometry.GeometricForward.blockNormalForm_of_standardRepresentative_canonical",
+        "NcCubic.Geometry.GeometricConverse.exists_bivector_of_normalForm"
+      ],
       "priority": 18,
       "source": "§1.1、§2、定理1.1(3)逆構成",
-      "planned_module": "NcCubic/Geometry/Comparison.lean",
+      "planned_module": "NcCubic/Geometry/GeometricCanonicalDirections.lean",
       "verified_components": [
         "実際のアフィン商環と一式presentation・Jacobian",
         "全素点の偏微分被覆・scheme Smoothからアフィン切断環のSmooth",
@@ -439,10 +451,12 @@
         "G1",
         "G2"
       ],
-      "status": "open",
+      "status": "proved",
       "required": true,
       "acceptance": "幾何学的な最終型の独立レビューとNcCubic.theorem113の証明。scripts/check.sh --completeが成功。",
-      "declarations": [],
+      "declarations": [
+        "NcCubic.theorem113"
+      ],
       "priority": 19,
       "source": "定理1.1(3)、印刷pp.2–3",
       "planned_module": "NcCubic/Completion.lean"

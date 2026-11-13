@@ -62,12 +62,11 @@ Macでは日本語対応を含むMacTeXを推奨する。`scripts/blueprint_lual
 生成前にこのHTMLディレクトリを置換し、改名前の章を残さない。
 全体ビルド・公理監査を含めて検証するときはルートで `lake build`。
 元の分類定理の完成判定は `bash scripts/check.sh --complete` で別に行う。
-現在は4課題が未完了であり、最終ゲートは失敗するのが正しい。
+全19課題を証明し、最終型の独立レビューと完成ゲートを通過した。
 
-2026-11-07、準備済みクラウド環境で従来の全体ビルドとHTML生成を検証した。
-2026-11-08、LuaLaTeXエンジンラッパーを単体テストし、日本語と数式を含む
-試験文書がPDFになり、日本語テキストを抽出できることを確認した。
-実際のVerso Blueprint全体のPDF生成は未検証である。
+2026-11-13、準備済みクラウド環境で全体ビルド、公理監査、HTMLとLuaLaTeX PDFの生成を検証した。
+日本語PDFからのテキスト抽出と、19課題すべてが証明済みである依存グラフも確認した。
+この環境のTeX補完手順は `docs/TEX_RUNTIME.md` を参照する。
 初回はVersoBlueprint・Versoと補助依存の取得にネットワーク接続が必要。
 この独立した Lake package でも Stacks の Git partial clone が失敗し得るため、
 `scripts/build_blueprint.sh` はルート共通の `scripts/resolve_deps.sh` を呼ぶ。

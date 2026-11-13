@@ -17,13 +17,12 @@ open Informal
 tag := "nc-cubic-blueprint"
 %%%
 
-2026-11-07 / Blueprint v0.4.0。
+2026-11-13 / Blueprint v0.4.0。
 原典は同梱の `paper/cubic_poisson_paper_20261104.pdf`、対象は
 定理1.1第3項（印刷 pp.2–3）と、その証明に必要な §2–3 である。
 
-*アフィン分類は証明済み。元の幾何学的定理は未証明である。* 現在の19課題のうち、P0–P5・P6a・P6b・L0–L5・A の15課題が完了している。
-残る課題はG0・G1・G2・Tである。
-以下は各課題の主張・仮定・証明設計・実装先候補を与える。
+*元の幾何学的定理1.1(3)を証明済み。* P0–P5・P6a・P6b・L0–L5・A・G0–G2・Tの全19課題が完了した。
+以下は各課題の主張・仮定・証明と検証済みのLean宣言を与える。
 
 # 目標と規約
 %%%
@@ -39,7 +38,7 @@ $`F` を固定して Poisson 切断 $`\pi_X` を定数 trivector $`P` で表示�
 $$`N=3k+m,\qquad P=\sum_{s=1}^k\partial_{x_{s1}}\wedge\partial_{x_{s2}}\wedge\partial_{x_{s3}},\qquad F=\sum_{s=1}^k f_s(x_s,u)`
 
 となることと、その逆構成を証明する。各 $`f_s` は全次数3、同じ中心変数
-$`u=(u_1,\ldots,u_m)` を共有してよい。括弧は
+$`u=(u_1,\ldots,u_m)` を共有してよい。斉次座標のアフィン錐上の表示では、括弧は
 
 $$`\{x_{s1},x_{s2}\}=\partial_{x_{s3}}f_s,\quad\{x_{s2},x_{s3}\}=\partial_{x_{s1}}f_s,\quad\{x_{s3},x_{s1}\}=\partial_{x_{s2}}f_s`
 
@@ -60,8 +59,7 @@ file := "roadmap"
 3. アフィン分類：P5 で多項式を分解し、P6b の複数ブロックの逆構成と合わせて A を証明する。
 4. 幾何への接続：G0 の表示、G1 の Jacobi 持上げ、G2 の比較・降下を証明して T を閉じる。
 
-次の着手点はG0–G2の幾何学的表示・持上げ・比較である。
-アフィン核心は完了した。大きな未完了部分はG0–G2の幾何学的基盤である。
+アフィン核心に加え、G0–G2の幾何学的表示・持上げ・比較と最終定理Tまで接続した。
 既存 API と未確認の適用条件は `docs/LIBRARIES.md` に分けて記録する。
 ファイル候補は将来の配置案であり、存在する Lean 宣言の一覧ではない。
 
@@ -79,7 +77,7 @@ L群は一般の基点自由な形式族についての補題群で、P3・P4 �
 
 ルートの `lake build` は証明ライブラリ、公理監査、Stacks アダプター、依存グラフの照合、
 この HTML と LuaLaTeX PDF の生成を実行する。分類定理の完成確認は別の
-`bash scripts/check.sh --complete` で行う。現在は4課題が残っているため失敗するのが正しい。
+`bash scripts/check.sh --complete` で行う。最終型の独立レビューとこの完成ゲートも通過した。
 
 {include 0 NcCubicBlueprint.Chapters.Foundations}
 {include 0 NcCubicBlueprint.Chapters.LieTheory}
