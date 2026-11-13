@@ -22,7 +22,10 @@ variable {n : ℕ}
 abbrev cotangentChartOpen (i : Fin (n+1)) : (ProjectiveAmbient n).Opens :=
   Proj.basicOpen (homogeneousSubmodule (Fin (n+1)) ℂ) (X i)
 
-abbrev ambientProjection (n : ℕ) :=
+/-- The canonical coefficient projection with its native scheme source fixed.
+Keeping this type explicit avoids reconstructing the projective scheme through
+module-category carriers in subsequent exterior and dual comparisons. -/
+abbrev ambientProjection (n : ℕ) : ProjectiveAmbient n ⟶ Spec (CommRingCat.of ℂ) :=
   Stacks.AlgebraicGeometry.ProjPolyChart.projToSpecCoeff ℂ n
 
 theorem cotangentChartOpen_affine (i : Fin (n+1)) : IsAffineOpen (cotangentChartOpen i) :=

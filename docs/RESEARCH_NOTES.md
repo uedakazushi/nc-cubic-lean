@@ -208,7 +208,10 @@ Euler∧Jと比較し、`ChartJacobiDivisibility` と `LocalizedPrincipalIdeal` 
 非零大域切断であり、表示定理・持上げ・比較定理を仮定に含めない。
 結論は実際の全開集合上の括弧の標準表示と `HasBlockNormalForm`、逆方向は
 各正規形からの実際の非零双ベクトルの存在である。原論文§1.1・定理1.1(3)との
-独立の型レビューで、代数的な分類目標としての忠実性を確認した。
+独立の型レビューで、代数的な分類目標としての忠実性を確認した。原典pp.2–5は基礎体C、
+射影スキーム、飽和イデアル層、代数的Euler列・Hartshorne IIIのコホモロジーを使い、
+holomorphic・解析的カテゴリーとは明示していない。現在のSchemeによる型はこの代数的読解に忠実である。
+別途、解析的Poisson構造まで追加で主張する場合にのみGAGAの比較が必要となる。
 
 Poisson条件は標準的な標数0の特徴付け、すなわち実際の双ベクトルから誘導される
 括弧のJacobi恒等式で記述する。別個のSchouten演算や解析的なカテゴリーの機構を
@@ -232,14 +235,17 @@ Poisson条件は標準的な標数0の特徴付け、すなわち実際の双ベ
    接続し、全射影開で同じ括弧を与える定数Pを供給する。
 3. `ExteriorRawDualIso` の実際のprecompositionは同型であり、`ExteriorRawPairing` は
    外積双対性の標準大域射を構成する。`ExteriorDualityCriterion` は実際のunit上の行列式公式から
-   有限局所自由な場合の同型性を証明する。標準射のunit評価をこの条件へ接続する部分が残る。
+   有限局所自由な場合の同型性を証明する。`ExteriorDualPairingDeterminant` の計算されたunit評価に
+   適用し、標準射の実際の同型性まで検証できた。`SmoothBivectorDuality` がSmoothだけから標準同型を与える。
    `ExteriorFunctionalAgreement`・`BivectorFaithfulness` は、実際の同型と行列式公式を明示すれば
    双導分からの逆構成、全開集合での括弧の回収、実際の双ベクトルの単射性を与える。
    `DeterminantBiderivation` は同じ評価公式から実際の双ベクトルの双導分性と相対性を回収する。
    `ImmersionBracketCompatibility` は実際のunit制限の等式を、全開集合の括弧のpullbackの等式へ移す。
 4. `GeometricForward`・`GeometricConverse` は実際の外積双対同型と行列式公式を明示した補助定理である。
    正方向は個々のPの実際の標準表示から正規形へ移し、逆方向は正規形から実際の非零双ベクトルを作る。
-   前者に任意のπの表示定理を仮定として隠してはいない。標準写像の同型性・評価公式、任意πの表示と
-   全開集合の比較を証明してから最終型へ適用する。
+   `GeometricCanonicalDirections` はこの同型・公式の条件を標準写像で実際に充足した。
+   逆方向は既に比較入力なしで証明できている。前者に任意のπの表示定理を仮定として隠してはいない。
+   `HypersurfaceBivectorLinear` は任意Pからの実際の双ベクトル写像を複素線形な単射にした。
+   任意πの表示と全開集合の比較を証明してから全射性と最終型へ適用する。
    `GeometricClassificationStatement` は独立レビュー済みの未証明の命題定義であり、
    `NcCubic.theorem113` はまだ証明されていない。

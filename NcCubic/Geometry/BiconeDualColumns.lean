@@ -70,18 +70,18 @@ open Stacks.AlgebraicGeometry.ReflexiveModules
 its dual bicone and the specified pointwise duality maps. -/
 def dualBiconeComparisonIso (X : Scheme.{u}) {I : Type v} [Finite I]
     {F G : I → X.Modules} (b : Bicone F) (c : Bicone G)
-    (hb : b.IsBilimit) (hc : c.IsBilimit) (e : ∀ i, G i ≅ dualSheaf (F i)) :
-    c.pt ≅ dualSheaf b.pt :=
-  biconeComparisonIso c (relabelBicone (dualBicone b) e) hc
-    (relabelBicone_isBilimit (dualBicone b) (dualBicone_isBilimit b hb) e)
+    (hb : b.IsBilimit) (hc : c.IsBilimit) (e : ∀ i, G i ≅ dualSheaf (X := X) (F i)) :
+    c.pt ≅ dualSheaf (X := X) b.pt :=
+  biconeComparisonIso c (relabelBicone (dualBicone (X := X) b) e) hc
+    (relabelBicone_isBilimit (dualBicone (X := X) b) (dualBicone_isBilimit (X := X) b hb) e)
 
 @[simp] theorem dualBiconeComparisonIso_column (X : Scheme.{u}) {I : Type v} [Finite I]
     {F G : I → X.Modules} (b : Bicone F) (c : Bicone G)
-    (hb : b.IsBilimit) (hc : c.IsBilimit) (e : ∀ i, G i ≅ dualSheaf (F i)) (i : I) :
+    (hb : b.IsBilimit) (hc : c.IsBilimit) (e : ∀ i, G i ≅ dualSheaf (X := X) (F i)) (i : I) :
     c.ι i ≫ (dualBiconeComparisonIso X b c hb hc e).hom =
-      (e i).hom ≫ dualMap (b.π i) :=
-  biconeComparisonIso_column c (relabelBicone (dualBicone b) e) hc
-    (relabelBicone_isBilimit (dualBicone b) (dualBicone_isBilimit b hb) e) i
+      (e i).hom ≫ dualMap (X := X) (b.π i) :=
+  biconeComparisonIso_column c (relabelBicone (dualBicone (X := X) b) e) hc
+    (relabelBicone_isBilimit (dualBicone (X := X) b) (dualBicone_isBilimit (X := X) b hb) e) i
 
 /-- The identity site/scheme comparison preserves an ORIGINAL bicone and
 its bilimit structure, without choosing any new native biproduct vertex. -/

@@ -1,6 +1,5 @@
 module
 public import NcCubic.Geometry.ProjectiveQuadraticSections
-public import NcCubic.Geometry.QuadraticSectionReadout
 public import NcCubic.Geometry.BivectorLinearity
 public import NcCubic.Geometry.ProjectiveCoordinateDerivatives
 @[expose] public noncomputable section

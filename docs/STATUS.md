@@ -155,7 +155,7 @@ Lakeで再解決したroot/Versoのmanifestには同じ固定Stacksを追加し�
 課題宣言のtheorem確認、Stacksアダプター、Blueprint整合性とHTML・LuaLaTeX PDF生成を要求する。
 分類定理の完成判定は `bash scripts/check.sh --complete`。未完了課題がある現在は失敗する。
 許容する公理はpropext・Classical.choice・Quot.soundのみで、独自公理や証明穴は使わない。
-今回の全体 `lake build` は成功した。257モジュールをビルドし、2982宣言の推移的公理監査、
+今回の全体 `lake build` は成功した。283モジュールをビルドし、3132宣言の推移的公理監査、
 117件の課題定理の実在・theorem確認、既存Stacksアダプターの監査まで通過した。
 Verso検査は `ok: true`・エラー0件。19ノード・34依存辺・15課題の証明済み状態を照合した。
 HTML11ページのローカルファイルと全ノードanchorに欠落はなく、181種類の数式をKaTeXで検査した。
@@ -181,14 +181,19 @@ procfs互換処理は現在は不要。原論文はpaper/source.jsonのSHA256で
   全開集合の全切断上で一致する。アフィン開上の準連接層の比較を経由し、
   任意の開集合の切断加群に有限自由性を仮定しない。
 - `ExteriorRawPairing`：外積接層から余接外積の双対への標準の大域射を構成した。
-  `ExteriorDualityCriterion` は、実際のunit上の行列式評価から、その射の有限局所自由な場合の
-  同型性を導く。標準射に対する評価公式の接続は実装中。
+  `ExteriorDualPairingDeterminant` は実際のunit行列式公式を計算し、
+  `ExteriorDualityCriterion` に適用して、実際の有限局所自由性だけから標準射の同型性を証明した。
+  `SmoothBivectorDuality` は実際のSmooth仮定からこの標準同型を供給する。
 - `ExteriorFunctionalAgreement`・`BivectorFaithfulness`：実際の行列式公式と同型を明示した場合、
   双導分からの実際の双ベクトルへの逆構成、全開集合の括弧の回収と単射性を証明した。
+  標準同型への適用も完了し、`GeometricCanonicalDirections` の逆方向には比較仮定を残さない。
 - `ConstantRepresentativeOfTangency`：接性の係数可除性から、全射影開上で同じ括弧を与える
   定数trivectorを構成した。可除性を幾何学的接性から得る比較は別途未完了。
 
-これらはG0・G2・Tを無条件に閉じるものではない。最終定理の状態は未証明のままである。
+`HypersurfaceBivector` は任意の定数trivectorから実際の双ベクトルを構成し、
+`HypersurfaceBivectorLinear` はその複素線形性と単射性を証明した。
+残る全射性は、任意の双ベクトルの標準表示の存在と同値である。
+これらはG0・G2・Tを閉じるものではない。最終定理の状態は未証明のままである。
 
 ## 実装中の課題：元の射影幾何への接続
 
@@ -199,8 +204,9 @@ scheme smoothnessと孤立gradient条件の比較、および実際の標準括�
 1. 検証済みのambient持上げと元のEuler商のΓ全射性を、標準twist乗法を使う中央項同型へ接続する。
    任意の双ベクトル切断の二次係数表示について、標準のtwist乗法・Euler商写像による
    括弧の評価と接性を比較し、Euler補正とKoszul表示から一意なPを得る。
-2. 有限局所自由な余接層について外積と双対の大域同型を構成し、標準縮約と比較する。
-   これにより、双導分から実際の双ベクトルへの逆構成と、双ベクトルから括弧への単射性を閉じる。
+2. 標準外積双対同型・逆構成・括弧の単射性は検証できた。
+   元のEuler包含と標準座標場の一致、および持ち上げた切断とその二次係数の全開集合上の
+   括弧比較を供給し、検証済みの引き戻し則・法線可除性・全開集合への降下へ適用する。
 3. 以上をアフィン分類と実際の標準括弧の比較へ接続し、最終定理を証明する。
 
 `Geometry.GeometricClassificationStatement` の代数的な最終型は原論文との独立レビュー済みだが、

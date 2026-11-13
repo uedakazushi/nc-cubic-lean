@@ -1,6 +1,7 @@
 /- Copyright (c) 2026 nc-cubic contributors. All rights reserved. -/
 module
 public import NcCubic.Geometry.ExteriorRawPairing
+public import NcCubic.Geometry.ExteriorDualPairingDeterminant
 public import NcCubic.Geometry.ExteriorDualityCriterion
 public import NcCubic.Geometry.ExteriorFunctionalAgreement
 public import StacksFrontier.AlgebraicGeometry.Morphisms.Smooth.DifferentialsLocallyFree
@@ -64,4 +65,43 @@ theorem smoothBivectorDualityIsoOfFormula_unit {X S : Scheme.{u}} (f : X ⟶ S) 
       (exteriorDualPairing (Scheme.Hom.relativeDifferentials f))) :
     HasUnitDeterminantFormula f (smoothBivectorDualityIsoOfFormula f h).hom :=
   cotangentExteriorDualityMap_unit_of_formula f h
+end NcCubic.Geometry
+
+namespace NcCubic.Geometry
+open AlgebraicGeometry CategoryTheory
+open Stacks.AlgebraicGeometry.ReflexiveModules
+universe u
+set_option backward.isDefEq.respectTransparency false
+/-- The canonical map satisfies the computed determinant law on actual wedges. -/
+theorem cotangentExteriorDualityMap_unit {X S : Scheme.{u}} (f : X ⟶ S) :
+    HasUnitDeterminantFormula f (cotangentExteriorDualityMap f) :=
+  cotangentExteriorDualityMap_unit_of_formula f
+    (exteriorDualPairing_hasDeterminantFormula (Scheme.Hom.relativeDifferentials f))
+
+/-- The genuine canonical exterior tangent/cotangent duality, with no
+comparison map or unit law as input. -/
+def bivectorDualityIso {X S : Scheme.{u}} (f : X ⟶ S)
+    [AlgebraicGeometry.SheafOfModules.IsFiniteLocallyFree.{u,u,u}
+      (Scheme.Hom.relativeDifferentials f)] :
+    bivectorSheaf f ≅ dualSheaf
+      (Scheme.Modules.exteriorPower (Scheme.Hom.relativeDifferentials f) (2:ℤ)) :=
+  bivectorDualityIsoOfFormula f
+    (exteriorDualPairing_hasDeterminantFormula (Scheme.Hom.relativeDifferentials f))
+
+theorem bivectorDualityIso_unit {X S : Scheme.{u}} (f : X ⟶ S)
+    [AlgebraicGeometry.SheafOfModules.IsFiniteLocallyFree.{u,u,u}
+      (Scheme.Hom.relativeDifferentials f)] :
+    HasUnitDeterminantFormula f (bivectorDualityIso f).hom :=
+  cotangentExteriorDualityMap_unit f
+
+/-- Smoothness alone supplies the canonical actual duality. -/
+def smoothBivectorDualityIso {X S : Scheme.{u}} (f : X ⟶ S) [Smooth f] :
+    bivectorSheaf f ≅ dualSheaf
+      (Scheme.Modules.exteriorPower (Scheme.Hom.relativeDifferentials f) (2:ℤ)) :=
+  smoothBivectorDualityIsoOfFormula f
+    (exteriorDualPairing_hasDeterminantFormula (Scheme.Hom.relativeDifferentials f))
+
+theorem smoothBivectorDualityIso_unit {X S : Scheme.{u}} (f : X ⟶ S) [Smooth f] :
+    HasUnitDeterminantFormula f (smoothBivectorDualityIso f).hom :=
+  cotangentExteriorDualityMap_unit f
 end NcCubic.Geometry
