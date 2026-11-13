@@ -16,40 +16,40 @@ local instance (X : Scheme.{u}) : HasFiniteBiproducts X.Modules :=
 /-- Coordinate components carry local pure tensors to actual wedges of the
 images of the original coordinate inclusions. No rank or freeness assumption is used. -/
 theorem exterior_component_map_wedge {X : Scheme.{u}} (L : X.Modules) (N : ℕ)
-    {T : X.Modules} (g : SheafExteriorFrame.sum L N ⟶ T)
+    {T : X.Modules} (g : SheafExteriorFrame.sum (X := X) L N ⟶ T)
     (i j : Fin N) (U : X.Opens) (s t : Γ(L,U)) :
-    (Scheme.Modules.exteriorPowerMap g 2).val.app (op U)
-      ((SheafExteriorFrame.component L N i j).val.app (op U)
+    (Scheme.Modules.exteriorPowerMap (X := X) g 2).val.app (op U)
+      ((SheafExteriorFrame.component (X := X) L N i j).val.app (op U)
         ((PresheafOfModules.tensorSheafUnit L L).app (op U) (s ⊗ₜ t))) =
-      exteriorWedgeAlternating T U (fun k => g.val.app (op U)
+      exteriorWedgeAlternating (X := X) T U (fun k => g.val.app (op U)
         (![(biproduct.ι (fun _ : Fin N => L) i).val.app (op U) s,
           (biproduct.ι (fun _ : Fin N => L) j).val.app (op U) t] k)) := by
-  let v : Fin 2 → Γ(SheafExteriorFrame.sum L N,U) :=
+  let v : Fin 2 → Γ(SheafExteriorFrame.sum (X := X) L N,U) :=
     ![(biproduct.ι (fun _ : Fin N => L) i).val.app (op U) s,
       (biproduct.ι (fun _ : Fin N => L) j).val.app (op U) t]
   have hw := SheafExteriorFrame.component_wedge L N i j (op U) s t
-  have he : (SheafExteriorFrame.component L N i j).val.app (op U)
+  have he : (SheafExteriorFrame.component (X := X) L N i j).val.app (op U)
       ((PresheafOfModules.tensorSheafUnit L L).app (op U) (s ⊗ₜ t)) =
-      exteriorWedgeAlternating (SheafExteriorFrame.sum L N) U v := by
+      exteriorWedgeAlternating (X := X) (SheafExteriorFrame.sum (X := X) L N) U v := by
     rw [exteriorWedgeAlternating_homogeneousProd]
     exact hw
-  exact (congrArg ((Scheme.Modules.exteriorPowerMap g 2).val.app (op U)) he).trans
-    (exteriorWedgeAlternating_map g U v)
+  exact (congrArg ((Scheme.Modules.exteriorPowerMap (X := X) g 2).val.app (op U)) he).trans
+    (exteriorWedgeAlternating_map (X := X) g U v)
 
 /-- The actual local bracket on each coordinate component is its determinant
 of tangent evaluations, after the exact original sheaf maps. -/
 theorem bivectorSectionBracket_component {X S : Scheme.{u}} (f : X ⟶ S)
-    (L : X.Modules) (N : ℕ) (g : SheafExteriorFrame.sum L N ⟶ tangentSheaf f)
+    (L : X.Modules) (N : ℕ) (g : SheafExteriorFrame.sum (X := X) L N ⟶ tangentSheaf (X := X) (S := S) f)
     (i j : Fin N) (U : X.Opens) (s t : Γ(L,U)) (a b : Γ(X,U)) :
-    bivectorSectionBracket f U
-      ((Scheme.Modules.exteriorPowerMap g 2).val.app (op U)
-        ((SheafExteriorFrame.component L N i j).val.app (op U)
+    bivectorSectionBracket (X := X) (S := S) f U
+      ((Scheme.Modules.exteriorPowerMap (X := X) g 2).val.app (op U)
+        ((SheafExteriorFrame.component (X := X) L N i j).val.app (op U)
           ((PresheafOfModules.tensorSheafUnit L L).app (op U) (s ⊗ₜ t)))) a b =
-      tangentSectionDerivation f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) i).val.app (op U) s)) a *
-        tangentSectionDerivation f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) j).val.app (op U) t)) b -
-      tangentSectionDerivation f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) j).val.app (op U) t)) a *
-        tangentSectionDerivation f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) i).val.app (op U) s)) b := by
-  exact (congrArg (fun π => bivectorSectionBracket f U π a b)
-    (exterior_component_map_wedge L N g i j U s t)).trans
-    (bivectorSectionBracket_native_wedge f U _ a b)
+      tangentSectionDerivation (X := X) (S := S) f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) i).val.app (op U) s)) a *
+        tangentSectionDerivation (X := X) (S := S) f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) j).val.app (op U) t)) b -
+      tangentSectionDerivation (X := X) (S := S) f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) j).val.app (op U) t)) a *
+        tangentSectionDerivation (X := X) (S := S) f U (g.val.app (op U) ((biproduct.ι (fun _ : Fin N => L) i).val.app (op U) s)) b := by
+  exact (congrArg (fun π => bivectorSectionBracket (X := X) (S := S) f U π a b)
+    (exterior_component_map_wedge (X := X) L N g i j U s t)).trans
+    (bivectorSectionBracket_native_wedge (X := X) (S := S) f U _ a b)
 end NcCubic.Geometry

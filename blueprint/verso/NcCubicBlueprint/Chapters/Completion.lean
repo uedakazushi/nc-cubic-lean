@@ -158,7 +158,7 @@ tag := "geometric-classification"
 $`F=\sum_s f_s(x_s,u)` により表示される。括弧は各三変数の Jacobian 括弧で、
 異なる active ブロックの間と中心変数の括弧は0である。逆にこの正規形は
 $`X` 上の Poisson 構造を与える。
-最終宣言は `NcCubic.theorem113 : NcCubic.GeometricClassificationStatement` とする。
+最終宣言は `NcCubic.theorem113 : NcCubic.Geometry.GeometricClassificationStatement` とする。
 :::
 
 最終型の未証明の命題定義 `NcCubic.Geometry.GeometricClassificationStatement` は、
@@ -169,8 +169,8 @@ Poisson条件は標数0での誘導括弧のJacobiによる特徴付けを用い
 
 証明設計：G0 で $`\pi_X` を一意な $`P` に移し、非零性も同型で移す。
 G1・G2 で A の仮定を満たして正規形を得て、G2 で幾何学的な結論へ戻す。
-逆方向も射影降下まで行う。最終命題の定義はまだ Lean にはない。
-原論文の量化対象・全仮定・式(1.1)(1.2)・逆構成を型と照合してから導入する。
+逆方向も射影降下まで行う。最終命題の定義は Lean に導入済みで、証明は未完了である。
+原論文の量化対象・全仮定・式(1.1)(1.2)・逆構成と型の照合は独立レビュー済み。
 ファイル候補は `NcCubic/Completion.lean`。
 
 終了時は全プロダクション宣言の公理監査と、最終型の独立レビューを行う。

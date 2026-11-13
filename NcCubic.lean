@@ -289,6 +289,7 @@ public import NcCubic.Geometry.ExteriorNativeStalk
 public import NcCubic.Geometry.ExteriorDualityCriterion
 public import NcCubic.Geometry.QuadraticCoefficientRatio
 public import NcCubic.Geometry.ExteriorRawPairingLinear
+public import NcCubic.Geometry.QuadraticExteriorMap
 public import NcCubic.Geometry.QuadraticComponentEvaluation
 
 public import NcCubic.Geometry.ProjectiveBiderivationExt
@@ -334,3 +335,7 @@ public import NcCubic.Geometry.QuadraticExtensionRepresentation
 public import NcCubic.Geometry.NormalTangencyExtension
 public import NcCubic.Geometry.CanonicalEulerData
 public import NcCubic.Geometry.CanonicalEulerLiteralData
+public import NcCubic.Geometry.BivectorMorphismCongr
+public import NcCubic.Geometry.ProjectiveBivectorTransport
+public import NcCubic.Geometry.RetargetedColumnData
+public import NcCubic.Geometry.ExteriorSiteNativeBridge

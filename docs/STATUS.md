@@ -21,7 +21,7 @@ L5と最終アフィン型は独立レビュー済み。
 - P3：全多項式Jacobiと座標条件、符号付き展開、全共変ベクトルのHessian互換性の同値。
   未証明のsyzygy仮定は残さない。
 - P5：ブロックtrivectorを明示入力として混合偏微分を消去し、斉次f_sを構成。
-  ブロックtrivectorの存在はL5をAで接続する課題である。
+  ブロックtrivectorの存在はL5からAへ接続済み。
 - P6a・P6b：中心変数を共有する独立ブロックの全多項式Jacobiと、
   実際のHasBlockNormalFormから縮約括弧がPoissonになる逆方向。
 - L0：無限体上の基点自由な対称形式族に非退化元が存在すること。
@@ -213,3 +213,11 @@ scheme smoothnessと孤立gradient条件の比較、および実際の標準括�
 現時点では未証明の命題定義である。Poisson条件は標数0の誘導括弧のJacobiによる特徴付けを使い、
 別個のSchouten演算や解析的カテゴリーの実装を主張しない。未証明の表示や比較を入力仮定として
 Tを閉じることはしない。実際の型と次の接続はRESEARCH_NOTES §6に記載した。
+
+## 外積APIの比較
+
+`ExteriorSiteNativeBridge` は一般のscheme上でsite側とnative側の有限直和・外積の
+標準同型を構成し、成分・外積写像・移送した切断との整合性を証明した。
+`BivectorMorphismCongr` と `ProjectiveBivectorTransport` は、構造射の等式による
+双ベクトルの移送と全開集合上の括弧の保存を証明した。これらは個別にビルド・
+標準3公理監査済みであり、任意の双ベクトルの標準表示の存在への接続は作業中である。

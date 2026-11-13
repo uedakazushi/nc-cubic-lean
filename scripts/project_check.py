@@ -105,7 +105,7 @@ def main():
         if nodes['A']['status'] == 'proved':
             body += 'example : NcCubic.AffineClassificationStatement := NcCubic.theorem113_affine\n'
         if nodes['T']['status'] == 'proved':
-            body += 'example : NcCubic.GeometricClassificationStatement := NcCubic.theorem113\n'
+            body += 'example : NcCubic.Geometry.GeometricClassificationStatement := NcCubic.theorem113\n'
         with tempfile.NamedTemporaryFile('w', suffix='.lean', dir=check_tmp, delete=False) as f:
             f.write(body); temp_path = Path(f.name)
         try:
@@ -126,7 +126,7 @@ def main():
         subprocess.run(['lake', 'env', 'lean', 'scripts/Audit.lean'], cwd=ROOT, check=True)
         body = ('import NcCubic\n'
                 'example : NcCubic.AffineClassificationStatement := NcCubic.theorem113_affine\n'
-                'example : NcCubic.GeometricClassificationStatement := NcCubic.theorem113\n'
+                'example : NcCubic.Geometry.GeometricClassificationStatement := NcCubic.theorem113\n'
                 '#print axioms NcCubic.theorem113\n')
         with tempfile.NamedTemporaryFile('w', suffix='.lean', dir=check_tmp, delete=False) as f:
             f.write(body); temp_path = Path(f.name)
